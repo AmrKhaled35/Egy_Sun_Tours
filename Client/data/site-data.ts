@@ -24,7 +24,7 @@ export const heroSlides = [
   },
   {
     id: 3,
-    image: "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
+    image: "",
     title: "Sail the Sacred Nile",
     subtitle: "Experience the timeless beauty of Egypt"
   }

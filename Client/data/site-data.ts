@@ -33,32 +33,32 @@ export const heroSlides = [
 export const galleryImages = [
   {
     id: 1,
-    image: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/1e/a8/4c/caption.jpg?w=1400&h=-1&s=1",
     alt: "Pyramids of Giza"
   },
   {
     id: 2,
-    image: "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/21/37/ba/luxor.jpg?w=800&h=-1&s=1",
     alt: "Temple hieroglyphs"
   },
   {
     id: 3,
-    image: "https://images.pexels.com/photos/5712301/pexels-photo-5712301.jpeg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/61/49/40/the-egyptian-pyramids.jpg?w=1100&h=-1&s=1",
     alt: "Sphinx monument"
   },
   {
     id: 4,
-    image: "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/93/0f/3a/giza-pyramid-from-the.jpg?w=1100&h=-1&s=1",
     alt: "Desert landscape"
   },
   {
     id: 5,
-    image: "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/36/b5/ab/lovely-day-in-giza-pyramides.jpg?w=1400&h=-1&s=1",
     alt: "Ancient temple"
   },
   {
     id: 6,
-    image: "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/36/a7/35/fayum-owasishe-paradise.jpg?w=1400&h=-1&s=1",
     alt: "Egyptian artifacts"
   }
 ];

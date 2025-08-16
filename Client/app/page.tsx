@@ -3,6 +3,7 @@ import Navbar from '@/components/layout/Navbar';
 import HeroSlider from '@/components/sections/HeroSlider';
 import GalleryPreview from '@/components/sections/GalleryPreview';
 import ReviewsSection from '@/components/sections/ReviewsSection';
+import TripsSection from '@/components/sections/TripsSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/layout/Footer';
@@ -43,6 +44,7 @@ export default function Home() {
       <Navbar />
       <HeroSlider />
       <GalleryPreview />
+      <TripsSection />
       <ReviewsSection />
       <AboutSection />
       <ContactSection />

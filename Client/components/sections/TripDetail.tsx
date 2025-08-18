@@ -2,7 +2,7 @@
 import { useState , useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Clock, Users, MapPin, Star, CheckCircle, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Clock, Users, MapPin, Star, CheckCircle, MessageCircle, X, Camera } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { siteData } from '@/data/site-data';
@@ -23,6 +23,7 @@ interface Trip {
     description: string;
     image: string;
   }[];
+  gallery: string[];
 }
 
 interface TripDetailProps {
@@ -31,6 +32,8 @@ interface TripDetailProps {
 
 const TripDetail = ({ trip }: TripDetailProps) => {
   const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>([]);
+  const [visibleGalleryItems, setVisibleGalleryItems] = useState<number[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     trip.timeline.forEach((_, index) => {
@@ -39,6 +42,14 @@ const TripDetail = ({ trip }: TripDetailProps) => {
       }, index * 300);
     });
   }, [trip.timeline]);
+
+  useEffect(() => {
+    trip.gallery.forEach((_, index) => {
+      setTimeout(() => {
+        setVisibleGalleryItems(prev => [...prev, index]);
+      }, index * 150);
+    });
+  }, [trip.gallery]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-amber-50">
@@ -50,6 +61,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           </Link>
         </Button>
       </div>
+      
       <section className="relative">
         <div className="aspect-[21/9] relative">
           <Image
@@ -90,6 +102,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           </div>
         </div>
       </section>
+      
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-12">
@@ -171,6 +184,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           </div>
         </div>
       </section>
+      
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -229,6 +243,71 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           </div>
         </div>
       </section>
+
+      {/* Photo Gallery Section */}
+      <section className="py-20 bg-gradient-to-b from-white to-amber-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Experience <span className="text-amber-600">Gallery</span>
+            </h2>
+            <p className="text-xl text-gray-600">
+              Discover the beauty and wonder that awaits you on this journey
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {trip.gallery.map((image, index) => (
+              <div
+                key={index}
+                className={`group relative aspect-square overflow-hidden rounded-lg cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-xl ${
+                  visibleGalleryItems.includes(index)
+                    ? 'opacity-100 transform translate-y-0'
+                    : 'opacity-0 transform translate-y-4'
+                }`}
+                onClick={() => setSelectedImage(image)}
+              >
+                <Image
+                  src={image}
+                  alt={`${trip.title} gallery image ${index + 1}`}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 border border-white/30">
+                    <Camera className="w-6 h-6 text-white" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl max-h-full">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
+            >
+              <X size={24} />
+            </button>
+            <div className="relative aspect-auto max-h-[80vh] max-w-full">
+              <Image
+                src={selectedImage}
+                alt="Gallery image"
+                width={800}
+                height={600}
+                className="object-contain w-full h-full rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      
       <section className="py-20 bg-gradient-to-r from-amber-600 to-amber-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -256,7 +335,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-amber-600"
+              className="border-white  hover:bg-white text-amber-600"
               asChild
             >
               <Link href="/contact">

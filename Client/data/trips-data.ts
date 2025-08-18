@@ -1,3 +1,10 @@
+export const siteData = {
+  contact: {
+    whatsapp: "+201234567890",
+    phone: "+20 12 3456 7890",
+    email: "info@example.com"
+  }
+};
 export const allTrips = [
   {
     id: 1,
@@ -5,7 +12,7 @@ export const allTrips = [
     shortDescription:
       "A full-day tour to explore the Pyramids of Giza, the Great Sphinx, Memphis, and Saqqara",
     fullDescription:
-      "This fascinating journey takes you through the wonders of ancient Egypt. Start by visiting the Great Pyramids of Giza and the legendary Sphinx, then continue to Memphis, the ancient capital of Egypt. Afterward, explore Saqqara to see the Step Pyramid of Djoser, the oldest pyramid in history, and finally visit Dahshur to admire the Red and Bent Pyramids of King Sneferu. A comprehensive tour that reveals the beauty and history of Egypt’s Old Kingdom.",
+      "This fascinating journey takes you through the wonders of ancient Egypt. Start by visiting the Great Pyramids of Giza and the legendary Sphinx, then continue to Memphis, the ancient capital of Egypt. Afterward, explore Saqqara to see the Step Pyramid of Djoser, the oldest pyramid in history, and finally visit Dahshur to admire the Red and Bent Pyramids of King Sneferu. A comprehensive tour that reveals the beauty and history of Egypt's Old Kingdom.",
     duration: "Full Day (8 - 9 hours)",
     price: "From $90 per person",
     image: "https://egysuntours.com/wp-content/uploads/2021/09/20230508_112234-scaled.jpg",
@@ -67,9 +74,23 @@ export const allTrips = [
       {
         time: "5:00 PM",
         title: "Return to Hotel",
-        description: "Relax during your return transfer to the hotel with unforgettable memories of Egypt’s ancient wonders.",
+        description: "Relax during your return transfer to the hotel with unforgettable memories of Egypt's ancient wonders.",
         image: "https://www.luxurytravelmagazine.com/files/610/7/637/Mena-House-Oberoi-Giza-Cairo-Egypt-1_big_bu.jpg"
       }
+    ],
+    gallery: [
+      "https://egysuntours.com/wp-content/uploads/2021/09/a1755bb0-24fc-4c88-b30a-95a60bdff30a.jpg",
+      "https://egysuntours.com/wp-content/uploads/2024/01/083.jpg",
+      "https://egysuntours.com/wp-content/uploads/2024/01/100.jpg",
+      "https://egysuntours.com/wp-content/uploads/2024/01/122.jpg",
+      "https://egysuntours.com/wp-content/uploads/2024/01/149.jpg",
+      "https://egysuntours.com/wp-content/uploads/2024/01/444.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/09/20230508_112234-scaled.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/09/6c721a37-23bc-4b76-9aeb-7cfb8953b164.jpg",
+      "https://egysuntours.com/wp-content/uploads/2024/01/187.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/09/656ddefc-5e91-4925-bf62-45349f9304dd.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/09/d6e44028-e2a8-4643-84fe-c6e99c964476.jpg",
+      "https://egysuntours.com/wp-content/uploads/2024/01/098-e1704933567734.jpg"
     ]
   },  
   {
@@ -140,6 +161,20 @@ export const allTrips = [
         image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
       },
     ],
+    gallery: [
+      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
+      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
+      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
+      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
+      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
+      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
+      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
+      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg",
+      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
+      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg"
+    ]
   },
   {
     id: 3,
@@ -209,6 +244,20 @@ export const allTrips = [
           "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
       },
     ],
+    gallery: [
+      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
+      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
+      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
+      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
+      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
+      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
+      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
+      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
+      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg",
+      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg"
+    ]
   },
   {
     id: 4,
@@ -275,6 +324,20 @@ export const allTrips = [
           "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
       },
     ],
+    gallery: [
+      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
+      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
+      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
+      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
+      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
+      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
+      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
+      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
+      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg",
+      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg"
+    ]
   },
   {
     id: 5,
@@ -341,6 +404,20 @@ export const allTrips = [
         image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
       },
     ],
+    gallery: [
+      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
+      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
+      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
+      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
+      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
+      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
+      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
+      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
+      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
+      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg"
+    ]
   },
   {
     id: 6,
@@ -406,6 +483,20 @@ export const allTrips = [
           "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
       },
     ],
+    gallery: [
+      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
+      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
+      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
+      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
+      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
+      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
+      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
+      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
+      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
+      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg"
+    ]
   },
 ];
 

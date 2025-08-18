@@ -101,7 +101,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                 {trip.fullDescription}
               </p>
               <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                What's Included
+                What&apos;s Included
               </h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 {trip.highlights.map((highlight, index) => (

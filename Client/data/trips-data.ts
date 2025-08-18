@@ -1,88 +1,77 @@
 export const allTrips = [
   {
     id: 1,
-    title: "Pyramids & Sphinx Adventure",
+    title: "Giza Pyramids, Sphinx, Memphis & Saqqara",
     shortDescription:
-      "Explore the iconic Pyramids of Giza and the mysterious Sphinx",
+      "A full-day tour to explore the Pyramids of Giza, the Great Sphinx, Memphis, and Saqqara",
     fullDescription:
-      "Embark on an unforgettable journey to one of the Seven Wonders of the Ancient World. This comprehensive tour takes you through the magnificent Pyramids of Giza, where you'll discover the secrets of ancient Egyptian civilization and marvel at the engineering prowess of the pharaohs.",
-    duration: "Full Day (8 hours)",
-    price: "From $80 per person",
-    image: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+      "This fascinating journey takes you through the wonders of ancient Egypt. Start by visiting the Great Pyramids of Giza and the legendary Sphinx, then continue to Memphis, the ancient capital of Egypt. Afterward, explore Saqqara to see the Step Pyramid of Djoser, the oldest pyramid in history, and finally visit Dahshur to admire the Red and Bent Pyramids of King Sneferu. A comprehensive tour that reveals the beauty and history of Egypt’s Old Kingdom.",
+    duration: "Full Day (8 - 9 hours)",
+    price: "From $90 per person",
+    image: "https://egysuntours.com/wp-content/uploads/2021/09/20230508_112234-scaled.jpg",
     category: "Historical",
     highlights: [
       "Great Pyramid of Khufu",
       "Pyramid of Khafre",
       "Pyramid of Menkaure",
       "The Great Sphinx",
-      "Valley Temple",
-      "Panoramic viewpoint",
+      "Memphis Open-Air Museum",
+      "Step Pyramid of Djoser in Saqqara",
+      "Imhotep Museum",
+      "Red Pyramid of Sneferu",
+      "Bent Pyramid of Sneferu"
     ],
     timeline: [
       {
         time: "8:00 AM",
         title: "Hotel Pickup",
-        description: "Comfortable pickup from your hotel in Cairo or Giza area",
-        image:
-          "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
+        description: "Pickup from your hotel in Cairo or Giza in a modern air-conditioned vehicle",
+        image: "https://www.luxurytravelmagazine.com/files/610/7/637/Mena-House-Oberoi-Giza-Cairo-Egypt-1_big_bu.jpg"
       },
       {
         time: "9:00 AM",
-        title: "Great Pyramid of Khufu",
-        description:
-          "Explore the largest and oldest pyramid, learn about its construction and enter the burial chamber",
-        image:
-          "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+        title: "Giza Pyramids",
+        description: "Explore the Great Pyramids of Khufu, Khafre, and Menkaure. Option to enter one of the pyramids and enjoy a camel or horse ride (optional).",
+        image: "https://tse1.mm.bing.net/th/id/OIP.UCsHXMjZav8Jc6nYt0qw-AHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
       },
       {
         time: "10:30 AM",
-        title: "Pyramid of Khafre & Menkaure",
-        description:
-          "Visit the second and third pyramids, discover their unique features and historical significance",
-        image:
-          "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
+        title: "The Great Sphinx",
+        description: "Stand before the legendary Sphinx and explore the Valley Temple, learning about its history and mysteries.",
+        image: "https://th.bing.com/th/id/R.b41e09b19980f8e3b480ac5486687dee?rik=8LFIXYBPO1wk%2bw&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2ff%2ff6%2fGreat_Sphinx_of_Giza_-_20080716a.jpg&ehk=lFLStTRkoY7uzuGvi4eEPWvIjFBlVOfzBj%2bhMaFiF1M%3d&risl=1&pid=ImgRaw&r=0"
       },
       {
         time: "12:00 PM",
-        title: "The Great Sphinx",
-        description:
-          "Stand before the legendary Sphinx, learn about its mysteries and take memorable photos",
-        image:
-          "https://images.pexels.com/photos/5712301/pexels-photo-5712301.jpeg",
+        title: "Lunch Break",
+        description: "Enjoy a traditional Egyptian lunch at a local restaurant near the pyramids.",
+        image: "https://tse4.mm.bing.net/th/id/OIP.WDO1jpYr_aXSKyuzP_Zi4wHaFa?rs=1&pid=ImgDetMain&o=7&rm=3"
       },
       {
         time: "1:00 PM",
-        title: "Lunch Break",
-        description:
-          "Enjoy authentic Egyptian cuisine at a local restaurant with pyramid views",
-        image:
-          "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
+        title: "Memphis",
+        description: "Discover the ancient capital of Egypt, explore the open-air museum, and see the colossal statue of Ramesses II and the Alabaster Sphinx.",
+        image: "https://egysuntours.com/wp-content/uploads/2021/09/20230508_112234-scaled.jpg"
       },
       {
-        time: "2:30 PM",
-        title: "Valley Temple",
-        description:
-          "Explore the ancient mortuary temple and learn about mummification processes",
-        image:
-          "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
+        time: "2:00 PM",
+        title: "Saqqara",
+        description: "Visit the Step Pyramid of Djoser, explore ancient tombs, and discover artifacts in the Imhotep Museum.",
+        image: "https://th.bing.com/th/id/R.6a4197fe0cf0416d56bd9a88afa31983?rik=0UhFV77UyfHzVg&pid=ImgRaw&r=0"
       },
       {
         time: "3:30 PM",
-        title: "Panoramic View",
-        description:
-          "Capture stunning photos from the best viewpoint overlooking all three pyramids",
-        image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+        title: "Dahshur",
+        description: "Explore the Red Pyramid and the Bent Pyramid of King Sneferu, remarkable examples of early pyramid construction.",
+        image: "https://www.rjtravelagency.com/wp-content/uploads/2023/03/Dahshur-Egypt-1.jpg"
       },
       {
-        time: "4:30 PM",
+        time: "5:00 PM",
         title: "Return to Hotel",
-        description:
-          "Comfortable return journey to your hotel with unforgettable memories",
-        image:
-          "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      },
-    ],
-  },
+        description: "Relax during your return transfer to the hotel with unforgettable memories of Egypt’s ancient wonders.",
+        image: "https://www.luxurytravelmagazine.com/files/610/7/637/Mena-House-Oberoi-Giza-Cairo-Egypt-1_big_bu.jpg"
+      }
+    ]
+  },  
   {
     id: 2,
     title: "Islamic Cairo Walking Tour",

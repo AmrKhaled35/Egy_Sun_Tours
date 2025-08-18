@@ -57,9 +57,9 @@ const ContactSection = () => {
 
           {/* Content */}
           <div className="animate-fade-in">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Get In Touch With Us
-            </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            Get In Touch <span className="text-amber-600">With Us</span>
+          </h2>
             <p className="text-lg text-gray-600 mb-8">
               Ready to explore Egypt? Contact us today to plan your perfect Egyptian adventure. 
               We're here to answer all your questions and create a customized experience just for you.

@@ -5,6 +5,16 @@ export const siteData = {
     email: "info@example.com"
   }
 };
+import i1 from '@/images/i1 (1).png'
+import i2 from '@/images/i1 (2).png'
+import i3 from '@/images/i1 (3).png'
+import i4 from '@/images/i1 (4).png'
+import i5 from '@/images/i1 (5).png'
+import i6 from '@/images/i1 (6).png'
+import i7 from '@/images/i1 (7).png'
+import i8 from '@/images/i1 (8).png'
+import i9 from '@/images/i1 (9).png'
+import i10 from '@/images/i1 (10).png'
 export const allTrips = [
   {
     id: 1,
@@ -94,88 +104,94 @@ export const allTrips = [
     ]
   },  
   {
-    id: 2,
-    title: "Islamic Cairo Walking Tour",
+    id: 3,
+    title: "Cairo City Tour – Museum, Citadel & Old Cairo",
     shortDescription:
-      "Discover the medieval Islamic architecture and vibrant bazaars",
+      "Explore Cairo’s ancient treasures, Islamic landmarks, vibrant bazaars, and Coptic heritage in one full-day tour",
     fullDescription:
-      "Step back in time as you wander through the narrow streets of Islamic Cairo, a UNESCO World Heritage site. This immersive walking tour showcases the finest examples of Islamic architecture, bustling markets, and centuries-old traditions that continue to thrive today.",
-    duration: "Half Day (4 hours)",
-    price: "From $60 per person",
-    image: "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-    category: "Cultural",
+      "Discover Cairo as the land of civilizations where ancient pharaonic wonders blend with Islamic and Coptic heritage. This 8-hour city tour includes the Egyptian Museum with its priceless collection of artifacts including Tutankhamun’s treasures, the Citadel of Saladin with the stunning Alabaster Mosque of Mohamed Ali, Islamic Cairo with Khan El Khalili bazaar, and Coptic Cairo where the Holy Family once stayed. A perfect mix of history, culture, and local life.",
+    duration: "Full Day (8 hours)",
+    price: "From $90 per person",
+    image: "https://egysuntours.com/wp-content/uploads/2024/01/544.jpg",
+    category: "City Tour",
     highlights: [
-      "Al-Azhar Mosque",
-      "Khan El Khalili Bazaar",
+      "The Egyptian Museum",
+      "Tutankhamun’s treasures",
       "Citadel of Saladin",
-      "Sultan Hassan Mosque",
-      "Traditional coffee houses",
-      "Local artisan workshops",
+      "Mohamed Ali Alabaster Mosque",
+      "Khan El Khalili Bazaar",
+      "Hanging Church",
+      "Church of St. Sergius & Bacchus (Abu Serga)",
+      "Ben Ezra Synagogue",
+      "Coptic Museum",
+      "Al-Azhar Park"
     ],
     timeline: [
       {
-        time: "9:00 AM",
-        title: "Meet at Al-Azhar Mosque",
+        time: "8:00 AM",
+        title: "Hotel Pickup",
         description:
-          "Begin your journey at one of the oldest universities in the world",
-        image:
-          "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
+          "Meet your Egyptologist guide and start the journey in a private air-conditioned vehicle",
+        image: "https://tse1.mm.bing.net/th/id/OIP.qBvPkCSNd31nVfHbIS_jYgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
       },
       {
-        time: "9:30 AM",
-        title: "Khan El Khalili Bazaar",
+        time: "9:00 AM",
+        title: "Egyptian Museum",
         description:
-          "Navigate through the bustling medieval market, meet local artisans",
-        image:
-          "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
+          "Explore 5000 years of history with over 250,000 artifacts including the treasures of King Tutankhamun",
+        image: "https://www.elfagr.org/UploadCache/libfiles/485/8/600x338o/267.jpg"
       },
       {
         time: "11:00 AM",
-        title: "Traditional Coffee House",
+        title: "Citadel of Saladin & Mohamed Ali Mosque",
         description:
-          "Experience authentic Egyptian coffee culture and local conversations",
-        image:
-          "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      },
-      {
-        time: "11:30 AM",
-        title: "Sultan Hassan Mosque",
-        description:
-          "Marvel at the magnificent Mamluk architecture and intricate decorations",
-        image:
-          "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      },
-      {
-        time: "12:30 PM",
-        title: "Citadel of Saladin",
-        description:
-          "Explore the medieval fortress with panoramic views of Cairo",
-        image:
-          "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
+          "Visit the medieval fortress and the magnificent Alabaster Mosque with panoramic views of Cairo",
+        image: "https://tse1.mm.bing.net/th/id/OIP.QQDgddbgjautcztHpO_ZTAHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
       },
       {
         time: "1:00 PM",
-        title: "Tour Conclusion",
+        title: "Lunch Break",
         description:
-          "End the tour with recommendations for further exploration",
-        image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+          "Enjoy a traditional Egyptian meal at a local restaurant",
+        image: "https://tse4.mm.bing.net/th/id/OIP.WDO1jpYr_aXSKyuzP_Zi4wHaFa?rs=1&pid=ImgDetMain&o=7&rm=3"
       },
+      {
+        time: "2:00 PM",
+        title: "Islamic Cairo & Khan El Khalili Bazaar",
+        description:
+          "Wander through narrow streets, shop for souvenirs, spices, and meet local artisans",
+        image: "https://tse3.mm.bing.net/th/id/OIP.lMHAQKSfyJyPCFJWf4JqkwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+      },
+      {
+        time: "3:30 PM",
+        title: "Coptic Cairo",
+        description:
+          "Visit the Hanging Church, Abu Serga, Ben Ezra Synagogue, and learn about the Holy Family’s journey",
+        image: "https://tse1.mm.bing.net/th/id/OIP.bu10BtXuuFbZ9l8m6s2tOQHaEI?rs=1&pid=ImgDetMain&o=7&rm=3"
+      },
+      {
+        time: "5:00 PM",
+        title: "Return to Hotel",
+        description:
+          "Drive back to your hotel with unforgettable memories of Cairo",
+        image: "https://tse1.mm.bing.net/th/id/OIP.qBvPkCSNd31nVfHbIS_jYgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+      }
     ],
     gallery: [
-      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
-      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
-      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
-      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg",
-      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
-      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg"
+      "https://egysuntours.com/wp-content/uploads/2021/09/80b43446-6e16-4cc0-ad2b-f7544b72c175.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/09/e3e8ddf2-7487-4714-b1bf-ed1828bbf235.jpg",
+      i1,
+      i2,
+      i3,
+      i4,
+      i5,
+      i6,
+      i7,
+      i8,
+      i9,
+      i10
     ]
-  },
+  },  
   {
     id: 3,
     title: "Nile River Cruise Experience",

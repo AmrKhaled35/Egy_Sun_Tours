@@ -62,7 +62,7 @@ const ContactSection = () => {
           </h2>
             <p className="text-lg text-gray-600 mb-8">
               Ready to explore Egypt? Contact us today to plan your perfect Egyptian adventure. 
-              We're here to answer all your questions and create a customized experience just for you.
+              We&apos;re here to answer all your questions and create a customized experience just for you.
             </p>
 
             {/* Contact Methods */}

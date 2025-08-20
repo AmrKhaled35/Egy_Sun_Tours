@@ -2,7 +2,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
+<<<<<<< HEAD
 import {galleryImages2} from "@/data/site-data";
+=======
+import { galleryImages2 } from "@/data/site-data";
+
+>>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
 
 const GalleryGrid = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -38,7 +43,7 @@ const GalleryGrid = () => {
         <div className="relative mb-16">
           <div className="aspect-[21/15] md:aspect-[21/9] lg:aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
-              src="https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg"
+              src="https://wallpapers.com/images/hd/ancient-egypt-lu2bnz4wnu5a34kl.jpg"
               alt="Explore Egypt Photo & Video Gallery"
               fill
               className="object-cover"
@@ -73,7 +78,11 @@ const GalleryGrid = () => {
                 {item.type === 'video' ? (
                   <>
                     <video
+<<<<<<< HEAD
                       src={typeof item.image === 'string' ? item.image : item.image.src}
+=======
+                      src={typeof item.image === "string" ? item.image : item.image.src}
+>>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       muted
                       loop
@@ -132,7 +141,11 @@ const GalleryGrid = () => {
               <div className="relative w-full h-full">
                 {galleryImages2[selectedImage].type === "video" ? (
                   <video
+<<<<<<< HEAD
                     src={typeof galleryImages2[selectedImage].image === 'string' ? galleryImages2[selectedImage].image : galleryImages2[selectedImage].image.src}
+=======
+                    src={typeof galleryImages2[selectedImage].image === "string" ? galleryImages2[selectedImage].image : galleryImages2[selectedImage].image.src}
+>>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
                     controls
                     autoPlay
                     className="w-full h-full object-contain"

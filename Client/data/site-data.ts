@@ -90,6 +90,7 @@ export const reviews = [
     date: "October 2024"
   }
 ];
+<<<<<<< HEAD
 import i1 from "@/images/Gallery/im1.png";
 import i2 from "@/images/Gallery/im2.png";
 import i3 from "@/images/Gallery/im3.png";
@@ -110,6 +111,27 @@ import i17 from "@/images/Gallery/im17.png";
 import i18 from "@/images/Gallery/im18.png";
 import i19 from "@/images/Gallery/im19.png";
 
+=======
+import i1 from '@/images/Gallery/im1.png'
+import i2 from '@/images/Gallery/im2.png'
+import i3 from '@/images/Gallery/im3.png'
+import i4 from '@/images/Gallery/im4.png'
+import i5 from '@/images/Gallery/im5.png'
+import i6 from '@/images/Gallery/im6.png'
+import i7 from '@/images/Gallery/im7.png'
+import i8 from '@/images/Gallery/im8.png'
+import i9 from '@/images/Gallery/im9.png'
+import i10 from '@/images/Gallery/im10.png'
+import i11 from '@/images/Gallery/im11.png'
+import i12 from '@/images/Gallery/im12.png'
+import i13 from '@/images/Gallery/im13.png'
+import i14 from '@/images/Gallery/im14.png'
+import i15 from "@/images/Gallery/im15.png"
+import i16 from "@/images/Gallery/im16.png"
+import i17 from "@/images/Gallery/im17.png"
+import i18 from "@/images/Gallery/im18.png"
+import i19 from "@/images/Gallery/im19.png"
+>>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
 export const galleryImages2 = [
   {
     id: 1,
@@ -120,7 +142,11 @@ export const galleryImages2 = [
   },
   {
     id: 2,
+<<<<<<< HEAD
     image: i2 ,
+=======
+    image: i2,
+>>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
     alt: "Ancient Egyptian hieroglyphs on temple walls",
     category: "Temples",
     type: "image"

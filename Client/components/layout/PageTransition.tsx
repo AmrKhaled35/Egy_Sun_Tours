@@ -11,22 +11,22 @@ const PageTransition = ({ children }: PageTransitionProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 300);
 
-    return () => clearTimeout(timer);
-  }, [pathname]);
+  //   return () => clearTimeout(timer);
+  // }, [pathname]);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-white">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen bg-white">
+  //       <LoadingSpinner size="lg" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="animate-fade-in">

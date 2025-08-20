@@ -514,85 +514,156 @@ export const allTrips = [
   ]
 }
 ,
-  {
-    id: 6,
-    title: "Coptic Cairo Heritage Tour",
-    shortDescription:
-      "Discover Egypt's Christian heritage and ancient churches",
-    fullDescription:
-      "Explore the spiritual heart of Christian Egypt in Old Cairo. This enlightening tour takes you through ancient churches, monasteries, and religious sites that have been centers of Christian worship for over 1,500 years.",
-    duration: "Half Day (4 hours)",
-    price: "From $65 per person",
-    image: "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-    category: "Religious",
-    highlights: [
-      "Hanging Church",
-      "Ben Ezra Synagogue",
-      "Church of St. Sergius",
-      "Coptic Museum",
-      "Babylon Fortress",
-      "Religious manuscripts",
-    ],
-    timeline: [
-      {
-        time: "9:00 AM",
-        title: "Coptic Museum",
-        description: "Begin with an overview of Christian Egypt's rich history",
-        image:
-          "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      },
-      {
-        time: "10:00 AM",
-        title: "Hanging Church",
-        description:
-          "Visit the most famous Coptic church suspended above ancient towers",
-        image:
-          "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      },
-      {
-        time: "11:00 AM",
-        title: "Church of St. Sergius",
-        description:
-          "Explore the church built over the Holy Family's resting place",
-        image:
-          "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      },
-      {
-        time: "11:45 AM",
-        title: "Ben Ezra Synagogue",
-        description: "Discover the historic Jewish heritage of Old Cairo",
-        image:
-          "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      },
-      {
-        time: "12:30 PM",
-        title: "Babylon Fortress",
-        description: "Walk through the ancient Roman fortress ruins",
-        image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      },
-      {
-        time: "1:00 PM",
-        title: "Tour Conclusion",
-        description: "End with reflection time and souvenir shopping",
-        image:
-          "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      },
-    ],
-    gallery: [
-      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
-      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
-      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
-      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
-      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
-      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg"
-    ]
-  },
+{
+  id: 6,
+  title: "Sound & Light Show",
+  shortDescription:
+    "Experience the magical Sound and Light Show at the Giza Pyramids and Sphinx with stunning night illuminations and narrated ancient history.",
+  fullDescription:
+    "Witness the legendary Sound and Light Show at the Giza Plateau. For one enchanting hour, the pyramids of Cheops, Chephren, and Mykerinus, along with the Great Sphinx, come alive with lights and sounds narrating the history, myths, and achievements of ancient Egypt. The show tells the story of the Pharaohs, the construction of the pyramids, and the role of the Sphinx as guardian of the necropolis for over 5000 years. Enjoy the breathtaking atmosphere of the illuminated pyramids under the night sky, with multilingual audio translations available. Your evening begins with pickup from your hotel and transportation in a modern air-conditioned vehicle.",
+  duration: "Evening Show (1 hour)",
+  location: "Giza Pyramids, Egypt",
+  price: "From $60 per person",
+  image: "https://egysuntours.com/wp-content/uploads/2021/09/136714281_3638620599556173_1960673596822392492_n.jpg",
+  category: "Day Tour",
+  highlights: [
+    "Stunning illumination of the Pyramids and Sphinx",
+    "Narrated history of the Pharaohs and legends of ancient Egypt",
+    "The story of the Great Pyramid of Khufu",
+    "Learn about the guardian role of the Great Sphinx",
+    "Magical night atmosphere at the Giza Plateau",
+    "Multilingual headsets available free of charge"
+  ],
+  timeline: [
+    {
+      time: "7:00 PM",
+      title: "Hotel Pickup",
+      description:
+        "Your escorted representative will pick you up from your hotel in a modern air-conditioned vehicle.",
+      image: "https://digital.ihg.com/is/image/ihg/crowne-plaza-duqm-7221634194-4x3"
+    },
+    {
+      time: "8:00 PM",
+      title: "Sound & Light Show Begins",
+      description:
+        "Watch the Pyramids and Sphinx illuminated as a dramatic narration tells the story of Egypt’s ancient history.",
+      image: "https://egysuntours.com/wp-content/uploads/2021/09/4948784481611951257.jpg"
+    },
+    {
+      time: "9:00 PM",
+      title: "End of Show & Return",
+      description:
+        "After the performance, you’ll be transferred back to your hotel with unforgettable memories of ancient Egypt under the stars.",
+      image: "https://tse1.mm.bing.net/th/id/OIP.qBvPkCSNd31nVfHbIS_jYgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+    }
+  ],
+  gallery: [
+    "https://egysuntours.com/wp-content/uploads/2021/09/31849-%D8%A7%D9%84%D8%B5%D9%88%D8%AA-%D8%A7%D9%84%D8%B6%D9%88%D8%A1-7.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/118308195_3239889809429256_2164121050822661641_n.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/123654868_3464779423606959_589954823904061958_n.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/136714281_3638620599556173_1960673596822392492_n.jpg"
+  ],
+  included: [
+    "Pick up services from your hotel & return",
+    "All transfers by a modern air-conditioned vehicle",
+    "English-speaking escorted representative",
+    "Entrance fees to the show",
+    "Bottled water during the trip",
+    "All taxes & service charges"
+  ],
+  excluded: [
+    "Any extras not mentioned in the itinerary",
+    "Tipping",
+    "Personal expenses",
+    "Optional activities"
+  ],
+  notes: [
+    "All languages available via free translation headsets (English, French, German, Spanish, Italian, Russian, Japanese, Polish, Arabic)."
+  ]
+},
+{
+  id: 7,
+  title: "Half Day Tour to Giza Pyramids & Sphinx",
+  shortDescription:
+    "Discover the Pyramids of Giza, the Great Sphinx, and the Valley Temple with an expert Egyptologist on a half-day private tour.",
+  fullDescription:
+    "Visit the world’s most iconic monuments in just half a day. The Giza Plateau, home to the Great Pyramid of Khufu, the Pyramid of Khafre, and the Pyramid of Menkaure, dates back to the 4th Dynasty (c. 2613–2494 BC). The Great Pyramid of Khufu, the largest and oldest, remained the tallest structure in the world for nearly 3,800 years. During this tour, you’ll explore the pyramids, the legendary Great Sphinx—guardian of the plateau since the time of Khafre—and the Valley Temple, an ancient funerary site. You’ll also enjoy a short stop at a traditional bazaar to experience authentic Egyptian handmade crafts. Lunch at a high-quality local restaurant is included, along with pickup and drop-off from your hotel in a private, air-conditioned vehicle.",
+  duration: "Half Day (Approx. 5 hours)",
+  location: "Giza Plateau, Cairo, Egypt",
+  price: "From $75 per person",
+  image: "https://egysuntours.com/wp-content/uploads/2021/09/7742631-1863757234.jpg",
+  category: "Day Tour",
+  highlights: [
+    "Visit the Great Pyramid of Khufu, oldest of the Seven Wonders",
+    "See the Pyramids of Khafre and Menkaure",
+    "Explore the Great Sphinx and Valley Temple",
+    "Learn the fascinating history from a professional Egyptologist",
+    "Enjoy a local lunch in Cairo",
+    "Browse traditional Egyptian crafts at a local bazaar"
+  ],
+  timeline: [
+    {
+      time: "8:00 AM",
+      title: "Hotel Pickup",
+      description:
+        "Your Egyptologist guide will pick you up from your hotel in a private, air-conditioned vehicle.",
+      image: "https://digital.ihg.com/is/image/ihg/crowne-plaza-duqm-7221634194-4x3"
+    },
+    {
+      time: "8:30 AM",
+      title: "Visit Giza Pyramids",
+      description:
+        "Explore the Great Pyramid of Khufu, the Pyramid of Khafre, and the Pyramid of Menkaure while learning about their history.",
+      image: "https://tse2.mm.bing.net/th/id/OIP.ObZ0CiM3AfupXUwYZP96tgHaEo?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      time: "10:30 AM",
+      title: "The Great Sphinx & Valley Temple",
+      description:
+        "See the colossal Sphinx, carved from limestone, and visit the Valley Temple of Khafre.",
+      image: "https://i.ytimg.com/vi/myzyGFc00bc/maxresdefault.jpg"
+    },
+    {
+      time: "11:30 AM",
+      title: "Bazaar Visit & Lunch",
+      description:
+        "Stop at a traditional Cairo bazaar to discover local crafts, followed by a delicious lunch at a high-quality local restaurant.",
+      image: "https://tse3.mm.bing.net/th/id/OIP.W464loO-K6KKRefcyhtFcwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      time: "1:00 PM",
+      title: "Return to Hotel",
+      description:
+        "After the tour, relax as you are driven back to your hotel in Cairo or Giza.",
+      image: "https://digital.ihg.com/is/image/ihg/crowne-plaza-duqm-7221634194-4x3"
+    }
+  ],
+  gallery: [
+    "https://egysuntours.com/wp-content/uploads/2021/09/36c1089a-446d-40b2-b0b9-2a093fe53753.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/ed056a42-1db6-4735-bead-1f6122ccd10f.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/f505e33b-e175-4999-ba18-620c41e005c7.jpg",
+    "https://tse2.mm.bing.net/th/id/OIP.ObZ0CiM3AfupXUwYZP96tgHaEo?rs=1&pid=ImgDetMain&o=7&rm=3"
+  ],
+  included: [
+    "Pick up services from your hotel & return",
+    "All transfers by a private air-conditioned vehicle",
+    "Private English-speaking Egyptologist guide",
+    "Entrance fees to all mentioned sites",
+    "Lunch meal at good quality local restaurant in Cairo",
+    "Bottled water on board during the tour",
+    "Shopping tours in Cairo",
+    "All taxes & service charges"
+  ],
+  excluded: [
+    "Any extras not mentioned in the itinerary",
+    "Tipping"
+  ],
+  notes: [
+    "In case of pickup from Heliopolis or 6th of October areas, a supplement of $10 per person applies."
+  ]
+}
+
+
 ];
 
 export const featuredTrips = allTrips.slice(0, 3);

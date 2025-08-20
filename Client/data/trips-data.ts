@@ -15,6 +15,11 @@ import i7 from '@/images/i1 (7).png'
 import i8 from '@/images/i1 (8).png'
 import i9 from '@/images/i1 (9).png'
 import i10 from '@/images/i1 (10).png'
+import s1 from '@/images/s1 (1).png'
+import s2 from '@/images/s1 (2).png'
+import s3 from '@/images/s1 (3).png'
+import f1 from '@/images/f (1).png'
+import f2 from '@/images/f (2).png'
 export const allTrips = [
   {
     id: 1,
@@ -288,166 +293,227 @@ export const allTrips = [
     ]
   }
 ,  
-  {
-    id: 4,
-    title: "Egyptian Museum & Treasures",
-    shortDescription:
-      "Discover ancient artifacts and treasures of the pharaohs",
-    fullDescription:
-      "Immerse yourself in 5,000 years of Egyptian history at the world-renowned Egyptian Museum. From Tutankhamun's golden treasures to ancient mummies, this guided tour brings the fascinating stories of ancient Egypt to life.",
-    duration: "Half Day (3 hours)",
-    price: "From $70 per person",
-    image: "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-    category: "Historical",
-    highlights: [
-      "Tutankhamun's treasures",
-      "Royal mummies",
-      "Ancient papyrus collection",
-      "Pharaonic jewelry",
-      "Sarcophagi collection",
-      "Expert guided tour",
-    ],
-    timeline: [
-      {
-        time: "9:00 AM",
-        title: "Museum Entrance",
-        description: "Meet your expert guide at the Egyptian Museum entrance",
-        image:
-          "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      },
-      {
-        time: "9:30 AM",
-        title: "Tutankhamun Gallery",
-        description: "Explore the golden treasures of the boy king Tutankhamun",
-        image:
-          "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      },
-      {
-        time: "10:30 AM",
-        title: "Royal Mummies Hall",
-        description: "Come face to face with ancient pharaohs and queens",
-        image:
-          "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      },
-      {
-        time: "11:15 AM",
-        title: "Ancient Artifacts",
-        description:
-          "Discover everyday objects that tell the story of ancient life",
-        image:
-          "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      },
-      {
-        time: "11:45 AM",
-        title: "Papyrus & Jewelry",
-        description:
-          "Learn about ancient writing and admire exquisite pharaonic jewelry",
-        image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      },
-      {
-        time: "12:00 PM",
-        title: "Tour Conclusion",
-        description:
-          "End with a visit to the museum shop for authentic souvenirs",
-        image:
-          "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      },
-    ],
-    gallery: [
-      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
-      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
-      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
-      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
-      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg",
-      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg"
-    ]
-  },
-  {
-    id: 5,
-    title: "Saqqara & Memphis Day Trip",
-    shortDescription:
-      "Explore the ancient capital and the Step Pyramid complex",
-    fullDescription:
-      "Journey to the ancient capital of Memphis and the necropolis of Saqqara, home to the world's oldest pyramid. This archaeological adventure reveals the origins of pyramid building and the grandeur of Egypt's first capital city.",
-    duration: "Full Day (6 hours)",
-    price: "From $85 per person",
-    image: "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
-    category: "Archaeological",
-    highlights: [
-      "Step Pyramid of Djoser",
-      "Memphis ancient capital",
-      "Colossal statue of Ramses II",
-      "Ancient mastaba tombs",
-      "Pyramid texts",
-      "Archaeological discoveries",
-    ],
-    timeline: [
-      {
-        time: "8:00 AM",
-        title: "Departure to Saqqara",
-        description: "Comfortable journey to the ancient necropolis of Saqqara",
-        image:
-          "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
-      },
-      {
-        time: "9:00 AM",
-        title: "Step Pyramid Complex",
-        description:
-          "Explore the world's oldest pyramid built by architect Imhotep",
-        image:
-          "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      },
-      {
-        time: "10:30 AM",
-        title: "Mastaba Tombs",
-        description:
-          "Visit beautifully decorated nobles' tombs with original colors",
-        image:
-          "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      },
-      {
-        time: "12:00 PM",
-        title: "Memphis Open-Air Museum",
-        description:
-          "See the colossal statue of Ramses II and ancient artifacts",
-        image:
-          "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      },
-      {
-        time: "1:00 PM",
-        title: "Traditional Lunch",
-        description: "Enjoy local cuisine at a traditional Egyptian restaurant",
-        image:
-          "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      },
-      {
-        time: "2:30 PM",
-        title: "Return Journey",
-        description: "Comfortable return to Cairo with stops for photos",
-        image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      },
-    ],
-    gallery: [
-      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
-      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
-      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
-      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
-      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
-      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg"
-    ]
-  },
+{
+  id: 4,
+  title: "Pyramid Memphis and Sakkara",
+  shortDescription:
+    "Explore the Sphinx, Memphis – the ancient capital of Egypt, and the Step Pyramid of Saqqara in one unforgettable day.",
+  fullDescription:
+    "This full-day private tour takes you through Egypt’s most iconic landmarks. Start your journey at the Giza Plateau to marvel at the Pyramids of Cheops, Chephren, and Menkaure, along with the majestic Great Sphinx and Valley Temple. Continue to Saqqara, home of the world’s oldest pyramid, the Step Pyramid of King Djoser, and explore tombs and artifacts spanning Pharaonic, Greek, and Roman times. After lunch at a local restaurant, visit Memphis, the first capital of Egypt, and discover the colossal statue of Ramses II and the Alabaster Sphinx. Guided by a professional Egyptologist, this tour is a perfect blend of history, culture, and adventure.",
+  duration: "Full Day (8 hours)",
+  location: "Giza, Memphis & Saqqara, Egypt",
+  price: "From $95 per person",
+  image: "https://egysuntours.com/wp-content/uploads/2021/08/144.jpg",
+  category: "Day Tour",
+  highlights: [
+    "The Great Pyramids of Giza: Cheops, Chephren, Menkaure",
+    "The Great Sphinx and Valley Temple",
+    "Step Pyramid of Djoser at Saqqara",
+    "Imhotep Museum",
+    "Tombs from different dynasties, including Greek and Roman eras",
+    "Memphis Open-Air Museum",
+    "Colossal Statue of Ramses II",
+    "Alabaster Sphinx of Memphis",
+    "Traditional Egyptian lunch at a local restaurant",
+    "Private Egyptologist guide with hotel pickup and drop-off"
+  ],
+  timeline: [
+    {
+      time: "8:00 AM",
+      title: "Hotel Pickup",
+      description:
+        "Meet your Egyptologist guide and begin the tour in a private air-conditioned vehicle.",
+      image: "https://tse1.mm.bing.net/th/id/OIP.qBvPkCSNd31nVfHbIS_jYgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      time: "9:00 AM",
+      title: "Giza Pyramids & Sphinx",
+      description:
+        "Explore the Pyramids of Cheops, Chephren, and Menkaure. Visit the Great Sphinx and the Valley Temple.",
+      image: "https://th.bing.com/th/id/R.2622255f4613bc682ec3b0bc60933f5c?rik=QcQJtMJDPJUhkQ&pid=ImgRaw&r=0"
+    },
+    {
+      time: "11:00 AM",
+      title: "Camel or Horse Ride (Optional)",
+      description:
+        "Enjoy a camel or horse ride around the pyramids for a unique perspective.",
+      image: "https://media.tacdn.com/media/attractions-splice-spp-674x446/12/6e/8d/30.jpg"
+    },
+    {
+      time: "12:30 PM",
+      title: "Saqqara – Step Pyramid of Djoser",
+      description:
+        "Visit the world’s oldest major stone structure, explore tombs, and see the Imhotep Museum.",
+      image: "https://th.bing.com/th/id/R.5fa9a0969062670adfc2c2f6d92598be?rik=5gVufMQ2zOzWjw&pid=ImgRaw&r=0"
+    },
+    {
+      time: "2:00 PM",
+      title: "Lunch Break",
+      description:
+        "Enjoy a delicious traditional Egyptian meal at a local restaurant.",
+      image: "https://tse3.mm.bing.net/th/id/OIP.6KRLD2puWAQE8HtBakvV1gHaE8?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      time: "3:00 PM",
+      title: "Memphis – Ancient Capital",
+      description:
+        "Explore the open-air museum, see the colossal statue of Ramses II and the Alabaster Sphinx.",
+      image: "https://egysuntours.com/wp-content/uploads/2021/09/20230508_112234-scaled.jpg"
+    },
+    {
+      time: "5:00 PM",
+      title: "Return to Hotel",
+      description:
+        "Drive back to your hotel with unforgettable memories of ancient Egypt.",
+      image: "https://tse1.mm.bing.net/th/id/OIP.qBvPkCSNd31nVfHbIS_jYgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+    }
+  ],
+  gallery: [
+    "https://egysuntours.com/wp-content/uploads/2021/08/3b4719a1-a451-48ea-8737-c0a33f317b6e.jpg",
+    "https://egysuntours.com/wp-content/uploads/2024/01/022.jpg",
+    "https://egysuntours.com/wp-content/uploads/2024/01/20230520_121656-scaled.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/08/e5858dcf-6e19-48af-8726-145bb269fe30.jpg",
+    "https://egysuntours.com/wp-content/uploads/2024/01/20230526_095300-scaled.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/08/ae24e1cd-27a0-474f-b7dd-db650e552699.jpg",
+    s1,
+    s2,
+  ],
+  included: [
+    "All transfers by a private air-conditioned vehicle",
+    "Pick up services from your hotel & return",
+    "Private English-speaking Egyptologist guide",
+    "Entrance fees to all mentioned sites",
+    "Bottled water during the trip",
+    "Shopping tours in Cairo",
+    "All taxes & service charges"
+  ],
+  excluded: [
+    "Any extras not mentioned in the itinerary"
+  ]
+}
+,
+{
+  id: 5,
+  title: "Fayoum Safari & Wadi El Rayan Adventure",
+  shortDescription:
+    "Escape Cairo and discover Fayoum’s desert wonders, including Wadi El Rayan waterfalls, Valley of the Whales, Mudawara Mountain, and the Magic Lake with sandboarding fun.",
+  fullDescription:
+    "This special full-day safari takes you 95 km southwest of Cairo to El Fayoum, a unique blend of ancient history and desert beauty. Travel by 4×4 through the desert with your professional Egyptologist guide and explore the UNESCO World Heritage site of Wadi Hitan (Valley of the Whales), where 40-million-year-old whale skeletons are preserved. Visit Wadi El Rayan waterfalls, Mudawara Mountain, and Medinet Madi – an ancient city dating back to the Middle Kingdom. Enjoy the breathtaking scenery of the Magic Lake, try sandboarding on the dunes, and relax with a late lunch before heading back to Cairo.",
+  duration: "Full Day (10-12 hours)",
+  location: "El Fayoum, Egypt",
+  price: "From $120 per person",
+  image: "https://www.egypttailormade.net/media/k2/galleries/396/Wadi%20al-Rayan.jpg",
+  category: "Safari",
+  highlights: [
+    "4×4 desert adventure from Cairo to Fayoum",
+    "Wadi Hitan (Valley of the Whales) – UNESCO World Heritage Site",
+    "Wadi El Rayan Waterfalls",
+    "Mudawara Mountain",
+    "Medinet Madi ancient city",
+    "Magic Lake with breathtaking desert views",
+    "Sandboarding experience",
+    "Traditional late lunch at a local restaurant"
+  ],
+  timeline: [
+    {
+      time: "7:00 AM",
+      title: "Hotel Pickup",
+      description:
+        "Your Egyptologist guide will pick you up from your Cairo hotel in a 4×4 vehicle for the drive to Fayoum.",
+      image: "https://tse1.mm.bing.net/th/id/OIP.qBvPkCSNd31nVfHbIS_jYgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      time: "9:30 AM",
+      title: "Wadi Hitan – Valley of the Whales",
+      description:
+        "Explore this UNESCO site famous for 40-million-year-old whale fossils in the desert landscape.",
+      image: "https://upload.wikimedia.org/wikipedia/commons/9/97/The_whales_fossils.jpg"
+    },
+    {
+      time: "11:30 AM",
+      title: "Mudawara Mountain",
+      description:
+        "Visit the stunning Mudawara Mountain with panoramic desert views.",
+      image: "https://vacationsinegypt.com/wp-content/uploads/2024/03/Jabal-El-Medawara.png"
+    },
+    {
+      time: "12:00 PM",
+      title: "Wadi El Rayan Waterfalls",
+      description:
+        "Discover Egypt’s only waterfalls, formed by desert springs and canals.",
+      image: "https://th.bing.com/th/id/R.f4052e2a99872b0d93b3326de6568ff6?rik=rWTd7aS%2fBN9PjA&riu=http%3a%2f%2fwww.egyptkeytours.com%2fwp-content%2fuploads%2f2017%2f10%2fFayoumWaterfalls.jpg&ehk=rhkmcVGejE0P%2fS4s13EaBnnVjtAofGoq6EMAq%2f%2bt40k%3d&risl=&pid=ImgRaw&r=0"
+    },
+    {
+      time: "1:00 PM",
+      title: "Medinet Madi",
+      description:
+        "Explore the ruins of an ancient city built by Amenemhet III and IV, dating back to the Middle Kingdom.",
+      image: "https://img.freepik.com/premium-photo/karnak-temple-is-dedicated-temple-complex-ancient-egypt-thebes-karnak-luxor-egypt_556412-7938.jpg"
+    },
+    {
+      time: "2:00 PM",
+      title: "Magic Lake & Sandboarding",
+      description:
+        "Relax at the stunning Magic Lake, go sandboarding, and soak in the desert beauty.",
+      image: "https://www.admiremorocco.com/uploads/1/1/3/7/11374822/sandboarding-agadir-morocco-ns_orig.jpeg"
+    },
+    {
+      time: "3:30 PM",
+      title: "Lunch",
+      description:
+        "Enjoy a late traditional lunch at a local restaurant in El Fayoum.",
+      image: "https://tse4.mm.bing.net/th/id/OIP.WDO1jpYr_aXSKyuzP_Zi4wHaFa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      time: "5:00 PM",
+      title: "Return to Cairo",
+      description:
+        "Drive back to Cairo with wonderful desert memories.",
+      image: "https://i.ytimg.com/vi/bDPq-dRH0fw/maxresdefault.jpg"
+    }
+  ],
+  gallery: [
+    "https://egysuntours.com/wp-content/uploads/2021/09/0e813fb6-e962-4c7b-bdc2-5ab914d117d0.jpg",
+    "https://egysuntours.com/wp-content/uploads/2024/01/20230524_111536-scaled.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/5b36d982-7183-426b-8b7b-335dad6698da.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/10c1ad79-d2eb-48e7-bcbd-c13fd3dd9a73.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/20cc782e-6b7a-45e7-8fd7-cdad089cf217.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/530ff580-1b32-4671-9faf-feb5e37adc0b.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/546ef331-4978-4880-8e12-f3a8616ebb06.jpg",
+    "https://egysuntours.com/wp-content/uploads/2024/01/20230524_111833-scaled.jpg",
+    "https://egysuntours.com/wp-content/uploads/2024/01/20230524_132758-scaled.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/afbc34e1-75a3-4685-9858-7e6364f9acd1.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/a9f645e4-054d-4f84-9f9c-343e82a34a59.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/72011b1a-36c8-4528-b22a-df738a5791ab.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/c4b50904-4b84-46a7-919c-e67196dbd1a1.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/cdf7cca3-fff2-4a27-9876-2460cf9af6e3.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/cfdccfa7-5555-4a0c-95f2-107166b6b590.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/d362d9f7-f75d-447a-b5b0-dcb1aa87b015.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/d131494e-a478-46b2-9b0a-375d7591b36c.jpg",
+    "https://egysuntours.com/wp-content/uploads/2024/01/20230524_145038-scaled.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/eb0011ac-f3c1-4a45-9954-4b111c70ef9a.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/f8c3f2df-2aa3-49e1-acb0-b8605d4f29d4.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/f5343c1f-6a69-4d56-ab4c-98b2b6d8ca30.jpg",
+    "https://egysuntours.com/wp-content/uploads/2021/09/f98244ed-226c-4eca-8ab3-d6553602a175.jpg",
+    f1 ,
+    f2,
+  ],
+  included: [
+    "Pick up service from your hotel in Cairo and back",
+    "All transfers by 4×4 car",
+    "Entrance fees to the mentioned sites",
+    "English-speaking Egyptologist guide",
+    "Bottled water during the tour",
+    "Late lunch at a local restaurant in El Fayoum",
+    "All taxes & service charge"
+  ],
+  excluded: [
+    "Any extras not mentioned in the program",
+    "Tipping",
+    "Sandboarding equipment rental ($25 if requested)"
+  ]
+}
+,
   {
     id: 6,
     title: "Coptic Cairo Heritage Tour",

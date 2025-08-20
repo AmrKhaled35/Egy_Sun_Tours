@@ -81,90 +81,58 @@ const TripsGrid = () => {
           {filteredTrips.map((trip, index) => (
             <Card
               key={trip.id}
-              className={`group hover:shadow-2xl transition-all duration-500 border border-amber-100 overflow-hidden ${
+              className={`group hover:shadow-2xl transition-all duration-500 border border-amber-100 overflow-hidden rounded-2xl bg-white ${
                 visibleTrips.includes(index)
                   ? "opacity-100 transform translate-y-0"
                   : "opacity-0 transform translate-y-8"
               }`}
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[5/4] overflow-hidden">
                 <Image
                   src={trip.image}
                   alt={trip.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                <div className="absolute top-6 left-6">
+                  <span className="bg-amber-600/90 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium border border-amber-400/30">
                     {trip.category}
                   </span>
                 </div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-white font-bold text-xl mb-2 group-hover:text-amber-200 transition-colors">
+
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h3 className="text-white font-bold text-xl mb-3 group-hover:text-amber-200 transition-colors leading-tight">
                     {trip.title}
                   </h3>
+                  <div className="flex items-center text-white/80 text-sm">
+                    <MapPin size={16} className="mr-2" />
+                    <span>{trip.location || "Cairo, Egypt"}</span>
+                  </div>
                 </div>
               </div>
 
-              <CardContent className="p-6">
-                <p className="text-gray-600 mb-4 leading-relaxed line-clamp-2">
+              <CardContent className="p-8">
+                <p className="text-gray-600 mb-6 leading-relaxed line-clamp-2 text-lg">
                   {trip.shortDescription}
                 </p>
 
-                <div className="space-y-2 mb-6 text-sm text-gray-500">
-                  <div className="flex items-center space-x-2">
-                    <Clock size={16} className="text-amber-600" />
-                    <span>{trip.duration}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Users size={16} className="text-amber-600" />
-                    <span>{trip.price}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <MapPin size={16} className="text-amber-600" />
-                    <span>{trip.highlights.length} highlights included</span>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Highlights:
-                    </h4>
-                    <div className="flex flex-wrap gap-1">
-                      {trip.highlights.slice(0, 3).map((highlight, idx) => (
-                        <span
-                          key={idx}
-                          className="bg-amber-100 text-amber-800 px-2 py-1 rounded text-xs"
-                        >
-                          {highlight}
-                        </span>
-                      ))}
-                      {trip.highlights.length > 3 && (
-                        <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
-                          +{trip.highlights.length - 3} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <Button
-                    className="w-full bg-amber-600 hover:bg-amber-700 text-white group"
-                    asChild
+                <Button
+                  className="w-full bg-amber-600 hover:bg-amber-700 text-white group py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  asChild
+                >
+                  <Link
+                    href={`/trips/${trip.id}`}
+                    className="inline-flex items-center justify-center space-x-2"
                   >
-                    <Link
-                      href={`/trips/${trip.id}`}
-                      className="inline-flex items-center justify-center space-x-2"
-                    >
-                      <span>View Details</span>
-                      <ArrowRight
-                        size={16}
-                        className="group-hover:translate-x-1 transition-transform"
-                      />
-                    </Link>
-                  </Button>
-                </div>
+                    <span>Explore Tour</span>
+                    <ArrowRight
+                      size={18}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           ))}

@@ -27,6 +27,7 @@ export const allTrips = [
     price: "From $90 per person",
     image: "https://egysuntours.com/wp-content/uploads/2021/09/20230508_112234-scaled.jpg",
     category: "Day Tour",
+    location : "Giza, Egypt",
     highlights: [
       "Great Pyramid of Khufu",
       "Pyramid of Khafre",
@@ -111,6 +112,7 @@ export const allTrips = [
     fullDescription:
       "Discover Cairo as the land of civilizations where ancient pharaonic wonders blend with Islamic and Coptic heritage. This 8-hour city tour includes the Egyptian Museum with its priceless collection of artifacts including Tutankhamun’s treasures, the Citadel of Saladin with the stunning Alabaster Mosque of Mohamed Ali, Islamic Cairo with Khan El Khalili bazaar, and Coptic Cairo where the Holy Family once stayed. A perfect mix of history, culture, and local life.",
     duration: "Full Day (8 hours)",
+    location: "Cairo, Egypt",
     price: "From $90 per person",
     image: "https://egysuntours.com/wp-content/uploads/2024/01/544.jpg",
     category: "Day Tour",
@@ -202,6 +204,7 @@ export const allTrips = [
     price: "From $127 per person",
     image: "https://i0.wp.com/mytravelation.com/wp-content/uploads/2023/09/alexandria.jpeg",
     category: "Day Tour",
+    location: "Alexandria, Egypt",
     highlights: [
       "Pick up services from the hotel in Cairo & return",
       "Entrance fees to the mentioned historical place (The Citadel from Outside)",

@@ -2,93 +2,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
+import { galleryImages2 } from "@/data/site-data";
 
-const galleryImages = [
-  {
-    id: 1,
-    image: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-    alt: "Great Pyramids of Giza at sunset",
-    category: "Pyramids",
-    type: "image"
-  },
-  {
-    id: 2,
-    image: "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-    alt: "Ancient Egyptian hieroglyphs on temple walls",
-    category: "Temples",
-    type: "image"
-  },
-  {
-    id: 3,
-    image: "https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4",
-    alt: "Ancient Egyptian temple tour video",
-    category: "Temples",
-    type: "video"
-  },
-  {
-    id: 4,
-    image: "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg",
-    alt: "Egyptian desert landscape with ancient ruins",
-    category: "Desert",
-    type: "image"
-  },
-  {
-    id: 5,
-    image: "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-    alt: "Luxor Temple columns and architecture",
-    category: "Temples",
-    type: "image"
-  },
-  {
-    id: 6,
-    image: "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-    alt: "Ancient Egyptian artifacts and treasures",
-    category: "Artifacts",
-    type: "image"
-  },
-  {
-    id: 7,
-    image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-    alt: "Nile River cruise boat at sunset",
-    category: "Nile",
-    type: "image"
-  },
-  {
-    id: 8,
-    image: "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-    alt: "Traditional Egyptian felucca sailing on the Nile",
-    category: "Nile",
-    type: "image"
-  },
-  {
-    id: 9,
-    image: "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
-    alt: "Valley of the Kings tomb entrance",
-    category: "Tombs",
-    type: "image"
-  },
-  {
-    id: 10,
-    image: "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-    alt: "Cairo Islamic architecture and mosques",
-    category: "Islamic",
-    type: "image"
-  },
-  {
-    id: 11,
-    image: "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-    alt: "Egyptian Museum artifacts display",
-    category: "Museums",
-    type: "image"
-  },
-  {
-    id: 12,
-    image: "https://images.pexels.com/photos/5712301/pexels-photo-5712301.jpeg",
-    alt: "Red Sea coral reef diving experience",
-    category: "Red Sea",
-    type: "image"
-  },
-];
 
 const GalleryGrid = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -96,7 +11,7 @@ const GalleryGrid = () => {
 
   useEffect(() => {
     // Animate images appearing one by one
-    galleryImages.forEach((_, index) => {
+    galleryImages2.forEach((_, index) => {
       setTimeout(() => {
         setVisibleImages((prev) => [...prev, index]);
       }, index * 100);
@@ -105,14 +20,14 @@ const GalleryGrid = () => {
 
   const nextImage = () => {
     if (selectedImage !== null) {
-      setSelectedImage((selectedImage + 1) % galleryImages.length);
+      setSelectedImage((selectedImage + 1) % galleryImages2.length);
     }
   };
 
   const prevImage = () => {
     if (selectedImage !== null) {
       setSelectedImage(
-        (selectedImage - 1 + galleryImages.length) % galleryImages.length
+        (selectedImage - 1 + galleryImages2.length) % galleryImages2.length
       );
     }
   };
@@ -124,7 +39,7 @@ const GalleryGrid = () => {
         <div className="relative mb-16">
           <div className="aspect-[21/15] md:aspect-[21/9] lg:aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
-              src="https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg"
+              src="https://wallpapers.com/images/hd/ancient-egypt-lu2bnz4wnu5a34kl.jpg"
               alt="Explore Egypt Photo & Video Gallery"
               fill
               className="object-cover"
@@ -144,8 +59,8 @@ const GalleryGrid = () => {
         </div>
 
         {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {galleryImages.map((item, index) => (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {galleryImages2.map((item, index) => (
             <div
               key={item.id}
               className={`group relative overflow-hidden rounded-lg cursor-pointer transition-all duration-500 break-inside-avoid mb-6 ${
@@ -159,7 +74,7 @@ const GalleryGrid = () => {
                 {item.type === 'video' ? (
                   <>
                     <video
-                      src={item.image}
+                      src={typeof item.image === "string" ? item.image : item.image.src}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       muted
                       loop
@@ -216,17 +131,17 @@ const GalleryGrid = () => {
               </button>
 
               <div className="relative w-full h-full">
-                {galleryImages[selectedImage].type === "video" ? (
+                {galleryImages2[selectedImage].type === "video" ? (
                   <video
-                    src={galleryImages[selectedImage].image}
+                    src={typeof galleryImages2[selectedImage].image === "string" ? galleryImages2[selectedImage].image : galleryImages2[selectedImage].image.src}
                     controls
                     autoPlay
                     className="w-full h-full object-contain"
                   />
                 ) : (
                   <Image
-                    src={galleryImages[selectedImage].image}
-                    alt={galleryImages[selectedImage].alt}
+                    src={galleryImages2[selectedImage].image}
+                    alt={galleryImages2[selectedImage].alt}
                     fill
                     className="object-contain"
                     sizes="100vw"
@@ -236,10 +151,10 @@ const GalleryGrid = () => {
 
               <div className="absolute bottom-4 left-4 right-4 bg-black/60 rounded-lg p-4 z-10">
                 <p className="text-white text-lg font-medium">
-                  {galleryImages[selectedImage].alt}
+                  {galleryImages2[selectedImage].alt}
                 </p>
                 <p className="text-white/80 text-sm">
-                  Category: {galleryImages[selectedImage].category}
+                  Category: {galleryImages2[selectedImage].category}
                 </p>
               </div>
             </div>

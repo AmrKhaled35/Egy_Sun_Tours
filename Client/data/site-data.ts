@@ -90,3 +90,108 @@ export const reviews = [
     date: "October 2024"
   }
 ];
+import i1 from '@/images/Gallery/im1.png'
+import i2 from '@/images/Gallery/im2.png'
+import i3 from '@/images/Gallery/im3.png'
+import i4 from '@/images/Gallery/im4.png'
+import i5 from '@/images/Gallery/im5.png'
+import i6 from '@/images/Gallery/im6.png'
+import i7 from '@/images/Gallery/im7.png'
+import i8 from '@/images/Gallery/im8.png'
+import i9 from '@/images/Gallery/im9.png'
+import i10 from '@/images/Gallery/im10.png'
+import i11 from '@/images/Gallery/im11.png'
+import i12 from '@/images/Gallery/im12.png'
+import i13 from '@/images/Gallery/im13.png'
+import i14 from '@/images/Gallery/im14.png'
+import i15 from "@/images/Gallery/im15.png"
+import i16 from "@/images/Gallery/im16.png"
+import i17 from "@/images/Gallery/im17.png"
+import i18 from "@/images/Gallery/im18.png"
+import i19 from "@/images/Gallery/im19.png"
+export const galleryImages2 = [
+  {
+    id: 1,
+    image: i1,
+    alt: "Great Pyramids of Giza at sunset",
+    category: "Pyramids",
+    type: "image"
+  },
+  {
+    id: 2,
+    image: i2,
+    alt: "Ancient Egyptian hieroglyphs on temple walls",
+    category: "Temples",
+    type: "image"
+  },
+  {
+    id: 3,
+    image: "https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4",
+    alt: "Ancient Egyptian temple tour video",
+    category: "Temples",
+    type: "video"
+  },
+  {
+    id: 4,
+    image: i3,
+    alt: "Egyptian desert landscape with ancient ruins",
+    category: "Desert",
+    type: "image"
+  },
+  {
+    id: 5,
+    image: i4,
+    alt: "Luxor Temple columns and architecture",
+    category: "Temples",
+    type: "image"
+  },
+  {
+    id: 6,
+    image: i5,
+    alt: "Ancient Egyptian artifacts and treasures",
+    category: "Artifacts",
+    type: "image"
+  },
+  {
+    id: 7,
+    image: i6,
+    alt: "Nile River cruise boat at sunset",
+    category: "Nile",
+    type: "image"
+  },
+  {
+    id: 8,
+    image: i7,
+    alt: "Traditional Egyptian felucca sailing on the Nile",
+    category: "Nile",
+    type: "image"
+  },
+  {
+    id: 9,
+    image: i8,
+    alt: "Valley of the Kings tomb entrance",
+    category: "Tombs",
+    type: "image"
+  },
+  {
+    id: 10,
+    image: i9,
+    alt: "Cairo Islamic architecture and mosques",
+    category: "Islamic",
+    type: "image"
+  },
+  {
+    id: 11,
+    image: i10,
+    alt: "Egyptian Museum artifacts display",
+    category: "Museums",
+    type: "image"
+  },
+  {
+    id: 12,
+    image: i11,
+    alt: "Red Sea coral reef diving experience",
+    category: "Red Sea",
+    type: "image"
+  },
+];

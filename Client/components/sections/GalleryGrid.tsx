@@ -2,19 +2,13 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
-<<<<<<< HEAD
-import {galleryImages2} from "@/data/site-data";
-=======
 import { galleryImages2 } from "@/data/site-data";
-
->>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
 
 const GalleryGrid = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [visibleImages, setVisibleImages] = useState<number[]>([]);
 
   useEffect(() => {
-    // Animate images appearing one by one
     galleryImages2.forEach((_, index) => {
       setTimeout(() => {
         setVisibleImages((prev) => [...prev, index]);
@@ -74,20 +68,14 @@ const GalleryGrid = () => {
               }`}
               onClick={() => setSelectedImage(index)}
             >
-              <div className={`relative ${ 'aspect-square'}`}>
+              <div className={`relative aspect-square`}>
                 {item.type === 'video' ? (
                   <>
                     <video
-<<<<<<< HEAD
-                      src={typeof item.image === 'string' ? item.image : item.image.src}
-=======
                       src={typeof item.image === "string" ? item.image : item.image.src}
->>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      muted
-                      loop
-                      playsInline
-                    />
+                      className="object-cover w-full h-full"
+                      controls
+                    ></video>
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 group-hover:bg-white/30 transition-colors">
                         <Play className="text-white w-8 h-8" fill="currentColor" />
@@ -141,14 +129,9 @@ const GalleryGrid = () => {
               <div className="relative w-full h-full">
                 {galleryImages2[selectedImage].type === "video" ? (
                   <video
-<<<<<<< HEAD
-                    src={typeof galleryImages2[selectedImage].image === 'string' ? galleryImages2[selectedImage].image : galleryImages2[selectedImage].image.src}
-=======
                     src={typeof galleryImages2[selectedImage].image === "string" ? galleryImages2[selectedImage].image : galleryImages2[selectedImage].image.src}
->>>>>>> cdb5503ed279c21cecbc793fbb8483650e533e0d
+                    className="object-contain w-full h-full"
                     controls
-                    autoPlay
-                    className="w-full h-full object-contain"
                   />
                 ) : (
                   <Image
@@ -156,7 +139,6 @@ const GalleryGrid = () => {
                     alt={galleryImages2[selectedImage].alt}
                     fill
                     className="object-contain"
-                    sizes="100vw"
                   />
                 )}
               </div>

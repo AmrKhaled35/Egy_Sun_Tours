@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { galleryImages2 } from "@/data/site-data";
 
@@ -30,10 +30,13 @@ const GalleryGrid = () => {
     }
   };
 
+  const getSrc = (image: string | StaticImageData) => {
+    return typeof image === "string" ? image : (image as StaticImageData).src;
+  };
+
   return (
     <section className="py-20 bg-gradient-to-b from-white to-amber-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
         <div className="relative mb-16">
           <div className="aspect-[21/15] md:aspect-[21/9] lg:aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
@@ -56,7 +59,6 @@ const GalleryGrid = () => {
           </div>
         </div>
 
-        {/* Image Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {galleryImages2.map((item, index) => (
             <div
@@ -68,14 +70,14 @@ const GalleryGrid = () => {
               }`}
               onClick={() => setSelectedImage(index)}
             >
-              <div className={`relative aspect-square`}>
+              <div className="relative aspect-square">
                 {item.type === 'video' ? (
                   <>
                     <video
-                      src={typeof item.image === "string" ? item.image : item.image.src}
+                      src={getSrc(item.image)}
                       className="object-cover w-full h-full"
                       controls
-                    ></video>
+                    />
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 group-hover:bg-white/30 transition-colors">
                         <Play className="text-white w-8 h-8" fill="currentColor" />
@@ -101,7 +103,6 @@ const GalleryGrid = () => {
           ))}
         </div>
 
-        {/* Modal */}
         {selectedImage !== null && (
           <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
             <div className="relative w-full h-full max-w-6xl max-h-[90vh] flex items-center justify-center">
@@ -129,7 +130,7 @@ const GalleryGrid = () => {
               <div className="relative w-full h-full">
                 {galleryImages2[selectedImage].type === "video" ? (
                   <video
-                    src={typeof galleryImages2[selectedImage].image === "string" ? galleryImages2[selectedImage].image : galleryImages2[selectedImage].image.src}
+                    src={getSrc(galleryImages2[selectedImage].image)}
                     className="object-contain w-full h-full"
                     controls
                   />

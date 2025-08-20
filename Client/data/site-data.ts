@@ -8,23 +8,24 @@ export const siteData = {
     tripadvisor: "https://www.tripadvisor.com/Attraction_Review-g294201-d19060269-Reviews-Egy_Sun_Tours-Cairo_Cairo_Governorate.html"
   }
 };
-
+import hero1 from "@/images/hero1.jpg"
+import hero3 from "@/images/hero3.jpg"
 export const heroSlides = [
   {
     id: 1,
-    image: "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
+    image: hero1,
     title: "Discover Ancient Wonders",
     subtitle: "Explore the magnificent pyramids of Giza"
   },
   {
     id: 2,
-    image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
+    image: "https://wallpapers.com/images/hd/ancient-egypt-lu2bnz4wnu5a34kl.jpg",
     title: "Journey Through History",
     subtitle: "Uncover the mysteries of ancient Egypt"
   },
   {
     id: 3,
-    image: "",
+    image: hero3,
     title: "Sail the Sacred Nile",
     subtitle: "Experience the timeless beauty of Egypt"
   }

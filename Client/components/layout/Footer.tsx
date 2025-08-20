@@ -1,17 +1,21 @@
+import Image from "next/image";
 import Link from 'next/link';
 import { MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
 import { siteData } from '@/data/site-data';
+import logo from '@/images/logo.jpg';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-black/95 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-4 gap-8">
-          {/* Brand */}
           <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold text-amber-400 mb-4">Egy Sun Tours</h3>
+            <div className="flex items-center mb-4 space-x-3">
+              <Image src={logo} alt="Egy Sun Tours" width={50} height={50} className="rounded-full  p-1" />
+              <h3 className="text-2xl font-bold text-amber-400">Egy Sun Tours</h3>
+            </div>
             <p className="text-gray-300 mb-4 leading-relaxed">
               Your gateway to discovering the rich culture, history, and beauty of Egypt. 
               We specialize in providing personalized and immersive tours.
@@ -34,7 +38,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
@@ -61,7 +64,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
             <ul className="space-y-3">
@@ -81,7 +83,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 mt-8 text-center text-gray-400">
           <p>&copy; {currentYear} Egy Sun Tours. All rights reserved.</p>
         </div>

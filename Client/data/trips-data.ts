@@ -26,7 +26,7 @@ export const allTrips = [
     duration: "Full Day (8 - 9 hours)",
     price: "From $90 per person",
     image: "https://egysuntours.com/wp-content/uploads/2021/09/20230508_112234-scaled.jpg",
-    category: "Historical",
+    category: "Day Tour",
     highlights: [
       "Great Pyramid of Khufu",
       "Pyramid of Khafre",
@@ -104,7 +104,7 @@ export const allTrips = [
     ]
   },  
   {
-    id: 3,
+    id: 2,
     title: "Cairo City Tour – Museum, Citadel & Old Cairo",
     shortDescription:
       "Explore Cairo’s ancient treasures, Islamic landmarks, vibrant bazaars, and Coptic heritage in one full-day tour",
@@ -113,7 +113,7 @@ export const allTrips = [
     duration: "Full Day (8 hours)",
     price: "From $90 per person",
     image: "https://egysuntours.com/wp-content/uploads/2024/01/544.jpg",
-    category: "City Tour",
+    category: "Day Tour",
     highlights: [
       "The Egyptian Museum",
       "Tutankhamun’s treasures",
@@ -194,87 +194,97 @@ export const allTrips = [
   },  
   {
     id: 3,
-    title: "Nile River Cruise Experience",
-    shortDescription:
-      "Sail the legendary Nile River and witness Egypt from the water",
+    title: "Alexandria Day Tours",
+    shortDescription: "What you can see in Alex",
     fullDescription:
-      "Experience the magic of the Nile River, the lifeblood of Egypt, on this enchanting cruise. Watch the sun set over ancient temples, enjoy traditional music and dance, and dine on authentic Egyptian cuisine while floating on the world's longest river.",
-    duration: "Evening (3 hours)",
-    price: "From $90 per person",
-    image: "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-    category: "Leisure",
+      "Alexandria is located on the Mediterranean coast, 137 miles (220 kilometers) northwest of Cairo. Day trips to Alexandria can last anywhere from six to 12 hours, depending on the option you choose. Most guided tours include hotel pickup and drop-off in Cairo. Choose a small-group tour or a private tour guide.",
+    duration: "6–12 hours",
+    price: "From $127 per person",
+    image: "https://i0.wp.com/mytravelation.com/wp-content/uploads/2023/09/alexandria.jpeg",
+    category: "Day Tour",
     highlights: [
-      "Traditional felucca sailing",
-      "Sunset over the Nile",
-      "Egyptian dinner buffet",
-      "Live entertainment",
-      "Cairo skyline views",
-      "Traditional music & dance",
+      "Pick up services from the hotel in Cairo & return",
+      "Entrance fees to the mentioned historical place (The Citadel from Outside)",
+      "Transfer by a private air-conditioned vehicle",
+      "Private English-speaking Egyptologist guide",
+      "Lunch during your tour",
+      "All taxes & service charge",
+      "Bottled water during your trip"
+    ],
+    exclusions: [
+      "Any extras not mentioned in the program",
+      "Tipping",
+      "The entrance fees of the Citadel of Sultan Qeitbay"
+    ],
+    notes: [
+      "Hat",
+      "Camera",
+      "Sunglasses"
     ],
     timeline: [
       {
+        time: "7:00 AM",
+        title: "Hotel Pickup from Cairo",
+        description:
+          "Start your journey from your hotel in Cairo with your Egyptologist guide in a private air-conditioned vehicle to Alexandria.",
+        image: "https://tse1.mm.bing.net/th/id/OIP.qBvPkCSNd31nVfHbIS_jYgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+      },
+      {
+        time: "10:00 AM",
+        title: "Qaitbay Citadel",
+        description:
+          "Visit the famous Citadel of Qaitbay, built on the site of the ancient Lighthouse of Alexandria, and enjoy panoramic sea views.",
+        image: "https://th.bing.com/th/id/R.3776bd319d034a44ca1b3aeda2f7e4c3?rik=nUCggawBK7rZbQ&pid=ImgRaw&r=0"
+      },
+      {
+        time: "11:30 AM",
+        title: "Alexandria Corniche",
+        description:
+          "Take a stroll along Alexandria’s beautiful Corniche, enjoy the sea breeze, and capture memorable photos.",
+        image: "https://cdn.audleytravel.com/1400/1000/60/4269-alexandria-corniche.jpg"
+      },
+      {
+        time: "1:00 PM",
+        title: "Lunch Break",
+        description:
+          "Enjoy a delicious seafood or traditional Egyptian meal at a local restaurant overlooking the Mediterranean Sea.",
+        image: "https://c.regencyholidays.com/blog/2024/1/241612_Shutterstock_21843189311-ezgif.com-jpg-to-webp-converter.webp"
+      },
+      {
+        time: "2:30 PM",
+        title: "Library of Alexandria (from outside)",
+        description:
+          "See the modern Bibliotheca Alexandrina from the outside, one of the most important cultural landmarks in the world.",
+        image: "https://momaa.org/wp-content/uploads/2019/10/Bibliotheca-Alexandrina-1.png"
+      },
+      {
+        time: "3:30 PM",
+        title: "Montaza Gardens",
+        description:
+          "Stroll through Montaza Gardens, explore the royal palaces, and enjoy the lush greenery by the sea.",
+        image: "https://www.holidify.com/images/cmsuploads/compressed/521962957551e3f435a63b_20221103134229.jpeg"
+      },
+      {
         time: "5:00 PM",
-        title: "Nile Corniche Pickup",
+        title: "Return to Cairo",
         description:
-          "Meet at the Nile Corniche and board your traditional felucca",
-        image:
-          "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      },
-      {
-        time: "5:30 PM",
-        title: "Sailing Begins",
-        description:
-          "Start your peaceful journey along the historic Nile River",
-        image: "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      },
-      {
-        time: "6:30 PM",
-        title: "Sunset Photography",
-        description:
-          "Capture the magical sunset over Cairo's skyline from the water",
-        image:
-          "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
-      },
-      {
-        time: "7:00 PM",
-        title: "Traditional Dinner",
-        description:
-          "Enjoy authentic Egyptian cuisine while floating on the Nile",
-        image:
-          "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      },
-      {
-        time: "7:30 PM",
-        title: "Live Entertainment",
-        description:
-          "Experience traditional Egyptian music and folkloric dance",
-        image:
-          "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      },
-      {
-        time: "8:00 PM",
-        title: "Return to Shore",
-        description:
-          "Conclude your magical Nile experience and return to the dock",
-        image:
-          "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      },
-    ],
+          "Drive back to Cairo with unforgettable memories of your Alexandria day trip.",
+        image: "https://i.ytimg.com/vi/bDPq-dRH0fw/maxresdefault.jpg"
+      }
+    ],    
     gallery: [
-      "https://images.pexels.com/photos/5935794/pexels-photo-5935794.jpeg",
-      "https://images.pexels.com/photos/71241/pexels-photo-71241.jpeg",
-      "https://images.pexels.com/photos/3290075/pexels-photo-3290075.jpeg",
-      "https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg",
-      "https://images.pexels.com/photos/5935751/pexels-photo-5935751.jpeg",
-      "https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg",
-      "https://images.pexels.com/photos/5935658/pexels-photo-5935658.jpeg",
-      "https://images.pexels.com/photos/8350555/pexels-photo-8350555.jpeg",
-      "https://images.pexels.com/photos/7967739/pexels-photo-7967739.jpeg",
-      "https://images.pexels.com/photos/13659552/pexels-photo-13659552.jpeg",
-      "https://images.pexels.com/photos/18149199/pexels-photo-18149199.jpeg",
-      "https://images.pexels.com/photos/3290073/pexels-photo-3290073.jpeg"
+
+      "https://cairoegypttours.com/wp-content/uploads/2022/03/Alexandria-Library.jpg",
+      "https://jakadatoursegypt.com/wp-content/uploads/2021/04/Library-of-Alexandria.jpg",
+      "https://tse2.mm.bing.net/th/id/OIP.wEbZLTYk4llenqe-vKNOVQHaE6?rs=1&pid=ImgDetMain&o=7&rm=3",
+      "https://egysuntours.com/wp-content/uploads/2021/08/330713cf-6f0f-4b42-8a60-41ac4a792f57.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/08/cc7d77da-854f-4f7a-b6d6-9a5f2b1dcee2.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/08/3b2cede4-33b3-4ab4-b2a5-dd772160dbb9.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/08/5ac20a90-ae45-418b-9023-2798e36e1eb7.jpg",
+      "https://egysuntours.com/wp-content/uploads/2021/08/63bc4c7a-f385-4888-946c-fecc68f34f71.jpg"
     ]
-  },
+  }
+,  
   {
     id: 4,
     title: "Egyptian Museum & Treasures",

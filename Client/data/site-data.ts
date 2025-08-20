@@ -13,15 +13,15 @@ import hero3 from "@/images/hero3.jpg"
 export const heroSlides = [
   {
     id: 1,
-    image: hero1,
-    title: "Discover Ancient Wonders",
-    subtitle: "Explore the magnificent pyramids of Giza"
-  },
-  {
-    id: 2,
     image: "https://wallpapers.com/images/hd/ancient-egypt-lu2bnz4wnu5a34kl.jpg",
     title: "Journey Through History",
     subtitle: "Uncover the mysteries of ancient Egypt"
+  },
+  {
+    id: 2,
+    image: hero1,
+    title: "Discover Ancient Wonders",
+    subtitle: "Explore the magnificent pyramids of Giza"
   },
   {
     id: 3,

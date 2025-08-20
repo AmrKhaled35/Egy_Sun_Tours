@@ -6,6 +6,8 @@ import { ArrowLeft, Clock, Users, MapPin, Star, CheckCircle, MessageCircle, X, C
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { siteData } from '@/data/site-data';
+import { StaticImageData } from "next/image";
+
 
 interface Trip {
   id: number;
@@ -23,7 +25,7 @@ interface Trip {
     description: string;
     image: string;
   }[];
-  gallery: string[];
+  gallery: (string | StaticImageData)[]
 }
 
 interface TripDetailProps {
@@ -52,18 +54,9 @@ const TripDetail = ({ trip }: TripDetailProps) => {
   }, [trip.gallery]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-amber-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Button variant="outline" asChild className="border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white">
-          <Link href="/trips" className="inline-flex items-center space-x-2">
-            <ArrowLeft size={16} />
-            <span>Back to All Tours</span>
-          </Link>
-        </Button>
-      </div>
-      
+    <div className="min-h-screen bg-gradient-to-b from-white to-amber-50">      
       <section className="relative">
-        <div className="aspect-[21/9] relative">
+        <div className="aspect-[21/9.35] relative">
           <Image
             src={trip.image}
             alt={trip.title}
@@ -265,7 +258,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                     ? 'opacity-100 transform translate-y-0'
                     : 'opacity-0 transform translate-y-4'
                 }`}
-                onClick={() => setSelectedImage(image)}
+                onClick={() => setSelectedImage(typeof image === 'string' ? image : null)}
               >
                 <Image
                   src={image}

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Logo from "@/images/logo.jpg"
+import Logo from "@/images/logo.png"
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,8 +37,8 @@ const Navbar = () => {
             <Image
               src={Logo}
               alt="Egy Sun Tours Logo"
-              width={40}
-              height={40}
+              width={70}
+              height={70}
               className="rounded"
             />
             <span className="text-2xl font-bold text-white">Egy Sun Tours</span>

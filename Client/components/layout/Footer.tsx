@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from 'next/link';
 import { MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
 import { siteData } from '@/data/site-data';
-import logo from '@/images/logo.jpg';
+import logo from '@/images/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -13,7 +13,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center mb-4 space-x-3">
-              <Image src={logo} alt="Egy Sun Tours" width={50} height={50} className="rounded-full  p-1" />
+              <Image src={logo} alt="Egy Sun Tours" width={70} height={70} className="rounded-full  p-1" />
               <h3 className="text-2xl font-bold text-amber-400">Egy Sun Tours</h3>
             </div>
             <p className="text-gray-300 mb-4 leading-relaxed">

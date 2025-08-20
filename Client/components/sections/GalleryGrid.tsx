@@ -122,7 +122,7 @@ const GalleryGrid = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="relative mb-16">
-          <div className="aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
+          <div className="aspect-[21/15] md:aspect-[21/9] lg:aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src="https://images.pexels.com/photos/2387873/pexels-photo-2387873.jpeg"
               alt="Explore Egypt Photo & Video Gallery"
@@ -132,10 +132,10 @@ const GalleryGrid = () => {
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white">
-                <h1 className="text-5xl md:text-6xl font-bold mb-4">
+                <h1 className="text-5xl md:text-5xl lg:text-6xl font-bold mb-4">
                   Photo & Video Gallery
                 </h1>
-                <p className="text-xl md:text-2xl mb-6 max-w-3xl">
+                <p className="text-sm md:text-xl lg:text-2xl mb-6 max-w-3xl">
                   Experience the magic of Egypt through stunning visuals from our unforgettable tours
                 </p>
               </div>

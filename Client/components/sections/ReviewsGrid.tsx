@@ -35,7 +35,7 @@ const ReviewsGrid = () => {
     <section className="py-20 bg-gradient-to-b from-white to-amber-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="relative mb-16 ">
-          <div className="aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
+          <div className="aspect-[21/15] md:aspect-[21/9] lg:aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src="https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg"
               alt="Customer Reviews and Testimonials"
@@ -45,10 +45,10 @@ const ReviewsGrid = () => {
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white">
-                <h1 className="text-5xl md:text-6xl font-bold mb-4">
+                <h1 className="text-4xl min-[400px]:text-5xl md:text-5xl lg:text-6xl font-bold mb-4">
                   Customer Reviews
                 </h1>
-                <p className="text-xl md:text-2xl mb-6 max-w-3xl">
+                <p className="text-sm md:text-xl lg:text-2xl mb-6 max-w-3xl">
                   Real experiences from travelers who discovered Egypt with us
                 </p>
               </div>
@@ -82,7 +82,7 @@ const ReviewsGrid = () => {
 
                 {/* Excerpt */}
                 <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                  "{review.excerpt}"
+                  &quot;{review.excerpt}&quot;
                 </p>
 
                 {/* Tour Info */}

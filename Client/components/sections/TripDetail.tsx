@@ -1,13 +1,22 @@
 "use client";
-import { useState , useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowLeft, Clock, Users, MapPin, Star, CheckCircle, MessageCircle, X, Camera } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { siteData } from '@/data/site-data';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  ArrowLeft,
+  Clock,
+  Users,
+  MapPin,
+  Star,
+  CheckCircle,
+  MessageCircle,
+  X,
+  Camera,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { siteData } from "@/data/site-data";
 import { StaticImageData } from "next/image";
-
 
 interface Trip {
   id: number;
@@ -25,7 +34,7 @@ interface Trip {
     description: string;
     image: string;
   }[];
-  gallery: (string | StaticImageData)[]
+  gallery: (string | StaticImageData)[];
 }
 
 interface TripDetailProps {
@@ -33,14 +42,16 @@ interface TripDetailProps {
 }
 
 const TripDetail = ({ trip }: TripDetailProps) => {
-  const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>([]);
+  const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>(
+    []
+  );
   const [visibleGalleryItems, setVisibleGalleryItems] = useState<number[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     trip.timeline.forEach((_, index) => {
       setTimeout(() => {
-        setVisibleTimelineItems(prev => [...prev, index]);
+        setVisibleTimelineItems((prev) => [...prev, index]);
       }, index * 300);
     });
   }, [trip.timeline]);
@@ -48,15 +59,15 @@ const TripDetail = ({ trip }: TripDetailProps) => {
   useEffect(() => {
     trip.gallery.forEach((_, index) => {
       setTimeout(() => {
-        setVisibleGalleryItems(prev => [...prev, index]);
+        setVisibleGalleryItems((prev) => [...prev, index]);
       }, index * 150);
     });
   }, [trip.gallery]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-amber-50">      
+    <div className="min-h-screen bg-gradient-to-b from-white to-amber-50">
       <section className="relative">
-        <div className="aspect-[21/9.35] relative">
+        <div className="relative w-full min-h-[70vh] md:min-h-[95vh] lg:min-h-[95vh]">
           <Image
             src={trip.image}
             alt={trip.title}
@@ -67,27 +78,27 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white max-w-4xl mx-auto px-4">
               <div className="mb-4">
-                <span className="bg-amber-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+                <span className="bg-amber-600 text-white px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium">
                   {trip.category}
                 </span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              <h1 className="text-4xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
                 {trip.title}
               </h1>
-              <p className="text-xl md:text-2xl mb-8 text-white/90">
+              <p className="text-base sm:text-lg md:text-2xl mb-6 md:mb-8 text-white/90">
                 {trip.shortDescription}
               </p>
-              <div className="flex flex-wrap justify-center gap-6 text-white/90">
+              <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-white/90 text-sm md:text-base">
                 <div className="flex items-center space-x-2">
-                  <Clock size={20} />
+                  <Clock size={18} className="md:w-5 md:h-5" />
                   <span>{trip.duration}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Users size={20} />
+                  <Users size={18} className="md:w-5 md:h-5" />
                   <span>{trip.price}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Star size={20} className="text-yellow-400" />
+                  <Star size={18} className="text-yellow-400 md:w-5 md:h-5" />
                   <span>5.0 Rating</span>
                 </div>
               </div>
@@ -95,7 +106,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           </div>
         </div>
       </section>
-      
+
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-3 gap-12">
@@ -127,7 +138,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                     </div>
                     <p className="text-gray-600">per person</p>
                   </div>
-                  
+
                   <div className="space-y-4 mb-6">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Duration:</span>
@@ -142,13 +153,18 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                       <span className="font-medium">English, Arabic</span>
                     </div>
                   </div>
-                  
-                  <Button 
+
+                  <Button
                     className="w-full bg-green-600 hover:bg-green-700 text-white mb-4"
                     asChild
                   >
-                    <a 
-                      href={`https://wa.me/${siteData.contact.whatsapp.replace(/[^0-9]/g, '')}?text=Hi! I'm interested in booking the ${trip.title} tour. Can you provide more details?`}
+                    <a
+                      href={`https://wa.me/${siteData.contact.whatsapp.replace(
+                        /[^0-9]/g,
+                        ""
+                      )}?text=Hi! I'm interested in booking the ${
+                        trip.title
+                      } tour. Can you provide more details?`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center space-x-2"
@@ -157,17 +173,15 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                       <span>Book via WhatsApp</span>
                     </a>
                   </Button>
-                  
-                  <Button 
-                    variant="outline" 
+
+                  <Button
+                    variant="outline"
                     className="w-full border-amber-600 text-amber-600 hover:bg-amber-600 hover:text-white"
                     asChild
                   >
-                    <Link href="/contact">
-                      Get More Information
-                    </Link>
+                    <Link href="/contact">Get More Information</Link>
                   </Button>
-                  
+
                   <p className="text-sm text-gray-500 text-center mt-4">
                     Free cancellation up to 24 hours before the tour
                   </p>
@@ -177,7 +191,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           </div>
         </div>
       </section>
-      
+
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -191,17 +205,21 @@ const TripDetail = ({ trip }: TripDetailProps) => {
 
           <div className="relative">
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-amber-200 h-full hidden lg:block"></div>
-            
+
             {trip.timeline.map((item, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`relative mb-16 transition-all duration-700 ${
-                  visibleTimelineItems.includes(index) 
-                    ? 'opacity-100 transform translate-y-0' 
-                    : 'opacity-0 transform translate-y-8'
+                  visibleTimelineItems.includes(index)
+                    ? "opacity-100 transform translate-y-0"
+                    : "opacity-0 transform translate-y-8"
                 }`}
               >
-                <div className={`lg:flex items-center ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
+                <div
+                  className={`lg:flex items-center ${
+                    index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+                  }`}
+                >
                   <div className="lg:w-1/2 lg:px-8">
                     <Card className="shadow-lg border border-amber-100">
                       <CardContent className="p-6">
@@ -255,10 +273,12 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                 key={index}
                 className={`group relative aspect-square overflow-hidden rounded-lg cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-xl ${
                   visibleGalleryItems.includes(index)
-                    ? 'opacity-100 transform translate-y-0'
-                    : 'opacity-0 transform translate-y-4'
+                    ? "opacity-100 transform translate-y-0"
+                    : "opacity-0 transform translate-y-4"
                 }`}
-                onClick={() => setSelectedImage(typeof image === 'string' ? image : null)}
+                onClick={() =>
+                  setSelectedImage(typeof image === "string" ? image : null)
+                }
               >
                 <Image
                   src={image}
@@ -268,7 +288,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 border border-white/30">
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 border border-white/30">
                     <Camera className="w-6 h-6 text-white" />
                   </div>
                 </div>
@@ -300,7 +320,7 @@ const TripDetail = ({ trip }: TripDetailProps) => {
           </div>
         </div>
       )}
-      
+
       <section className="py-20 bg-gradient-to-r from-amber-600 to-amber-700">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -310,13 +330,18 @@ const TripDetail = ({ trip }: TripDetailProps) => {
             Book now and create unforgettable memories in Egypt
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               className="bg-white text-amber-600 hover:bg-gray-100"
               asChild
             >
-              <a 
-                href={`https://wa.me/${siteData.contact.whatsapp.replace(/[^0-9]/g, '')}?text=Hi! I want to book the ${trip.title} tour. Please send me the details.`}
+              <a
+                href={`https://wa.me/${siteData.contact.whatsapp.replace(
+                  /[^0-9]/g,
+                  ""
+                )}?text=Hi! I want to book the ${
+                  trip.title
+                } tour. Please send me the details.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2"
@@ -325,15 +350,13 @@ const TripDetail = ({ trip }: TripDetailProps) => {
                 <span>Book Now via WhatsApp</span>
               </a>
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
+            <Button
+              size="lg"
+              variant="outline"
               className="border-white  hover:bg-white text-amber-600"
               asChild
             >
-              <Link href="/contact">
-                Ask Questions
-              </Link>
+              <Link href="/contact">Ask Questions</Link>
             </Button>
           </div>
         </div>

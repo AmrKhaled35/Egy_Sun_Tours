@@ -75,7 +75,7 @@ const ContactForm = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="relative mb-16">
-          <div className="aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
+          <div className="aspect-[21/15] md:aspect-[21/9] lg:aspect-[21/6]relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src="https://images.pexels.com/photos/3722818/pexels-photo-3722818.jpeg"
               alt="Get In Touch - Explore Egypt"
@@ -85,10 +85,10 @@ const ContactForm = () => {
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center text-white">
-                <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                <h1 className="text-4xl min-[400px]:text-5xl md:text-5xl lg:text-6xl font-bold mb-6">
                   Get In Touch
                 </h1>
-                <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+                <p className="text-sm md:text-xl lg:text-2xl  max-w-3xl mx-auto">
                   Ready to explore the wonders of ancient Egypt? Contact us
                   today to plan your perfect Egyptian adventure with our expert
                   guides.
@@ -103,11 +103,11 @@ const ContactForm = () => {
           <div className="animate-fade-in">
             <div className="mb-12">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                Let's Plan Your Egyptian Adventure
+                Let&apos;s Plan Your Egyptian Adventure
               </h2>
               <p className="text-lg text-gray-600 mb-8">
-                We're here to help you create unforgettable memories in Egypt.
-                Whether you're interested in exploring ancient pyramids, sailing
+                We&apos;re here to help you create unforgettable memories in Egypt.
+                Whether you&apos;re interested in exploring ancient pyramids, sailing
                 the Nile, or discovering hidden gems, our expert guides will
                 ensure an authentic and safe experience.
               </p>

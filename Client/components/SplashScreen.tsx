@@ -43,9 +43,8 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black/90" />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
-        {/* Title */}
+
         <div
           className={`transition-all duration-1000 transform ${
             showTitle ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -61,7 +60,6 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           </h1>
         </div>
 
-        {/* Subtitle */}
         <div
           className={`transition-all duration-1000 transform ${
             showSubtitle
@@ -75,7 +73,6 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
           <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mt-4" />
         </div>
 
-        {/* Loading dots */}
         <div
           className={`mt-10 sm:mt-12 transition-all duration-1000 ${
             showSubtitle ? "opacity-100" : "opacity-0"

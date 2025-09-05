@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from reviews.models import Review
 from reviews.serializers import ReviewSerializer
+from api.permissions import IsAdminUserOrReadOnly
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
@@ -10,6 +11,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     """
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [IsAdminUserOrReadOnly]
     
     def get_queryset(self):
         queryset = Review.objects.all()

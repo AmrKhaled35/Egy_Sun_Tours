@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from contact.models import ContactInfo, ContactMessage
 from contact.serializers import ContactInfoSerializer, ContactMessageSerializer
+from api.permissions import IsAdminUserOrReadOnly
 
 
 class ContactInfoViewSet(mixins.RetrieveModelMixin,
@@ -14,6 +15,7 @@ class ContactInfoViewSet(mixins.RetrieveModelMixin,
     """
     queryset = ContactInfo.objects.all()
     serializer_class = ContactInfoSerializer
+    permission_classes = [IsAdminUserOrReadOnly]
     
     def list(self, request, *args, **kwargs):
         # Return the singleton instance
@@ -54,6 +56,19 @@ class ContactMessageViewSet(mixins.CreateModelMixin,
     """
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
+    
+    def get_permissions(self):
+        """
+        Custom permissions:
+        - Anyone can create a message (POST)
+        - Only admin users can list, retrieve, delete messages (GET, DELETE)
+        """
+        if self.action == 'create':
+            return []  # Allow anyone to send a message
+        else:
+            # For list, retrieve, delete - admin only
+            from rest_framework.permissions import IsAdminUser
+            return [IsAdminUser()]
     
     @action(detail=True, methods=['patch'])
     def mark_as_read(self, request, pk=None):

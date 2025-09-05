@@ -2,6 +2,22 @@
 
 This is the backend API for Egy Sun Tours, built with Django and Django REST Framework.
 
+## Authentication System
+
+This project uses JWT (JSON Web Token) authentication to secure the API endpoints. Only admin users can access the dashboard and perform CRUD operations.
+
+### Authentication Flow
+
+1. **Login**: Admin users can obtain JWT tokens by sending a POST request to `/api/token/` with valid credentials.
+2. **Using Tokens**: Include the access token in the Authorization header (`Bearer <token>`) for all protected requests.
+3. **Refreshing Tokens**: When an access token expires, use the refresh token to obtain a new one via `/api/token/refresh/`.
+
+### Admin-Only Access
+
+- The application enforces admin-only access for modifying data.
+- Regular users and anonymous visitors can only read public data.
+- Admin users cannot be created through the API and must be created directly in the database.
+
 ## Setup
 
 1. Create a virtual environment:

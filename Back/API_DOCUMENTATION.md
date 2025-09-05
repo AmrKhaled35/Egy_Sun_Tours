@@ -7,10 +7,10 @@ This document provides a comprehensive guide to using the Egy Sun Tours API.
 - Production: `https://api.egyptours.com` (when deployed)
 
 ## Authentication
-API endpoints that modify data require authentication. Authentication is handled through Django Rest Framework's token-based authentication.
+API endpoints that modify data require authentication. Authentication is handled through JWT (JSON Web Tokens).
 
-### Getting an Authentication Token
-- **URL**: `/api-auth/login/`
+### Getting a JWT Token
+- **URL**: `/api/token/`
 - **Method**: `POST`
 - **Data Params**:
   ```json
@@ -21,32 +21,47 @@ API endpoints that modify data require authentication. Authentication is handled
   ```
 - **Success Response**:
   - **Code**: 200
-  - **Content**: `{ "token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b" }`
+  - **Content**:
+    ```json
+    {
+      "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+    ```
 - **Sample Call**:
   ```bash
-  curl -X POST http://localhost:8000/api-auth/login/ \
+  curl -X POST http://localhost:8000/api/token/ \
     -H "Content-Type: application/json" \
     -d '{"username": "admin", "password": "adminpass123"}'
   ```
 
-### Using the Token
-Include the token in the Authorization header for all protected requests:
+### Using the JWT Token
+Include the access token in the Authorization header for all protected requests:
 ```
-Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 ```
 
-### Logging Out
-- **URL**: `/api-auth/logout/`
+### Refreshing the Token
+- **URL**: `/api/token/refresh/`
 - **Method**: `POST`
-- **Headers**: `Authorization: Token <your-token>`
+- **Data Params**:
+  ```json
+  {
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+  ```
 - **Success Response**:
   - **Code**: 200
-  - **Content**: `{ "success": "Successfully logged out" }`
+  - **Content**: `{ "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }`
 - **Sample Call**:
   ```bash
-  curl -X POST http://localhost:8000/api-auth/logout/ \
-    -H "Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+  curl -X POST http://localhost:8000/api/token/refresh/ \
+    -H "Content-Type: application/json" \
+    -d '{"refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."}'
   ```
+
+### Admin Access Restriction
+**Note**: Only admin users can access the dashboard and perform CRUD operations. Admin users are created directly in the database and cannot be created through the API.
 
 ## API Endpoints
 

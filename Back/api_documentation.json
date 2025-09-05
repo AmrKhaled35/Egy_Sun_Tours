@@ -46,11 +46,11 @@
     }
   ],
   "paths": {
-    "/api-auth/login/": {
+    "/api/token/": {
       "post": {
         "tags": ["Authentication"],
-        "summary": "Login to the system",
-        "description": "Authenticate with username and password to get access token",
+        "summary": "Login to get JWT tokens",
+        "description": "Authenticate with username and password to get JWT access and refresh tokens",
         "requestBody": {
           "required": true,
           "content": {
@@ -67,7 +67,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/JWTResponse"
                 }
               }
             }
@@ -78,22 +78,47 @@
         }
       }
     },
-    "/api-auth/logout/": {
+    "/api/token/refresh/": {
       "post": {
         "tags": ["Authentication"],
-        "summary": "Logout from the system",
-        "description": "Invalidate the current authentication token",
-        "security": [
-          {
-            "BearerAuth": []
+        "summary": "Refresh JWT access token",
+        "description": "Use refresh token to get a new access token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["refresh"],
+                "properties": {
+                  "refresh": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  }
+                }
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "Successfully logged out"
+            "description": "Successfully refreshed token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Invalid refresh token"
           }
         }
       }
@@ -905,12 +930,16 @@
           }
         }
       },
-      "LoginResponse": {
+      "JWTResponse": {
         "type": "object",
         "properties": {
-          "token": {
+          "access": {
             "type": "string",
-            "example": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          },
+          "refresh": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
           }
         }
       },
@@ -1530,7 +1559,7 @@
       "BearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "Token"
+        "bearerFormat": "JWT"
       }
     }
   }

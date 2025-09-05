@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from trips.models import Trip, TimelineItem, TripImage
 from trips.serializers import TripSerializer, TripDetailSerializer, TimelineItemSerializer, TripImageSerializer
+from api.permissions import IsAdminUserOrReadOnly
 
 
 class TripViewSet(viewsets.ModelViewSet):
@@ -14,6 +15,7 @@ class TripViewSet(viewsets.ModelViewSet):
     queryset = Trip.objects.all()
     serializer_class = TripSerializer
     parser_classes = [MultiPartParser, FormParser, JSONParser]
+    permission_classes = [IsAdminUserOrReadOnly]
     
     def get_serializer_class(self):
         if self.action == 'retrieve':

@@ -3,6 +3,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from gallery.models import GalleryItem
 from gallery.serializers import GalleryItemSerializer
+from api.permissions import IsAdminUserOrReadOnly
 
 
 class GalleryViewSet(viewsets.ModelViewSet):
@@ -12,6 +13,7 @@ class GalleryViewSet(viewsets.ModelViewSet):
     queryset = GalleryItem.objects.all()
     serializer_class = GalleryItemSerializer
     parser_classes = [MultiPartParser, FormParser]
+    permission_classes = [IsAdminUserOrReadOnly]
     
     def get_queryset(self):
         queryset = GalleryItem.objects.all()

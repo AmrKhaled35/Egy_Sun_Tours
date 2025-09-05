@@ -1,0 +1,8 @@
+django>=5.2.0
+djangorestframework>=3.16.0
+django-cors-headers>=4.0.0
+pillow>=11.0.0
+pytz>=2025.2
+# MongoDB related (optional)
+# djongo>=1.2.30
+# pymongo>=4.0.0

@@ -2,23 +2,25 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ExternalLink, Calendar, MapPin, User } from "lucide-react";
+import { Star, Calendar, MapPin, User } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { allReviews } from "@/data/reviews-data";
 import { siteData } from "@/data/site-data";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { allReviews } from "@/data/reviews-data";
 
 const ReviewsGrid = () => {
+  const [reviews] = useLocalStorage("reviews", allReviews);
   const [visibleReviews, setVisibleReviews] = useState<number[]>([]);
 
   useEffect(() => {
     // Animate reviews appearing one by one
-    allReviews.forEach((_, index) => {
+    reviews.forEach((_, index) => {
       setTimeout(() => {
         setVisibleReviews((prev) => [...prev, index]);
       }, index * 150);
     });
-  }, []);
+  }, [reviews]);
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -34,7 +36,8 @@ const ReviewsGrid = () => {
   return (
     <section className="py-20 bg-gradient-to-b from-white to-amber-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="relative mb-16 ">
+        {/* Hero Section */}
+        <div className="relative mb-16 ">
           <div className="aspect-[21/15] md:aspect-[21/9] lg:aspect-[21/6] relative rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src="https://images.pexels.com/photos/3290074/pexels-photo-3290074.jpeg"
@@ -55,9 +58,10 @@ const ReviewsGrid = () => {
             </div>
           </div>
         </div>
+
         {/* Reviews Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allReviews.map((review, index) => (
+          {reviews.map((review, index) => (
             <Card
               key={review.id}
               className={`hover:shadow-xl transition-all duration-500 border border-amber-100 ${

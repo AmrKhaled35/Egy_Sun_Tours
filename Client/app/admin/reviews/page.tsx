@@ -1,15 +1,32 @@
 "use client";
-import { useState } from 'react';
-import { Plus, Edit, Trash2, Star, Calendar, User } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Plus, Edit, Trash2, Star, Calendar, User, Save, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { allReviews } from '@/data/reviews-data';
+// import { apiClient } from '@/lib/api';
+
+interface Review {
+  id: number;
+  name: string;
+  username: string;
+  rating: number;
+  title: string;
+  excerpt: string;
+  fullText: string;
+  date: string;
+  location: string;
+  tourType: string;
+}
 
 export default function ReviewsAdmin() {
+  const [reviews, setReviews] = useLocalStorage<Review[]>('reviews', allReviews);
   const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
+  const [formData, setFormData] = useState<Partial<Review>>({
     name: '',
     username: '',
     rating: 5,
@@ -19,6 +36,86 @@ export default function ReviewsAdmin() {
     location: '',
     tourType: ''
   });
+
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      username: '',
+      rating: 5,
+      title: '',
+      fullText: '',
+      date: '',
+      location: '',
+      tourType: ''
+    });
+    setEditingReview(null);
+    setShowForm(false);
+  };
+
+  const handleEdit = (review: Review) => {
+    setFormData(review);
+    setEditingReview(review);
+    setShowForm(true);
+  };
+
+  const handleDelete = async (id: number) => {
+    if (confirm('Are you sure you want to delete this review?')) {
+      try {
+        // API call (commented for now)
+        // await apiClient.deleteReview(id);
+        
+        // Local Storage
+        const updatedReviews = reviews.filter(review => review.id !== id);
+        setReviews(updatedReviews);
+        
+        alert('Review deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting review:', error);
+        alert('Error deleting review. Please try again.');
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.title || !formData.fullText) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      const reviewData = {
+        ...formData,
+        id: editingReview ? editingReview.id : Date.now(),
+        excerpt: formData.fullText?.substring(0, 100) + '...' || ''
+      } as Review;
+
+      if (editingReview) {
+        // API call (commented for now)
+        // await apiClient.updateReview(editingReview.id, reviewData);
+        
+        // Local Storage
+        const updatedReviews = reviews.map(review => 
+          review.id === editingReview.id ? reviewData : review
+        );
+        setReviews(updatedReviews);
+        alert('Review updated successfully!');
+      } else {
+        // API call (commented for now)
+        // await apiClient.createReview(reviewData);
+        
+        // Local Storage
+        setReviews([...reviews, reviewData]);
+        alert('Review created successfully!');
+      }
+      
+      resetForm();
+    } catch (error) {
+      console.error('Error saving review:', error);
+      alert('Error saving review. Please try again.');
+    }
+  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -48,26 +145,35 @@ export default function ReviewsAdmin() {
         </Button>
       </div>
 
-      {/* Add Review Form */}
+      {/* Add/Edit Review Form */}
       {showForm && (
         <Card className="border-2 border-black">
           <CardContent className="p-6">
-            <h2 className="text-xl font-bold mb-6">Add New Review</h2>
-            <div className="space-y-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-bold">
+                {editingReview ? 'Edit Review' : 'Add New Review'}
+              </h2>
+              <Button variant="ghost" onClick={resetForm}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Customer Name</label>
+                  <label className="block text-sm font-medium mb-2">Customer Name *</label>
                   <Input 
-                    value={formData.name}
+                    value={formData.name || ''}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     placeholder="Enter customer name"
                     className="border-gray-300"
+                    required
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">Username</label>
                   <Input 
-                    value={formData.username}
+                    value={formData.username || ''}
                     onChange={(e) => setFormData({...formData, username: e.target.value})}
                     placeholder="Enter username"
                     className="border-gray-300"
@@ -77,11 +183,12 @@ export default function ReviewsAdmin() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Rating</label>
+                  <label className="block text-sm font-medium mb-2">Rating *</label>
                   <select 
-                    value={formData.rating}
+                    value={formData.rating || 5}
                     onChange={(e) => setFormData({...formData, rating: parseInt(e.target.value)})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                    required
                   >
                     <option value={5}>5 Stars</option>
                     <option value={4}>4 Stars</option>
@@ -91,78 +198,85 @@ export default function ReviewsAdmin() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Date</label>
+                  <label className="block text-sm font-medium mb-2">Date *</label>
                   <Input 
-                    value={formData.date}
+                    value={formData.date || ''}
                     onChange={(e) => setFormData({...formData, date: e.target.value})}
                     placeholder="e.g., December 2024"
                     className="border-gray-300"
+                    required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Location</label>
+                  <label className="block text-sm font-medium mb-2">Location *</label>
                   <Input 
-                    value={formData.location}
+                    value={formData.location || ''}
                     onChange={(e) => setFormData({...formData, location: e.target.value})}
                     placeholder="e.g., Cairo, Egypt"
                     className="border-gray-300"
+                    required
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Review Title</label>
+                  <label className="block text-sm font-medium mb-2">Review Title *</label>
                   <Input 
-                    value={formData.title}
+                    value={formData.title || ''}
                     onChange={(e) => setFormData({...formData, title: e.target.value})}
                     placeholder="Enter review title"
                     className="border-gray-300"
+                    required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Tour Type</label>
+                  <label className="block text-sm font-medium mb-2">Tour Type *</label>
                   <Input 
-                    value={formData.tourType}
+                    value={formData.tourType || ''}
                     onChange={(e) => setFormData({...formData, tourType: e.target.value})}
                     placeholder="e.g., Cultural Tour"
                     className="border-gray-300"
+                    required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Review Text</label>
+                <label className="block text-sm font-medium mb-2">Review Text *</label>
                 <Textarea 
-                  value={formData.fullText}
+                  value={formData.fullText || ''}
                   onChange={(e) => setFormData({...formData, fullText: e.target.value})}
                   placeholder="Enter the full review text"
                   className="border-gray-300"
                   rows={6}
+                  required
                 />
               </div>
 
               <div className="flex gap-4 pt-4">
-                <Button className="bg-black text-white hover:bg-gray-800">
-                  Add Review
+                <Button type="submit" className="bg-black text-white hover:bg-gray-800">
+                  <Save className="w-4 h-4 mr-2" />
+                  {editingReview ? 'Update Review' : 'Add Review'}
                 </Button>
                 <Button 
+                  type="button"
                   variant="outline" 
-                  onClick={() => setShowForm(false)}
+                  onClick={resetForm}
                 >
                   Cancel
                 </Button>
               </div>
-            </div>
+            </form>
           </CardContent>
         </Card>
       )}
 
       {/* Existing Reviews */}
       <div>
-        <h2 className="text-xl font-bold mb-6">Customer Reviews ({allReviews.length})</h2>
+        <h2 className="text-xl font-bold mb-6">Customer Reviews ({reviews.length})</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {allReviews.map((review) => (
+          {reviews.map((review) => (
             <Card key={review.id} className="border border-gray-200 hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="space-y-4">
@@ -173,10 +287,19 @@ export default function ReviewsAdmin() {
                       <span className="ml-2 text-sm text-gray-600">({review.rating}/5)</span>
                     </div>
                     <div className="flex gap-2">
-                      <Button size="sm" variant="outline">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={() => handleEdit(review)}
+                      >
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="text-red-600 hover:text-red-700"
+                        onClick={() => handleDelete(review.id)}
+                      >
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>

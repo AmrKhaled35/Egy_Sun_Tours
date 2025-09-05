@@ -1,12 +1,11 @@
-import { Metadata } from 'next';
+"use client";
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { MapPin, Camera, Star, Phone, TrendingUp, Users, Globe, Award } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-
-export const metadata: Metadata = {
-  title: 'Dashboard - Admin Panel',
-  description: 'Admin dashboard overview',
-};
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { allTrips } from '@/data/trips-data';
+import { allReviews } from '@/data/reviews-data';
 
 const quickAccessCards = [
   {
@@ -15,7 +14,6 @@ const quickAccessCards = [
     icon: MapPin,
     href: '/admin/trips',
     color: 'bg-blue-500',
-    count: '6 Active Tours'
   },
   {
     title: 'Gallery',
@@ -23,7 +21,6 @@ const quickAccessCards = [
     icon: Camera,
     href: '/admin/gallery',
     color: 'bg-green-500',
-    count: '24 Images'
   },
   {
     title: 'Reviews',
@@ -31,7 +28,6 @@ const quickAccessCards = [
     icon: Star,
     href: '/admin/reviews',
     color: 'bg-yellow-500',
-    count: '161 Reviews'
   },
   {
     title: 'Contact',
@@ -39,44 +35,80 @@ const quickAccessCards = [
     icon: Phone,
     href: '/admin/contact',
     color: 'bg-purple-500',
-    count: 'Contact Info'
-  },
-];
-
-const stats = [
-  {
-    title: 'Total Trips',
-    value: '6',
-    icon: MapPin,
-    change: '+2 this month'
-  },
-  {
-    title: 'Gallery Items',
-    value: '24',
-    icon: Camera,
-    change: '+8 this week'
-  },
-  {
-    title: 'Customer Reviews',
-    value: '161',
-    icon: Star,
-    change: '5.0 avg rating'
-  },
-  {
-    title: 'Happy Travelers',
-    value: '500+',
-    icon: Users,
-    change: '+50 this month'
   },
 ];
 
 export default function AdminDashboard() {
+  const [trips] = useLocalStorage('trips', allTrips);
+  const [reviews] = useLocalStorage('reviews', allReviews);
+  const [galleryItems] = useLocalStorage('galleryItems', []);
+  
+  const [stats, setStats] = useState([
+    {
+      title: 'Total Trips',
+      value: '0',
+      icon: MapPin,
+      change: 'Loading...'
+    },
+    {
+      title: 'Gallery Items',
+      value: '0',
+      icon: Camera,
+      change: 'Loading...'
+    },
+    {
+      title: 'Customer Reviews',
+      value: '0',
+      icon: Star,
+      change: 'Loading...'
+    },
+    {
+      title: 'Happy Travelers',
+      value: '500+',
+      icon: Users,
+      change: 'Growing daily'
+    },
+  ]);
+
+  useEffect(() => {
+    // Update stats based on actual data
+    setStats([
+      {
+        title: 'Total Trips',
+        value: trips.length.toString(),
+        icon: MapPin,
+        change: `${trips.length > 6 ? '+' + (trips.length - 6) : 'Default'} trips`
+      },
+      {
+        title: 'Gallery Items',
+        value: galleryItems.length.toString(),
+        icon: Camera,
+        change: `${galleryItems.length > 0 ? galleryItems.length + ' items' : 'No items yet'}`
+      },
+      {
+        title: 'Customer Reviews',
+        value: reviews.length.toString(),
+        icon: Star,
+        change: '5.0 avg rating'
+      },
+      {
+        title: 'Happy Travelers',
+        value: '500+',
+        icon: Users,
+        change: 'Growing daily'
+      },
+    ]);
+  }, [trips, reviews, galleryItems]);
+
   return (
     <div className="space-y-8">
+      {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         <p className="text-gray-600 mt-2">Welcome to Egy Sun Tours Admin Panel</p>
       </div>
+
+      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
@@ -98,6 +130,8 @@ export default function AdminDashboard() {
           );
         })}
       </div>
+
+      {/* Quick Access */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Access</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -113,7 +147,7 @@ export default function AdminDashboard() {
                     <h3 className="text-lg font-bold text-gray-900 mb-2">{card.title}</h3>
                     <p className="text-gray-600 text-sm mb-3">{card.description}</p>
                     <p className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full inline-block">
-                      {card.count}
+                      Manage {card.title}
                     </p>
                   </CardContent>
                 </Card>
@@ -122,6 +156,8 @@ export default function AdminDashboard() {
           })}
         </div>
       </div>
+
+      {/* Recent Activity */}
       <div>
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Activity</h2>
         <Card className="border border-gray-200">
@@ -131,33 +167,33 @@ export default function AdminDashboard() {
                 <div className="bg-green-100 p-2 rounded-full">
                   <Star className="w-4 h-4 text-green-600" />
                 </div>
-                <div>
-                  <p className="font-medium text-gray-900">New 5-star review received</p>
-                  <p className="text-sm text-gray-600">Sarah Johnson left a review for Pyramids tour</p>
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900">Reviews System Active</p>
+                  <p className="text-sm text-gray-600">Currently managing {reviews.length} customer reviews</p>
                 </div>
-                <span className="text-xs text-gray-500">2 hours ago</span>
+                <span className="text-xs text-gray-500">Live</span>
               </div>
               
               <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                 <div className="bg-blue-100 p-2 rounded-full">
                   <Camera className="w-4 h-4 text-blue-600" />
                 </div>
-                <div>
-                  <p className="font-medium text-gray-900">Gallery updated</p>
-                  <p className="text-sm text-gray-600">8 new photos added to gallery</p>
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900">Gallery Management</p>
+                  <p className="text-sm text-gray-600">Managing {galleryItems.length} media items</p>
                 </div>
-                <span className="text-xs text-gray-500">1 day ago</span>
+                <span className="text-xs text-gray-500">Active</span>
               </div>
               
               <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
                 <div className="bg-purple-100 p-2 rounded-full">
                   <MapPin className="w-4 h-4 text-purple-600" />
                 </div>
-                <div>
-                  <p className="font-medium text-gray-900">New trip added</p>
-                  <p className="text-sm text-gray-600">Coptic Cairo Heritage Tour created</p>
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900">Tours Management</p>
+                  <p className="text-sm text-gray-600">Currently offering {trips.length} unique experiences</p>
                 </div>
-                <span className="text-xs text-gray-500">3 days ago</span>
+                <span className="text-xs text-gray-500">Updated</span>
               </div>
             </div>
           </CardContent>

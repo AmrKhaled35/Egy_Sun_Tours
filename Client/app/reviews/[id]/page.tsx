@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ReviewDetail from '@/components/sections/ReviewDetail';
-import { allReviews } from '@/data/reviews-data';
 import { siteData } from '@/data/site-data';
+import { allReviews } from '@/data/reviews-data';
 
 interface ReviewPageProps {
   params: {
@@ -13,7 +13,10 @@ interface ReviewPageProps {
 }
 
 export async function generateMetadata({ params }: ReviewPageProps): Promise<Metadata> {
-  const review = allReviews.find(r => r.id === parseInt(params.id));
+  // In a real app, you'd fetch from API or database
+  // For now, we use the static data for metadata generation
+  const reviews = allReviews; // This would be fetched from API
+  const review = reviews.find(r => r.id === parseInt(params.id));
   
   if (!review) {
     return {

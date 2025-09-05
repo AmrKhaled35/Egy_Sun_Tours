@@ -1,3 +1,6 @@
+// This file will be dynamically updated by the admin panel
+// For now, we use this as initial data that gets loaded into localStorage
+
 export const allReviews = [
   {
     id: 1,

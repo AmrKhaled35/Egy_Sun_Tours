@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import TripDetail from '@/components/sections/TripDetail';
-import { allTrips } from '@/data/trips-data';
 import { siteData } from '@/data/site-data';
-
+import { allTrips } from '@/data/trips-data';
+import { apiClient } from '@/lib/api';
 interface TripPageProps {
   params: {
     id: string;
@@ -13,7 +13,9 @@ interface TripPageProps {
 }
 
 export async function generateMetadata({ params }: TripPageProps): Promise<Metadata> {
-  const trip = allTrips.find(t => t.id === parseInt(params.id));
+  // await apiClient.getTripById(parseInt(params.id))
+  const trips = allTrips; 
+  const trip = trips.find(t => t.id === parseInt(params.id));
   
   if (!trip) {
     return {
@@ -50,7 +52,12 @@ export async function generateMetadata({ params }: TripPageProps): Promise<Metad
     },
   };
 }
-
+// export async function generateStaticParams() {
+//   const trips = await apiClient.getTrips();
+//   return trips.map((trip: any) => ({
+//     id: trip.id.toString(),
+//   }));
+// }
 export async function generateStaticParams() {
   return allTrips.map((trip) => ({
     id: trip.id.toString(),

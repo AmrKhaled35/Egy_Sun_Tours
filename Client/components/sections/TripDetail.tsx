@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { siteData } from "@/data/site-data";
 import { StaticImageData } from "next/image";
+// import { allTrips } from '@/data/trips-data';
 
 interface Trip {
   id: number;

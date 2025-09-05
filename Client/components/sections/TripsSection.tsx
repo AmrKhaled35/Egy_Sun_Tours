@@ -1,17 +1,20 @@
 "use client";
+"use client";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, MapPin, Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { featuredTrips } from '@/data/trips-data';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { allTrips } from '@/data/trips-data';
 
 const TripsSection = () => {
+  const [trips] = useLocalStorage('trips', allTrips);
+  const featuredTrips = trips.slice(0, 3);
   const [visibleTrips, setVisibleTrips] = useState<number[]>([]);
 
   useEffect(() => {
-    // Animate trips appearing one by one
     featuredTrips.forEach((_, index) => {
       setTimeout(() => {
         setVisibleTrips(prev => [...prev, index]);

@@ -5,20 +5,23 @@ import Image from "next/image";
 import { Clock, Users, MapPin, ArrowRight, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { allTrips } from "@/data/trips-data";
 
 const TripsGrid = () => {
+  const [trips] = useLocalStorage("trips", allTrips);
   const [visibleTrips, setVisibleTrips] = useState<number[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   const categories = [
     "All",
-    ...Array.from(new Set(allTrips.map((trip) => trip.category))),
+    ...Array.from(new Set(trips.map((trip) => trip.category))),
   ];
+
   const filteredTrips =
     selectedCategory === "All"
-      ? allTrips
-      : allTrips.filter((trip) => trip.category === selectedCategory);
+      ? trips
+      : trips.filter((trip) => trip.category === selectedCategory);
 
   useEffect(() => {
     setVisibleTrips([]);
@@ -77,6 +80,7 @@ const TripsGrid = () => {
             </Button>
           ))}
         </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredTrips.map((trip, index) => (
             <Card
@@ -117,6 +121,30 @@ const TripsGrid = () => {
                 <p className="text-gray-600 mb-6 leading-relaxed line-clamp-2 text-lg">
                   {trip.shortDescription}
                 </p>
+
+                {/* Highlights Section */}
+                {trip.highlights && trip.highlights.length > 0 && (
+                  <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Highlights:
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {trip.highlights.slice(0, 3).map((highlight, idx) => (
+                        <span
+                          key={idx}
+                          className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs"
+                        >
+                          {highlight}
+                        </span>
+                      ))}
+                      {trip.highlights.length > 3 && (
+                        <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">
+                          +{trip.highlights.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 <Button
                   className="w-full bg-amber-600 hover:bg-amber-700 text-white group py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"

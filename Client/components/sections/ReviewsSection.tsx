@@ -2,9 +2,13 @@
 import { Star, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { reviews, siteData } from "@/data/site-data";
+import { siteData } from "@/data/site-data";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { allReviews } from "@/data/reviews-data";
 
 const ReviewsSection = () => {
+  const [reviews] = useLocalStorage("reviews", allReviews.slice(0, 3));
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -56,7 +60,7 @@ const ReviewsSection = () => {
 
                 {/* Review Text */}
                 <p className="text-gray-600 mb-4 leading-relaxed">
-                  &quot;{review.text}&quot;
+                  &quot;{review.excerpt}&quot;
                 </p>
 
                 {/* Author and Date */}

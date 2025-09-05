@@ -1,30 +1,82 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Save, Phone, Mail, MapPin, Globe, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { siteData } from '@/data/site-data';
+// import { apiClient } from '@/lib/api';
+
+interface ContactInfo {
+  phone: string;
+  email: string;
+  address: string;
+  website: string;
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  tripadvisor: string;
+  businessHours: string;
+  emergencyContact: string;
+  description: string;
+}
+
+const initialContactInfo: ContactInfo = {
+  phone: siteData.contact.whatsapp,
+  email: siteData.contact.email,
+  address: 'Cairo, Egypt',
+  website: 'https://egysuntours.com',
+  facebook: '',
+  instagram: '',
+  twitter: '',
+  tripadvisor: siteData.contact.tripadvisor,
+  businessHours: 'Monday - Sunday: 8:00 AM - 10:00 PM',
+  emergencyContact: siteData.contact.whatsapp,
+  description: 'Your gateway to discovering the rich culture, history, and beauty of Egypt.'
+};
 
 export default function ContactAdmin() {
-  const [formData, setFormData] = useState({
-    phone: siteData.contact.whatsapp,
-    email: siteData.contact.email,
-    address: 'Cairo, Egypt',
-    website: 'https://egysuntours.com',
-    facebook: '',
-    instagram: '',
-    twitter: '',
-    tripadvisor: siteData.contact.tripadvisor,
-    businessHours: 'Monday - Sunday: 8:00 AM - 10:00 PM',
-    emergencyContact: siteData.contact.whatsapp,
-    description: 'Your gateway to discovering the rich culture, history, and beauty of Egypt.'
-  });
+  const [contactInfo, setContactInfo] = useLocalStorage<ContactInfo>('contactInfo', initialContactInfo);
+  const [formData, setFormData] = useState<ContactInfo>(contactInfo);
+  const [hasChanges, setHasChanges] = useState(false);
 
-  const handleSave = () => {
-    // Here you would typically save to a database or API
-    alert('Contact information saved successfully!');
+  useEffect(() => {
+    setFormData(contactInfo);
+  }, [contactInfo]);
+
+  useEffect(() => {
+    const hasChanges = JSON.stringify(formData) !== JSON.stringify(contactInfo);
+    setHasChanges(hasChanges);
+  }, [formData, contactInfo]);
+
+  const handleSave = async () => {
+    try {
+      // API call (commented for now)
+      // await apiClient.updateContactInfo(formData);
+      
+      // Local Storage
+      setContactInfo(formData);
+      setHasChanges(false);
+      
+      alert('Contact information saved successfully!');
+    } catch (error) {
+      console.error('Error saving contact info:', error);
+      alert('Error saving contact information. Please try again.');
+    }
+  };
+
+  const handleReset = () => {
+    setFormData(contactInfo);
+    setHasChanges(false);
+  };
+
+  const handleInputChange = (field: keyof ContactInfo, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   return (
@@ -35,13 +87,24 @@ export default function ContactAdmin() {
           <h1 className="text-3xl font-bold text-gray-900">Contact Management</h1>
           <p className="text-gray-600 mt-2">Manage contact information and social links</p>
         </div>
-        <Button 
-          onClick={handleSave}
-          className="bg-black text-white hover:bg-gray-800"
-        >
-          <Save className="w-4 h-4 mr-2" />
-          Save Changes
-        </Button>
+        <div className="flex gap-3">
+          {hasChanges && (
+            <Button 
+              variant="outline"
+              onClick={handleReset}
+            >
+              Reset Changes
+            </Button>
+          )}
+          <Button 
+            onClick={handleSave}
+            className="bg-black text-white hover:bg-gray-800"
+            disabled={!hasChanges}
+          >
+            <Save className="w-4 h-4 mr-2" />
+            Save Changes
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -55,32 +118,36 @@ export default function ContactAdmin() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Phone Number</label>
+                <label className="block text-sm font-medium mb-2">Phone Number *</label>
                 <Input 
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  onChange={(e) => handleInputChange('phone', e.target.value)}
                   placeholder="Enter phone number"
                   className="border-gray-300"
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Email Address</label>
+                <label className="block text-sm font-medium mb-2">Email Address *</label>
                 <Input 
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
                   placeholder="Enter email address"
                   className="border-gray-300"
+                  type="email"
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Address</label>
+                <label className="block text-sm font-medium mb-2">Address *</label>
                 <Input 
                   value={formData.address}
-                  onChange={(e) => setFormData({...formData, address: e.target.value})}
+                  onChange={(e) => handleInputChange('address', e.target.value)}
                   placeholder="Enter business address"
                   className="border-gray-300"
+                  required
                 />
               </div>
 
@@ -88,9 +155,10 @@ export default function ContactAdmin() {
                 <label className="block text-sm font-medium mb-2">Website</label>
                 <Input 
                   value={formData.website}
-                  onChange={(e) => setFormData({...formData, website: e.target.value})}
+                  onChange={(e) => handleInputChange('website', e.target.value)}
                   placeholder="Enter website URL"
                   className="border-gray-300"
+                  type="url"
                 />
               </div>
 
@@ -98,7 +166,7 @@ export default function ContactAdmin() {
                 <label className="block text-sm font-medium mb-2">Emergency Contact</label>
                 <Input 
                   value={formData.emergencyContact}
-                  onChange={(e) => setFormData({...formData, emergencyContact: e.target.value})}
+                  onChange={(e) => handleInputChange('emergencyContact', e.target.value)}
                   placeholder="Enter emergency contact"
                   className="border-gray-300"
                 />
@@ -120,9 +188,10 @@ export default function ContactAdmin() {
                 <label className="block text-sm font-medium mb-2">Facebook</label>
                 <Input 
                   value={formData.facebook}
-                  onChange={(e) => setFormData({...formData, facebook: e.target.value})}
+                  onChange={(e) => handleInputChange('facebook', e.target.value)}
                   placeholder="Enter Facebook URL"
                   className="border-gray-300"
+                  type="url"
                 />
               </div>
 
@@ -130,9 +199,10 @@ export default function ContactAdmin() {
                 <label className="block text-sm font-medium mb-2">Instagram</label>
                 <Input 
                   value={formData.instagram}
-                  onChange={(e) => setFormData({...formData, instagram: e.target.value})}
+                  onChange={(e) => handleInputChange('instagram', e.target.value)}
                   placeholder="Enter Instagram URL"
                   className="border-gray-300"
+                  type="url"
                 />
               </div>
 
@@ -140,9 +210,10 @@ export default function ContactAdmin() {
                 <label className="block text-sm font-medium mb-2">Twitter</label>
                 <Input 
                   value={formData.twitter}
-                  onChange={(e) => setFormData({...formData, twitter: e.target.value})}
+                  onChange={(e) => handleInputChange('twitter', e.target.value)}
                   placeholder="Enter Twitter URL"
                   className="border-gray-300"
+                  type="url"
                 />
               </div>
 
@@ -150,19 +221,10 @@ export default function ContactAdmin() {
                 <label className="block text-sm font-medium mb-2">TripAdvisor</label>
                 <Input 
                   value={formData.tripadvisor}
-                  onChange={(e) => setFormData({...formData, tripadvisor: e.target.value})}
+                  onChange={(e) => handleInputChange('tripadvisor', e.target.value)}
                   placeholder="Enter TripAdvisor URL"
                   className="border-gray-300"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">WhatsApp Business</label>
-                <Input 
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  placeholder="Enter WhatsApp number"
-                  className="border-gray-300"
+                  type="url"
                 />
               </div>
             </div>
@@ -179,24 +241,26 @@ export default function ContactAdmin() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Business Hours</label>
+                <label className="block text-sm font-medium mb-2">Business Hours *</label>
                 <Textarea 
                   value={formData.businessHours}
-                  onChange={(e) => setFormData({...formData, businessHours: e.target.value})}
+                  onChange={(e) => handleInputChange('businessHours', e.target.value)}
                   placeholder="Enter business hours"
                   className="border-gray-300"
                   rows={3}
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Business Description</label>
+                <label className="block text-sm font-medium mb-2">Business Description *</label>
                 <Textarea 
                   value={formData.description}
-                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                  onChange={(e) => handleInputChange('description', e.target.value)}
                   placeholder="Enter business description"
                   className="border-gray-300"
                   rows={4}
+                  required
                 />
               </div>
             </div>

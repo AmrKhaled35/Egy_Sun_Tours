@@ -1,0 +1,1537 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Egy Sun Tours API",
+    "description": "API for managing tours, gallery, reviews, and contact information for Egy Sun Tours",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "email": "support@egyptours.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.egyptours.com",
+      "description": "Production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Authentication operations"
+    },
+    {
+      "name": "Trips",
+      "description": "Operations related to tours and trips"
+    },
+    {
+      "name": "Gallery",
+      "description": "Operations related to media gallery"
+    },
+    {
+      "name": "Reviews",
+      "description": "Operations related to customer reviews"
+    },
+    {
+      "name": "Contact",
+      "description": "Operations related to contact information"
+    },
+    {
+      "name": "Messages",
+      "description": "Operations related to contact messages"
+    }
+  ],
+  "paths": {
+    "/api-auth/login/": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Login to the system",
+        "description": "Authenticate with username and password to get access token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        }
+      }
+    },
+    "/api-auth/logout/": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Logout from the system",
+        "description": "Invalidate the current authentication token",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully logged out"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/trips/": {
+      "get": {
+        "tags": ["Trips"],
+        "summary": "Get all trips",
+        "description": "Retrieves a list of all trips",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer",
+                      "example": 10
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": "http://localhost:8000/api/trips/?page=2"
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true,
+                      "example": null
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Trip"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Trips"],
+        "summary": "Create a new trip",
+        "description": "Creates a new trip with optional timeline and gallery images",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TripCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Trip created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TripDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/trips/{id}/": {
+      "get": {
+        "tags": ["Trips"],
+        "summary": "Get trip details",
+        "description": "Retrieves detailed information about a specific trip including timeline and gallery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the trip",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TripDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Trip not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Trips"],
+        "summary": "Update a trip",
+        "description": "Updates an existing trip",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the trip to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TripUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trip updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TripDetail"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Trip not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Trips"],
+        "summary": "Delete a trip",
+        "description": "Deletes a trip",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the trip to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Trip deleted successfully"
+          },
+          "404": {
+            "description": "Trip not found"
+          }
+        }
+      }
+    },
+    "/api/trips/{id}/add_timeline_item/": {
+      "post": {
+        "tags": ["Trips"],
+        "summary": "Add timeline item",
+        "description": "Adds a timeline item to an existing trip",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the trip",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/TimelineItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Timeline item added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimelineItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Trip not found"
+          }
+        }
+      }
+    },
+    "/api/trips/{id}/add_gallery_image/": {
+      "post": {
+        "tags": ["Trips"],
+        "summary": "Add gallery image",
+        "description": "Adds an image to a trip's gallery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the trip",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Gallery image file"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gallery image added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TripImage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Trip not found"
+          }
+        }
+      }
+    },
+    "/api/gallery/": {
+      "get": {
+        "tags": ["Gallery"],
+        "summary": "Get all gallery items",
+        "description": "Retrieves a list of all gallery items with optional filtering",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Filter by category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by type (image or video)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["image", "video"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GalleryItem"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Gallery"],
+        "summary": "Create a gallery item",
+        "description": "Creates a new gallery item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/GalleryItemCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gallery item created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GalleryItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/gallery/{id}/": {
+      "delete": {
+        "tags": ["Gallery"],
+        "summary": "Delete a gallery item",
+        "description": "Deletes a gallery item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the gallery item to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Gallery item deleted successfully"
+          },
+          "404": {
+            "description": "Gallery item not found"
+          }
+        }
+      }
+    },
+    "/api/reviews/": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all reviews",
+        "description": "Retrieves a list of all reviews",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Review"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Create a review",
+        "description": "Creates a new review",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Review created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/reviews/{id}/": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get review details",
+        "description": "Retrieves detailed information about a specific review",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the review",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Review not found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Reviews"],
+        "summary": "Update a review",
+        "description": "Updates an existing review",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the review to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Review updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Review"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Review not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "summary": "Delete a review",
+        "description": "Deletes a review",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the review to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Review deleted successfully"
+          },
+          "404": {
+            "description": "Review not found"
+          }
+        }
+      }
+    },
+    "/api/contact/": {
+      "get": {
+        "tags": ["Contact"],
+        "summary": "Get contact info",
+        "description": "Retrieves the contact information",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contact/{id}/": {
+      "put": {
+        "tags": ["Contact"],
+        "summary": "Update contact info",
+        "description": "Updates the contact information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the contact info (always 1)",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactInfoUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact info updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "404": {
+            "description": "Contact info not found"
+          }
+        }
+      }
+    },
+    "/api/messages/": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get all messages",
+        "description": "Retrieves a list of all contact messages",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ContactMessage"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Messages"],
+        "summary": "Send a message",
+        "description": "Sends a new contact message",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactMessageCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Message sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/messages/{id}/": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get message details",
+        "description": "Retrieves a specific contact message",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the message",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Message not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Messages"],
+        "summary": "Delete a message",
+        "description": "Deletes a contact message",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the message to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Message deleted successfully"
+          },
+          "404": {
+            "description": "Message not found"
+          }
+        }
+      }
+    },
+    "/api/messages/{id}/mark_as_read/": {
+      "patch": {
+        "tags": ["Messages"],
+        "summary": "Mark message as read",
+        "description": "Marks a message as read",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the message to mark as read",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message marked as read",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "message marked as read"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Message not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "required": ["username", "password"],
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "admin"
+          },
+          "password": {
+            "type": "string",
+            "example": "adminpass123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+          }
+        }
+      },
+      "Trip": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique trip ID"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the trip"
+          },
+          "slug": {
+            "type": "string",
+            "description": "URL-friendly slug"
+          },
+          "shortDescription": {
+            "type": "string",
+            "description": "Brief description of the trip"
+          },
+          "fullDescription": {
+            "type": "string",
+            "description": "Detailed description of the trip"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Duration of the trip (e.g., '1 Day')"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Price of the trip"
+          },
+          "image": {
+            "type": "string",
+            "description": "URL to the main trip image"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the trip (e.g., 'Adventure', 'Cultural')"
+          },
+          "highlights": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Key highlights of the trip"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      },
+      "TripDetail": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Trip"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "timeline": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TimelineItem"
+                },
+                "description": "Trip timeline details"
+              },
+              "gallery": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TripImage"
+                },
+                "description": "Trip gallery images"
+              }
+            }
+          }
+        ]
+      },
+      "TripCreate": {
+        "type": "object",
+        "required": ["title", "shortDescription", "fullDescription", "duration", "price", "category", "image"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the trip"
+          },
+          "shortDescription": {
+            "type": "string",
+            "description": "Brief description of the trip"
+          },
+          "fullDescription": {
+            "type": "string",
+            "description": "Detailed description of the trip"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Duration of the trip (e.g., '1 Day')"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Price of the trip"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the trip"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "description": "Main trip image"
+          },
+          "highlights": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Key highlights of the trip"
+          },
+          "timeline": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "time": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "image": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "gallery": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      },
+      "TripUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the trip"
+          },
+          "shortDescription": {
+            "type": "string",
+            "description": "Brief description of the trip"
+          },
+          "fullDescription": {
+            "type": "string",
+            "description": "Detailed description of the trip"
+          },
+          "duration": {
+            "type": "string",
+            "description": "Duration of the trip (e.g., '1 Day')"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal",
+            "description": "Price of the trip"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the trip"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "description": "Main trip image"
+          },
+          "highlights": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Key highlights of the trip"
+          }
+        }
+      },
+      "TimelineItem": {
+        "type": "object",
+        "required": ["time", "title", "description"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique timeline item ID"
+          },
+          "time": {
+            "type": "string",
+            "description": "Time of the activity (e.g., '09:00 AM')"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the activity"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the activity"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "description": "Optional image for the activity"
+          }
+        }
+      },
+      "TripImage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique image ID"
+          },
+          "image": {
+            "type": "string",
+            "description": "URL to the gallery image"
+          }
+        }
+      },
+      "GalleryItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique gallery item ID"
+          },
+          "image": {
+            "type": "string",
+            "description": "URL to the image/video"
+          },
+          "alt": {
+            "type": "string",
+            "description": "Alternative text for the image"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the gallery item"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["image", "video"],
+            "description": "Type of the media (image or video)"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          }
+        }
+      },
+      "GalleryItemCreate": {
+        "type": "object",
+        "required": ["image", "alt", "category", "type"],
+        "properties": {
+          "image": {
+            "type": "string",
+            "format": "binary",
+            "description": "The image/video file"
+          },
+          "alt": {
+            "type": "string",
+            "description": "Alternative text for the image"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the gallery item"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["image", "video"],
+            "description": "Type of the media (image or video)",
+            "default": "image"
+          }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique review ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Reviewer's name"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Reviewer's username (optional)"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Rating (1-5 stars)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Review title/headline"
+          },
+          "excerpt": {
+            "type": "string",
+            "description": "Short excerpt of the review"
+          },
+          "fullText": {
+            "type": "string",
+            "description": "Full review text"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Review date"
+          },
+          "location": {
+            "type": "string",
+            "description": "Reviewer's location"
+          },
+          "tourType": {
+            "type": "string",
+            "description": "Type of tour reviewed"
+          }
+        }
+      },
+      "ReviewCreate": {
+        "type": "object",
+        "required": ["name", "rating", "title", "excerpt", "fullText", "location", "tourType"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Reviewer's name"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Reviewer's username (optional)"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Rating (1-5 stars)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Review title/headline"
+          },
+          "excerpt": {
+            "type": "string",
+            "description": "Short excerpt of the review"
+          },
+          "fullText": {
+            "type": "string",
+            "description": "Full review text"
+          },
+          "location": {
+            "type": "string",
+            "description": "Reviewer's location"
+          },
+          "tourType": {
+            "type": "string",
+            "description": "Type of tour reviewed"
+          }
+        }
+      },
+      "ReviewUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Reviewer's name"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true,
+            "description": "Reviewer's username (optional)"
+          },
+          "rating": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "Rating (1-5 stars)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Review title/headline"
+          },
+          "excerpt": {
+            "type": "string",
+            "description": "Short excerpt of the review"
+          },
+          "fullText": {
+            "type": "string",
+            "description": "Full review text"
+          },
+          "location": {
+            "type": "string",
+            "description": "Reviewer's location"
+          },
+          "tourType": {
+            "type": "string",
+            "description": "Type of tour reviewed"
+          }
+        }
+      },
+      "ContactInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Contact info ID (always 1)"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address"
+          },
+          "address": {
+            "type": "string",
+            "description": "Physical address"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Website URL"
+          },
+          "facebook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Facebook URL"
+          },
+          "instagram": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Instagram URL"
+          },
+          "twitter": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Twitter URL"
+          },
+          "tripadvisor": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "TripAdvisor URL"
+          },
+          "businessHours": {
+            "type": "string",
+            "description": "Business hours"
+          },
+          "emergencyContact": {
+            "type": "string",
+            "description": "Emergency contact number"
+          },
+          "description": {
+            "type": "string",
+            "description": "Company description"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        }
+      },
+      "ContactInfoUpdate": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email address"
+          },
+          "address": {
+            "type": "string",
+            "description": "Physical address"
+          },
+          "website": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Website URL"
+          },
+          "facebook": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Facebook URL"
+          },
+          "instagram": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Instagram URL"
+          },
+          "twitter": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "Twitter URL"
+          },
+          "tripadvisor": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "TripAdvisor URL"
+          },
+          "businessHours": {
+            "type": "string",
+            "description": "Business hours"
+          },
+          "emergencyContact": {
+            "type": "string",
+            "description": "Emergency contact number"
+          },
+          "description": {
+            "type": "string",
+            "description": "Company description"
+          }
+        }
+      },
+      "ContactMessage": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique message ID"
+          },
+          "name": {
+            "type": "string",
+            "description": "Sender's name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Sender's email"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Message subject"
+          },
+          "message": {
+            "type": "string",
+            "description": "Message content"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Submission date"
+          },
+          "is_read": {
+            "type": "boolean",
+            "description": "Whether the message has been read"
+          }
+        }
+      },
+      "ContactMessageCreate": {
+        "type": "object",
+        "required": ["name", "email", "subject", "message"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Sender's name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Sender's email"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Message subject"
+          },
+          "message": {
+            "type": "string",
+            "description": "Message content"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Token"
+      }
+    }
+  }
+}

@@ -43,6 +43,7 @@ interface TripDetailProps {
 }
 
 const TripDetail = ({ trip }: TripDetailProps) => {
+  console.log("Rendering TripDetail for trip:", trip);
   const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>(
     []
   );

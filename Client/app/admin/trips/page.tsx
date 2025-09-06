@@ -16,7 +16,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { allTrips } from "@/data/trips-data";
-// import { apiClient } from '@/lib/api';
+import { apiClient } from "@/lib/api";
+
 interface Trip {
   id: number;
   title: string;
@@ -37,15 +38,7 @@ interface Trip {
 }
 
 export default function TripsAdmin() {
-  const [trips, setTrips] = useLocalStorage<Trip[]>(
-    "trips",
-    allTrips.map((trip) => ({
-      ...trip,
-      gallery: trip.gallery.map((item) =>
-        typeof item === "string" ? item : ""
-      ),
-    }))
-  );
+  const [trips, setTrips] = useState<Trip[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
   const [formData, setFormData] = useState<Partial<Trip>>({
@@ -60,6 +53,20 @@ export default function TripsAdmin() {
     timeline: [{ time: "", title: "", description: "", image: "" }],
     gallery: [""],
   });
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const data = await apiClient.getTrips();
+        setTrips(data.results);
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+        alert("Failed to fetch trips from API");
+      }
+    };
+
+    fetchTrips();
+  }, []);
 
   const resetForm = () => {
     setFormData({
@@ -87,61 +94,91 @@ export default function TripsAdmin() {
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this trip?")) {
       try {
-        // await apiClient.deleteTrip(id);
-        // Local Storage
-        const updatedTrips = trips.filter((trip) => trip.id !== id);
-        setTrips(updatedTrips);
-
-        alert("Trip deleted successfully!");
+        const response = await fetch(`http://localhost:8000/api/trips/${id}/`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTIxMDAzLCJpYXQiOjE3NTcxMTc0MDMsImp0aSI6ImU1MDZhZGU4ZmI1NTQ1ZWI4NzZkZDY4Mjg0YzBlYmY0IiwidXNlcl9pZCI6IjEifQ.Dvg05FzgAyvVwjF-ZQqcfU0TJz41z8aeY4J5bKjw0IE"}`,
+          },
+        });
+  
+        if (response.ok) {
+          const updatedTrips = trips.filter((trip) => trip.id !== id);
+          setTrips(updatedTrips);
+          alert("Trip deleted successfully!");
+        } else {
+          alert("Error deleting trip from API.");
+        }
       } catch (error) {
         console.error("Error deleting trip:", error);
         alert("Error deleting trip. Please try again.");
       }
     }
   };
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!formData.title || !formData.shortDescription) {
       alert("Please fill in all required fields");
       return;
     }
-
+  
     try {
-      const tripData = {
-        ...formData,
-        id: editingTrip ? editingTrip.id : Date.now(),
-        highlights: formData.highlights?.filter((h) => h.trim() !== "") || [],
-        timeline: formData.timeline?.filter((t) => t.time && t.title) || [],
-        gallery: formData.gallery?.filter((u) => u.trim() !== "") || [],
-      } as Trip;
-
-      if (editingTrip) {
-        // API call (commented for now)
-        // await apiClient.updateTrip(editingTrip.id, tripData);
-
-        // Local Storage
-        const updatedTrips = trips.map((trip) =>
-          trip.id === editingTrip.id ? tripData : trip
-        );
-        setTrips(updatedTrips);
-        alert("Trip updated successfully!");
-      } else {
-        // API call (commented for now)
-        // await apiClient.createTrip(tripData);
-
-        // Local Storage
-        setTrips([...trips, tripData]);
-        alert("Trip created successfully!");
+      const payload = new FormData();
+      payload.append("title", formData.title || "");
+      payload.append("shortDescription", formData.shortDescription || "");
+      payload.append("fullDescription", formData.fullDescription || "");
+      payload.append("duration", formData.duration || "");
+      payload.append("price", formData.price || "");
+      payload.append("category", formData.category || "");
+  
+      if (formData.image instanceof File) {
+        payload.append("image", formData.image);
+        console.log("Image file appended to payload");
       }
-
+  
+      let response;
+      if (editingTrip) {
+        console.log(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`);
+        response = await fetch(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`, {
+          method: "PATCH",
+          body: payload,
+          headers: {
+            "Authorization": `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTIxMDAzLCJpYXQiOjE3NTcxMTc0MDMsImp0aSI6ImU1MDZhZGU4ZmI1NTQ1ZWI4NzZkZDY4Mjg0YzBlYmY0IiwidXNlcl9pZCI6IjEifQ.Dvg05FzgAyvVwjF-ZQqcfU0TJz41z8aeY4J5bKjw0IE"}`,
+          },
+        });
+      } else {
+        response = await fetch("http://127.0.0.1:8000/api/trips/", {
+          method: "POST",
+          body: payload,
+          headers: {
+            "Authorization": `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTIxMDAzLCJpYXQiOjE3NTcxMTc0MDMsImp0aSI6ImU1MDZhZGU4ZmI1NTQ1ZWI4NzZkZDY4Mjg0YzBlYmY0IiwidXNlcl9pZCI6IjEifQ.Dvg05FzgAyvVwjF-ZQqcfU0TJz41z8aeY4J5bKjw0IE"}`,
+          },
+        });
+      }
+  
+      if (!response.ok) {
+        throw new Error("Failed to save trip");
+      }
+  
+      const result = await response.json();
+  
+      setTrips(
+        editingTrip
+          ? trips.map((trip) => (trip.id === editingTrip.id ? result : trip))
+          : [...trips, result]
+      );
+  
+      alert(editingTrip ? "Trip updated successfully!" : "Trip created successfully!");
       resetForm();
     } catch (error) {
-      console.error("Error saving trip:", error);
-      alert("Error saving trip. Please try again.");
+      console.error(error);
+      alert("Error saving trip. Please check the console for details.");
     }
   };
+  
 
   const handleAddHighlight = () => {
     setFormData({
@@ -186,6 +223,7 @@ export default function TripsAdmin() {
     newTimeline[index] = { ...newTimeline[index], [field]: value };
     setFormData({ ...formData, timeline: newTimeline });
   };
+
   const handleAddGalleryImage = () => {
     setFormData({
       ...formData,
@@ -203,6 +241,7 @@ export default function TripsAdmin() {
     newGallery[index] = value;
     setFormData({ ...formData, gallery: newGallery });
   };
+
   const handleGalleryUpload = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
@@ -221,7 +260,6 @@ export default function TripsAdmin() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Trips Management</h1>
@@ -236,7 +274,6 @@ export default function TripsAdmin() {
         </Button>
       </div>
 
-      {/* Add/Edit Trip Form */}
       {showForm && (
         <Card className="border-2 border-black">
           <CardContent className="p-6">
@@ -313,17 +350,34 @@ export default function TripsAdmin() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Main Image URL *
+                    Main Image *
                   </label>
                   <Input
-                    value={formData.image || ""}
-                    onChange={(e) =>
-                      setFormData({ ...formData, image: e.target.value })
-                    }
-                    placeholder="Enter image URL"
-                    className="border-gray-300"
-                    required
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          setFormData({
+                            ...formData,
+                            image: file,
+                          });
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    className="border border-gray-300 rounded p-2 w-full"
+                    // required
                   />
+                  {formData.image && (
+                    <img
+                      src={formData.image}
+                      alt="Main"
+                      className="mt-2 w-40 h-40 object-cover rounded"
+                    />
+                  )}
                 </div>
               </div>
 
@@ -369,7 +423,7 @@ export default function TripsAdmin() {
               {/* Highlights */}
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  What&apos;s Included
+                  What's Included
                 </label>
                 {formData.highlights?.map((highlight, index) => (
                   <div key={index} className="flex gap-2 mb-2">
@@ -473,6 +527,8 @@ export default function TripsAdmin() {
                   Add Timeline Step
                 </Button>
               </div>
+
+              {/* Gallery */}
               <div>
                 <label className="block text-sm font-medium mb-2">
                   Gallery
@@ -513,7 +569,7 @@ export default function TripsAdmin() {
                 </Button>
               </div>
 
-              {/* Submit Buttons */}
+              {/* Submit */}
               <div className="flex gap-4 pt-4">
                 <Button
                   type="submit"
@@ -531,6 +587,7 @@ export default function TripsAdmin() {
         </Card>
       )}
 
+      {/* Existing Trips */}
       <div>
         <h2 className="text-xl font-bold mb-6">
           Existing Trips ({trips.length})
@@ -549,7 +606,6 @@ export default function TripsAdmin() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-medium">
@@ -573,12 +629,10 @@ export default function TripsAdmin() {
                       </Button>
                     </div>
                   </div>
-
                   <h3 className="font-bold text-gray-900">{trip.title}</h3>
                   <p className="text-sm text-gray-600 line-clamp-2">
                     {trip.shortDescription}
                   </p>
-
                   <div className="flex items-center gap-4 text-xs text-gray-500">
                     <div className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />

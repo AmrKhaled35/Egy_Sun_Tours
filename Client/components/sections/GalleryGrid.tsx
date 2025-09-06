@@ -1,37 +1,54 @@
 "use client";
 import { useState, useEffect } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
-import { galleryImages2 } from "@/data/site-data";
+
+interface GalleryItem {
+  id: number;
+  image: string;
+  alt: string;
+  category: string;
+  type: "image" | "video";
+}
 
 const GalleryGrid = () => {
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [visibleImages, setVisibleImages] = useState<number[]>([]);
-
   useEffect(() => {
-    galleryImages2.forEach((_, index) => {
-      setTimeout(() => {
-        setVisibleImages((prev) => [...prev, index]);
-      }, index * 100);
-    });
+    const fetchGallery = async () => {
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/gallery/");
+        if (!res.ok) throw new Error("Failed to fetch gallery");
+        const data = await res.json();
+        setGalleryItems(data.results);
+
+        // animate images after fetching
+        data.results.forEach((_: any, index: number) => {
+          setTimeout(() => {
+            setVisibleImages((prev) => [...prev, index]);
+          }, index * 100);
+        });
+      } catch (err) {
+        console.error("Error fetching gallery:", err);
+      }
+    };
+
+    fetchGallery();
   }, []);
 
   const nextImage = () => {
     if (selectedImage !== null) {
-      setSelectedImage((selectedImage + 1) % galleryImages2.length);
+      setSelectedImage((selectedImage + 1) % galleryItems.length);
     }
   };
 
   const prevImage = () => {
     if (selectedImage !== null) {
       setSelectedImage(
-        (selectedImage - 1 + galleryImages2.length) % galleryImages2.length
+        (selectedImage - 1 + galleryItems.length) % galleryItems.length
       );
     }
-  };
-
-  const getSrc = (image: string | StaticImageData) => {
-    return typeof image === "string" ? image : (image as StaticImageData).src;
   };
 
   return (
@@ -58,23 +75,22 @@ const GalleryGrid = () => {
             </div>
           </div>
         </div>
-
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {galleryImages2.map((item, index) => (
+          {galleryItems.map((item, index) => (
             <div
               key={item.id}
               className={`group relative overflow-hidden rounded-lg cursor-pointer transition-all duration-500 break-inside-avoid mb-6 ${
-                visibleImages.includes(index) 
-                  ? 'opacity-100 transform translate-y-0' 
-                  : 'opacity-0 transform translate-y-8'
+                visibleImages.includes(index)
+                  ? "opacity-100 transform translate-y-0"
+                  : "opacity-0 transform translate-y-8"
               }`}
               onClick={() => setSelectedImage(index)}
             >
               <div className="relative aspect-square">
-                {item.type === 'video' ? (
+                {item.type === "video" ? (
                   <>
                     <video
-                      src={getSrc(item.image)}
+                      src={item.image}
                       className="object-cover w-full h-full"
                       controls
                     />
@@ -96,13 +112,14 @@ const GalleryGrid = () => {
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <p className="text-white text-sm font-medium">{item.category}</p>
-                  <p className="text-white/80 text-xs">{item.type === 'video' ? 'Video' : 'Photo'}</p>
+                  <p className="text-white/80 text-xs">
+                    {item.type === "video" ? "Video" : "Photo"}
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
         {selectedImage !== null && (
           <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
             <div className="relative w-full h-full max-w-6xl max-h-[90vh] flex items-center justify-center">
@@ -128,16 +145,16 @@ const GalleryGrid = () => {
               </button>
 
               <div className="relative w-full h-full">
-                {galleryImages2[selectedImage].type === "video" ? (
+                {galleryItems[selectedImage].type === "video" ? (
                   <video
-                    src={getSrc(galleryImages2[selectedImage].image)}
+                    src={galleryItems[selectedImage].image}
                     className="object-contain w-full h-full"
                     controls
                   />
                 ) : (
                   <Image
-                    src={galleryImages2[selectedImage].image}
-                    alt={galleryImages2[selectedImage].alt}
+                    src={galleryItems[selectedImage].image}
+                    alt={galleryItems[selectedImage].alt}
                     fill
                     className="object-contain"
                   />
@@ -146,10 +163,10 @@ const GalleryGrid = () => {
 
               <div className="absolute bottom-4 left-4 right-4 bg-black/60 rounded-lg p-4 z-10">
                 <p className="text-white text-lg font-medium">
-                  {galleryImages2[selectedImage].alt}
+                  {galleryItems[selectedImage].alt}
                 </p>
                 <p className="text-white/80 text-sm">
-                  Category: {galleryImages2[selectedImage].category}
+                  Category: {galleryItems[selectedImage].category}
                 </p>
               </div>
             </div>

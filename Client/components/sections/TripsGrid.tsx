@@ -5,14 +5,27 @@ import Image from "next/image";
 import { Clock, Users, MapPin, ArrowRight, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { allTrips } from "@/data/trips-data";
+// import { useLocalStorage } from "@/hooks/useLocalStorage";
+// import { allTrips } from "@/data/trips-data";
+import { apiClient } from "@/lib/api";
 
 const TripsGrid = () => {
-  const [trips] = useLocalStorage("trips", allTrips);
+const [trips, setTrips] = useState<any[]>([]);
   const [visibleTrips, setVisibleTrips] = useState<number[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const data = await apiClient.getTrips();
+        setTrips(data.results);
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+        alert("Failed to fetch trips from API");
+      }
+    };
 
+    fetchTrips();
+  }, []);
   const categories = [
     "All",
     ...Array.from(new Set(trips.map((trip) => trip.category))),

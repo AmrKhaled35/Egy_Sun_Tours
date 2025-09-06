@@ -1,0 +1,859 @@
+{
+  "info": {
+    "_postman_id": "9fd132e7-d1b0-4a76-a9c7-fb463e4f7e15",
+    "name": "Egy Sun Tours API",
+    "description": "API documentation for Egy Sun Tours backend services",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Authentication endpoints for obtaining and refreshing JWT access tokens",
+      "item": [
+        {
+          "name": "Get JWT Tokens",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"adminpass123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/token/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "token",
+                ""
+              ]
+            },
+            "description": "Login to obtain JWT access and refresh tokens for subsequent API calls"
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh JWT Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"refresh\": \"{{refresh_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/token/refresh/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "token",
+                "refresh",
+                ""
+              ]
+            },
+            "description": "Use refresh token to get a new access token when the original expires"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify JWT Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api-auth/logout/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api-auth",
+                "logout",
+                ""
+              ]
+            },
+            "description": "Log out and invalidate the current token"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Trips",
+      "description": "Endpoints for managing trips",
+      "item": [
+        {
+          "name": "Get All Trips",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trips", ""]
+            },
+            "description": "Retrieves a list of all trips"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Trip Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trips", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the trip"
+                }
+              ]
+            },
+            "description": "Retrieves detailed information about a specific trip including timeline and gallery"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Trip",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trips", ""]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Cairo Pyramids Tour",
+                  "type": "text",
+                  "description": "Trip title"
+                },
+                {
+                  "key": "shortDescription",
+                  "value": "Explore the ancient pyramids of Giza",
+                  "type": "text"
+                },
+                {
+                  "key": "fullDescription",
+                  "value": "Discover the wonders of ancient Egypt with our guided tour to the Pyramids of Giza. This tour includes a visit to the Sphinx, the Valley Temple, and more.",
+                  "type": "text"
+                },
+                {
+                  "key": "duration",
+                  "value": "1 Day",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "99.99",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Cultural",
+                  "type": "text"
+                },
+                {
+                  "key": "highlights",
+                  "value": "[\"Great Pyramid of Giza\", \"Sphinx\", \"Valley Temple\", \"Camel Ride\"]",
+                  "type": "text",
+                  "description": "JSON array of highlights"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/image.jpg",
+                  "description": "Main trip image"
+                },
+                {
+                  "key": "timeline",
+                  "value": "{\"time\":\"09:00 AM\",\"title\":\"Pickup\",\"description\":\"Hotel pickup in Cairo\"}",
+                  "type": "text",
+                  "description": "JSON object for timeline item"
+                },
+                {
+                  "key": "timeline",
+                  "value": "{\"time\":\"10:00 AM\",\"title\":\"Pyramids Visit\",\"description\":\"Guided tour of the Pyramids\"}",
+                  "type": "text"
+                },
+                {
+                  "key": "gallery",
+                  "type": "file",
+                  "src": "/path/to/gallery1.jpg",
+                  "description": "Gallery image"
+                },
+                {
+                  "key": "gallery",
+                  "type": "file",
+                  "src": "/path/to/gallery2.jpg"
+                }
+              ]
+            },
+            "description": "Creates a new trip with optional timeline and gallery images"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Trip",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trips", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the trip to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Updated Cairo Pyramids Tour",
+                  "type": "text"
+                },
+                {
+                  "key": "shortDescription",
+                  "value": "Updated description",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "129.99",
+                  "type": "text"
+                }
+              ]
+            },
+            "description": "Updates an existing trip"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Trip",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trips", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the trip to delete"
+                }
+              ]
+            },
+            "description": "Deletes a trip"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Timeline Item",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:id/add_timeline_item/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trips", ":id", "add_timeline_item", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the trip"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "time",
+                  "value": "12:00 PM",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Lunch Break",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Traditional Egyptian lunch at a local restaurant",
+                  "type": "text"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/lunch.jpg",
+                  "description": "Optional image"
+                }
+              ]
+            },
+            "description": "Adds a timeline item to an existing trip"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Gallery Image",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/trips/:id/add_gallery_image/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "trips", ":id", "add_gallery_image", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the trip"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/new-gallery-image.jpg"
+                }
+              ]
+            },
+            "description": "Adds an image to a trip's gallery"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gallery",
+      "description": "Endpoints for managing gallery items",
+      "item": [
+        {
+          "name": "Get All Gallery Items",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/gallery/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "gallery", ""],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Adventure",
+                  "description": "Filter by category (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "type",
+                  "value": "image",
+                  "description": "Filter by type: image/video (optional)",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Retrieves a list of all gallery items with optional filtering"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Gallery Item",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/gallery/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "gallery", ""]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "src": "/path/to/gallery-image.jpg"
+                },
+                {
+                  "key": "alt",
+                  "value": "Beautiful sunset at the Nile",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Nature",
+                  "type": "text"
+                },
+                {
+                  "key": "type",
+                  "value": "image",
+                  "type": "text",
+                  "description": "image or video"
+                }
+              ]
+            },
+            "description": "Creates a new gallery item"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Gallery Item",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/gallery/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "gallery", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the gallery item to delete"
+                }
+              ]
+            },
+            "description": "Deletes a gallery item"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "description": "Endpoints for managing customer reviews",
+      "item": [
+        {
+          "name": "Get All Reviews",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reviews", ""]
+            },
+            "description": "Retrieves a list of all reviews"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Review Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reviews", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the review"
+                }
+              ]
+            },
+            "description": "Retrieves detailed information about a specific review"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reviews", ""]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Smith\",\n  \"username\": \"jsmith\",\n  \"rating\": 5,\n  \"title\": \"Amazing Experience!\",\n  \"excerpt\": \"We had a wonderful time exploring Egypt.\",\n  \"fullText\": \"Our tour guide was knowledgeable and friendly. The pyramids were breathtaking and the entire experience was well-organized.\",\n  \"location\": \"USA\",\n  \"tourType\": \"Cultural Tour\"\n}"
+            },
+            "description": "Creates a new review"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reviews", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the review to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"title\": \"Great Experience\",\n  \"fullText\": \"Updated review text with additional details.\"\n}"
+            },
+            "description": "Updates an existing review"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/reviews/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reviews", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the review to delete"
+                }
+              ]
+            },
+            "description": "Deletes a review"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "description": "Endpoints for managing contact messages",
+      "item": [
+        {
+          "name": "Get All Messages",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", ""]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{authToken}}",
+                "description": "Authentication token",
+                "type": "text"
+              }
+            ],
+            "description": "Retrieve all contact messages"
+          },
+          "response": []
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", ""]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"John Smith\",\n    \"email\": \"john.smith@example.com\",\n    \"subject\": \"Tour Inquiry\",\n    \"message\": \"Hello, I'm interested in booking a tour for my family next month. Can you please provide more information about your packages?\"\n}"
+            },
+            "description": "Send a new contact message"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Message Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "1", ""]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{authToken}}",
+                "description": "Authentication token",
+                "type": "text"
+              }
+            ],
+            "description": "Get details of a specific message"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "1", ""]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{authToken}}",
+                "description": "Authentication token",
+                "type": "text"
+              }
+            ],
+            "description": "Delete a specific message"
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Message as Read",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/1/mark_as_read/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", "1", "mark_as_read", ""]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Token {{authToken}}",
+                "description": "Authentication token",
+                "type": "text"
+              }
+            ],
+            "description": "Mark a message as read"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "description": "Endpoints for managing contact information",
+      "item": [
+        {
+          "name": "Get Contact Info",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/contact/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "contact", ""]
+            },
+            "description": "Retrieves the contact information"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Contact Info",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/contact/1/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "contact", "1", ""]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+20 123 456 7890\",\n  \"email\": \"info@egyptours.com\",\n  \"address\": \"123 Pyramid Street, Giza, Egypt\",\n  \"website\": \"https://egyptours.com\",\n  \"facebook\": \"https://facebook.com/egyptours\",\n  \"instagram\": \"https://instagram.com/egyptours\",\n  \"twitter\": \"https://twitter.com/egyptours\",\n  \"tripadvisor\": \"https://tripadvisor.com/egyptours\",\n  \"businessHours\": \"Mon-Fri: 9 AM - 6 PM\",\n  \"emergencyContact\": \"+20 987 654 3210\",\n  \"description\": \"Your gateway to experiencing the wonders of Egypt.\"\n}"
+            },
+            "description": "Updates the contact information"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contact Messages",
+      "description": "Endpoints for managing contact messages from users",
+      "item": [
+        {
+          "name": "Get All Messages",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", ""]
+            },
+            "description": "Retrieves a list of all contact messages"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Message Details",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the message"
+                }
+              ]
+            },
+            "description": "Retrieves a specific contact message"
+          },
+          "response": []
+        },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", ""]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"subject\": \"Tour Inquiry\",\n  \"message\": \"I'm interested in booking a tour to the Pyramids for next month. What are your available dates?\"\n}"
+            },
+            "description": "Sends a new contact message"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Message",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/:id/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", ":id", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the message to delete"
+                }
+              ]
+            },
+            "description": "Deletes a contact message"
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Message as Read",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/api/messages/:id/mark_as_read/",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "messages", ":id", "mark_as_read", ""],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1",
+                  "description": "ID of the message to mark as read"
+                }
+              ]
+            },
+            "description": "Marks a message as read"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "type": "string",
+      "description": "Base URL for API endpoints"
+    }
+  ]
+}

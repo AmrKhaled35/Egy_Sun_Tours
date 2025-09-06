@@ -90,7 +90,7 @@ export default function TripsAdmin() {
     setEditingTrip(trip);
     setShowForm(true);
   };
-
+  const token = localStorage.getItem("accessToken");
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this trip?")) {
       try {
@@ -98,7 +98,7 @@ export default function TripsAdmin() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTIxMDAzLCJpYXQiOjE3NTcxMTc0MDMsImp0aSI6ImU1MDZhZGU4ZmI1NTQ1ZWI4NzZkZDY4Mjg0YzBlYmY0IiwidXNlcl9pZCI6IjEifQ.Dvg05FzgAyvVwjF-ZQqcfU0TJz41z8aeY4J5bKjw0IE"}`,
+            Authorization: `Bearer ${token}`,
           },
         });
   
@@ -146,7 +146,7 @@ export default function TripsAdmin() {
           method: "PATCH",
           body: payload,
           headers: {
-            "Authorization": `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTIxMDAzLCJpYXQiOjE3NTcxMTc0MDMsImp0aSI6ImU1MDZhZGU4ZmI1NTQ1ZWI4NzZkZDY4Mjg0YzBlYmY0IiwidXNlcl9pZCI6IjEifQ.Dvg05FzgAyvVwjF-ZQqcfU0TJz41z8aeY4J5bKjw0IE"}`,
+            "Authorization": `Bearer ${token}`,
           },
         });
       } else {
@@ -154,7 +154,7 @@ export default function TripsAdmin() {
           method: "POST",
           body: payload,
           headers: {
-            "Authorization": `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTIxMDAzLCJpYXQiOjE3NTcxMTc0MDMsImp0aSI6ImU1MDZhZGU4ZmI1NTQ1ZWI4NzZkZDY4Mjg0YzBlYmY0IiwidXNlcl9pZCI6IjEifQ.Dvg05FzgAyvVwjF-ZQqcfU0TJz41z8aeY4J5bKjw0IE"}`,
+            "Authorization": `Bearer ${token}`,
           },
         });
       }

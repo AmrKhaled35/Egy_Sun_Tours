@@ -68,7 +68,7 @@ export default function GalleryAdmin() {
     setEditingItem(item);
     setShowForm(true);
   };
-
+  const token = localStorage.getItem("accessToken");
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this item?")) {
       try {
@@ -76,7 +76,7 @@ export default function GalleryAdmin() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTI3MzE4LCJpYXQiOjE3NTcxMjM3MTgsImp0aSI6IjYwZGQyZTkxYjFjYTRiN2Q4Y2M1N2UxNGMxNzMyODc3IiwidXNlcl9pZCI6IjEifQ.2JgqXNjhG_7MB_VcHkVnkDy22cH0T8FCbr7tizgg5DE"}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -113,7 +113,7 @@ export default function GalleryAdmin() {
           {
             method: "PUT",
             headers: {
-              Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTI3MzE4LCJpYXQiOjE3NTcxMjM3MTgsImp0aSI6IjYwZGQyZTkxYjFjYTRiN2Q4Y2M1N2UxNGMxNzMyODc3IiwidXNlcl9pZCI6IjEifQ.2JgqXNjhG_7MB_VcHkVnkDy22cH0T8FCbr7tizgg5DE"}`,
+              Authorization: `Bearer ${token}`,
             },
             body: data,
           }
@@ -122,7 +122,7 @@ export default function GalleryAdmin() {
         res = await fetch("http://127.0.0.1:8000/api/gallery/", {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTI3MzE4LCJpYXQiOjE3NTcxMjM3MTgsImp0aSI6IjYwZGQyZTkxYjFjYTRiN2Q4Y2M1N2UxNGMxNzMyODc3IiwidXNlcl9pZCI6IjEifQ.2JgqXNjhG_7MB_VcHkVnkDy22cH0T8FCbr7tizgg5DE"}`,
+            Authorization: `Bearer ${token}`,
           },
           body: data,
         });

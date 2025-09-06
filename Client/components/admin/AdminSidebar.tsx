@@ -18,7 +18,7 @@ const AdminSidebar = () => {
   const menuItems = [
     {
       name: 'Dashboard',
-      href: '/admin',
+      href: '/admin/dashboard',
       icon: LayoutDashboard,
     },
     {

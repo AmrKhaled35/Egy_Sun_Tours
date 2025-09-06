@@ -71,7 +71,7 @@ export default function ReviewsAdmin() {
     setEditingReview(review);
     setShowForm(true);
   };
-
+  const token = localStorage.getItem("accessToken");
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this item?")) {
       try {
@@ -79,7 +79,7 @@ export default function ReviewsAdmin() {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTMyMDU2LCJpYXQiOjE3NTcxMjg0NTYsImp0aSI6IjYxZDY5MGVkYTQ4NTRhYjFhODhjYWJhNTE4MTZjZjkyIiwidXNlcl9pZCI6IjEifQ.rcD87Shq901jJm-4SFedeopVUtInB14N4lzvchgcE34"}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -120,7 +120,7 @@ export default function ReviewsAdmin() {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTMyMDU2LCJpYXQiOjE3NTcxMjg0NTYsImp0aSI6IjYxZDY5MGVkYTQ4NTRhYjFhODhjYWJhNTE4MTZjZjkyIiwidXNlcl9pZCI6IjEifQ.rcD87Shq901jJm-4SFedeopVUtInB14N4lzvchgcE34"}`
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify(reviewData),
         });
@@ -129,7 +129,7 @@ export default function ReviewsAdmin() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzU3MTMyMDU2LCJpYXQiOjE3NTcxMjg0NTYsImp0aSI6IjYxZDY5MGVkYTQ4NTRhYjFhODhjYWJhNTE4MTZjZjkyIiwidXNlcl9pZCI6IjEifQ.rcD87Shq901jJm-4SFedeopVUtInB14N4lzvchgcE34"}`
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify(reviewData),
         });

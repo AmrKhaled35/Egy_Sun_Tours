@@ -1,10 +1,9 @@
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import ReviewDetail from '@/components/sections/ReviewDetail';
-import { siteData } from '@/data/site-data';
-import { allReviews } from '@/data/reviews-data';
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import ReviewDetail from "@/components/sections/ReviewDetail";
+import { siteData } from "@/data/site-data";
 
 interface ReviewPageProps {
   params: {
@@ -13,26 +12,27 @@ interface ReviewPageProps {
 }
 
 export async function generateMetadata({ params }: ReviewPageProps): Promise<Metadata> {
-  // In a real app, you'd fetch from API or database
-  // For now, we use the static data for metadata generation
-  const reviews = allReviews; // This would be fetched from API
-  const review = reviews.find(r => r.id === parseInt(params.id));
-  
-  if (!review) {
+  const res = await fetch(`http://127.0.0.1:8000/api/reviews/${params.id}`, {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
     return {
-      title: 'Review Not Found',
+      title: "Review Not Found",
     };
   }
 
+  const review = await res.json();
+
   return {
     title: `${review.title} - Customer Review | Egy Sun Tours`,
-    description: review.excerpt,
+    description: review.excerpt || review.fullText?.substring(0, 160),
     keywords: `Egypt tour review, ${review.name}, ${review.tourType}, customer testimonial, TripAdvisor review`,
     openGraph: {
       title: `${review.title} - Customer Review | Egy Sun Tours`,
-      description: review.excerpt,
-      type: 'article',
-      locale: 'en_US',
+      description: review.excerpt || review.fullText?.substring(0, 160),
+      type: "article",
+      locale: "en_US",
       siteName: siteData.name,
     },
     alternates: {
@@ -42,17 +42,35 @@ export async function generateMetadata({ params }: ReviewPageProps): Promise<Met
 }
 
 export async function generateStaticParams() {
-  return allReviews.map((review) => ({
+  const res = await fetch("http://127.0.0.1:8000/api/reviews", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    return [];
+  }
+
+  const data = await res.json();
+  const reviews = Array.isArray(data) ? data : data.results || [];
+
+  return reviews.map((review: any) => ({
     id: review.id.toString(),
   }));
 }
 
-export default function ReviewPage({ params }: ReviewPageProps) {
-  const review = allReviews.find(r => r.id === parseInt(params.id));
+export default async function ReviewPage({ params }: ReviewPageProps) {
+  const res = await fetch(`http://127.0.0.1:8000/api/reviews/${params.id}`, {
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  if (!review) {
+  if (!res.ok) {
     notFound();
   }
+
+  const review = await res.json();
 
   return (
     <main className="min-h-screen bg-white">

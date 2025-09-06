@@ -8,10 +8,24 @@ import { Button } from "@/components/ui/button";
 import { siteData } from "@/data/site-data";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { allReviews } from "@/data/reviews-data";
+import { apiClient } from "@/lib/api";
 
 const ReviewsGrid = () => {
-  const [reviews] = useLocalStorage("reviews", allReviews);
+  const [reviews , setReviews] = useState<any[]>([]);
   const [visibleReviews, setVisibleReviews] = useState<number[]>([]);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const data = await apiClient.getReviews();
+        setReviews(data.results);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        alert("Failed to fetch reviews from API");
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   useEffect(() => {
     // Animate reviews appearing one by one

@@ -1,37 +1,33 @@
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import Navbar from '@/components/layout/Navbar';
-import Footer from '@/components/layout/Footer';
-import TripDetail from '@/components/sections/TripDetail';
-import { siteData } from '@/data/site-data';
-import { allTrips } from '@/data/trips-data';
-import { apiClient } from '@/lib/api';
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import TripDetail from "@/components/sections/TripDetail";
+import { siteData } from "@/data/site-data";
 interface TripPageProps {
   params: {
     id: string;
   };
 }
-
 export async function generateMetadata({ params }: TripPageProps): Promise<Metadata> {
-  // await apiClient.getTripById(parseInt(params.id))
-  const trips = allTrips; 
-  const trip = trips.find(t => t.id === parseInt(params.id));
-  
-  if (!trip) {
+  const res = await fetch(`http://127.0.0.1:8000/api/trips/${params.id}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
     return {
-      title: 'Trip Not Found',
+      title: "Trip Not Found",
     };
   }
-
+  const trip = await res.json();
   return {
     title: `${trip.title} - Egypt Tour Details | Egy Sun Tours`,
-    description: trip.fullDescription,
-    keywords: `${trip.title}, Egypt tour, ${trip.category} tour, Cairo tours, guided tour Egypt, ${trip.highlights.join(', ')}`,
+    description: trip.fullDescription || trip.shortDescription,
+    keywords: `${trip.title}, Egypt tour, ${trip.category} tour, Cairo tours, guided tour Egypt, ${(trip.highlights || []).join(", ")}`,
     openGraph: {
       title: `${trip.title} - Egypt Tour Details | Egy Sun Tours`,
-      description: trip.fullDescription,
-      type: 'article',
-      locale: 'en_US',
+      description: trip.fullDescription || trip.shortDescription,
+      type: "article",
+      locale: "en_US",
       siteName: siteData.name,
       images: [
         {
@@ -43,7 +39,7 @@ export async function generateMetadata({ params }: TripPageProps): Promise<Metad
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${trip.title} - Egypt Tour Details | Egy Sun Tours`,
       description: trip.shortDescription,
     },
@@ -52,25 +48,31 @@ export async function generateMetadata({ params }: TripPageProps): Promise<Metad
     },
   };
 }
-// export async function generateStaticParams() {
-//   const trips = await apiClient.getTrips();
-//   return trips.map((trip: any) => ({
-//     id: trip.id.toString(),
-//   }));
-// }
 export async function generateStaticParams() {
-  return allTrips.map((trip) => ({
+  const res = await fetch("http://127.0.0.1:8000/api/trips", {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    return [];
+  }
+  const data = await res.json();
+  const trips = Array.isArray(data) ? data : data.results || [];
+
+  return trips.map((trip: any) => ({
     id: trip.id.toString(),
   }));
 }
-
-export default function TripPage({ params }: TripPageProps) {
-  const trip = allTrips.find(t => t.id === parseInt(params.id));
-
-  if (!trip) {
+export default async function TripPage({ params }: TripPageProps) {
+  const res = await fetch(`http://127.0.0.1:8000/api/trips/${params.id}`, {
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) {
     notFound();
   }
-
+  const trip = await res.json();
   return (
     <main className="min-h-screen bg-white">
       <Navbar />

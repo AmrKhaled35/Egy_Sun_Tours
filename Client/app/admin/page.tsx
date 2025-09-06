@@ -1,203 +1,98 @@
 "use client";
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { MapPin, Camera, Star, Phone, TrendingUp, Users, Globe, Award } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { allTrips } from '@/data/trips-data';
-import { allReviews } from '@/data/reviews-data';
 
-const quickAccessCards = [
-  {
-    title: 'Trips',
-    description: 'Manage tours and experiences',
-    icon: MapPin,
-    href: '/admin/trips',
-    color: 'bg-blue-500',
-  },
-  {
-    title: 'Gallery',
-    description: 'Manage photos and videos',
-    icon: Camera,
-    href: '/admin/gallery',
-    color: 'bg-green-500',
-  },
-  {
-    title: 'Reviews',
-    description: 'Manage customer reviews',
-    icon: Star,
-    href: '/admin/reviews',
-    color: 'bg-yellow-500',
-  },
-  {
-    title: 'Contact',
-    description: 'Manage contact information',
-    icon: Phone,
-    href: '/admin/contact',
-    color: 'bg-purple-500',
-  },
-];
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Lock, User } from "lucide-react";
 
-export default function AdminDashboard() {
-  const [trips] = useLocalStorage('trips', allTrips);
-  const [reviews] = useLocalStorage('reviews', allReviews);
-  const [galleryItems] = useLocalStorage('galleryItems', []);
-  
-  const [stats, setStats] = useState([
-    {
-      title: 'Total Trips',
-      value: '0',
-      icon: MapPin,
-      change: 'Loading...'
-    },
-    {
-      title: 'Gallery Items',
-      value: '0',
-      icon: Camera,
-      change: 'Loading...'
-    },
-    {
-      title: 'Customer Reviews',
-      value: '0',
-      icon: Star,
-      change: 'Loading...'
-    },
-    {
-      title: 'Happy Travelers',
-      value: '500+',
-      icon: Users,
-      change: 'Growing daily'
-    },
-  ]);
+export default function AdminLogin() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); 
+  const [showPopup, setShowPopup] = useState(false); 
+  const router = useRouter();
 
-  useEffect(() => {
-    // Update stats based on actual data
-    setStats([
-      {
-        title: 'Total Trips',
-        value: trips.length.toString(),
-        icon: MapPin,
-        change: `${trips.length > 6 ? '+' + (trips.length - 6) : 'Default'} trips`
-      },
-      {
-        title: 'Gallery Items',
-        value: galleryItems.length.toString(),
-        icon: Camera,
-        change: `${galleryItems.length > 0 ? galleryItems.length + ' items' : 'No items yet'}`
-      },
-      {
-        title: 'Customer Reviews',
-        value: reviews.length.toString(),
-        icon: Star,
-        change: '5.0 avg rating'
-      },
-      {
-        title: 'Happy Travelers',
-        value: '500+',
-        icon: Users,
-        change: 'Growing daily'
-      },
-    ]);
-  }, [trips, reviews, galleryItems]);
+  const showError = (message: string) => {
+    setError(message);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 3000);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/token/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!res.ok) {
+        showError("❌ Invalid username or password");
+        return;
+      }
+
+      const data = await res.json();
+      localStorage.setItem("accessToken", data.access);
+      localStorage.setItem("refreshToken", data.refresh);
+
+      router.push("/admin/dashboard");
+    } catch (error) {
+      console.error("Login error:", error);
+      showError("⚠️ Something went wrong. Try again.");
+    }
+  };
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 mt-2">Welcome to Egy Sun Tours Admin Panel</p>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
-          return (
-            <Card key={index} className="border border-gray-200 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                    <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                    <p className="text-xs text-green-600 mt-1">{stat.change}</p>
-                  </div>
-                  <div className="bg-gray-100 p-3 rounded-full">
-                    <Icon className="w-6 h-6 text-gray-600" />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+      <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-2xl rounded-2xl p-8 w-full max-w-md z-10 relative">
+        {showPopup && (
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white px-6 py-4 rounded-lg shadow-lg z-50 animate-fade-in">
+            {error}
+          </div>
+        )}
 
-      {/* Quick Access */}
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Access</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {quickAccessCards.map((card, index) => {
-            const Icon = card.icon;
-            return (
-              <Link key={index} href={card.href}>
-                <Card className="border border-gray-200 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer">
-                  <CardContent className="p-6 text-center">
-                    <div className={`${card.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">{card.title}</h3>
-                    <p className="text-gray-600 text-sm mb-3">{card.description}</p>
-                    <p className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full inline-block">
-                      Manage {card.title}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
+        <h1 className="text-4xl font-bold text-white text-center mb-2">
+          Egy Sun Tours
+        </h1>
+        <p className="text-center text-orange-400 font-medium mb-6">
+          Best Place ✈️
+        </p>
 
-      {/* Recent Activity */}
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Recent Activity</h2>
-        <Card className="border border-gray-200">
-          <CardContent className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-green-100 p-2 rounded-full">
-                  <Star className="w-4 h-4 text-green-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900">Reviews System Active</p>
-                  <p className="text-sm text-gray-600">Currently managing {reviews.length} customer reviews</p>
-                </div>
-                <span className="text-xs text-gray-500">Live</span>
-              </div>
-              
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-blue-100 p-2 rounded-full">
-                  <Camera className="w-4 h-4 text-blue-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900">Gallery Management</p>
-                  <p className="text-sm text-gray-600">Managing {galleryItems.length} media items</p>
-                </div>
-                <span className="text-xs text-gray-500">Active</span>
-              </div>
-              
-              <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                <div className="bg-purple-100 p-2 rounded-full">
-                  <MapPin className="w-4 h-4 text-purple-600" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-gray-900">Tours Management</p>
-                  <p className="text-sm text-gray-600">Currently offering {trips.length} unique experiences</p>
-                </div>
-                <span className="text-xs text-gray-500">Updated</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative">
+            <User className="absolute left-3 top-3 text-gray-400" size={20} />
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username"
+              required
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/20 text-white placeholder-gray-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          <div className="relative">
+            <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+              className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/20 text-white placeholder-gray-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            Login
+          </button>
+        </form>
       </div>
     </div>
   );

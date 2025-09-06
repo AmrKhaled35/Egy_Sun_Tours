@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { allReviews } from '@/data/reviews-data';
+import { apiClient } from '@/lib/api';
 // import { apiClient } from '@/lib/api';
 
 interface Review {
@@ -23,7 +24,7 @@ interface Review {
 }
 
 export default function ReviewsAdmin() {
-  const [reviews, setReviews] = useLocalStorage<Review[]>('reviews', allReviews);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingReview, setEditingReview] = useState<Review | null>(null);
   const [formData, setFormData] = useState<Partial<Review>>({
@@ -51,72 +52,112 @@ export default function ReviewsAdmin() {
     setEditingReview(null);
     setShowForm(false);
   };
+  useEffect(() => {
+    const fetchReviewsItems = async () => {
+      try {
+        const data = await apiClient.getReviews();
+        setReviews(data.results);
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+        alert("Failed to fetch GalleryItems from API");
+      }
+    };
+
+    fetchReviewsItems();
+  }, []);
 
   const handleEdit = (review: Review) => {
     setFormData(review);
     setEditingReview(review);
     setShowForm(true);
   };
-
+  const token = localStorage.getItem("accessToken");
   const handleDelete = async (id: number) => {
-    if (confirm('Are you sure you want to delete this review?')) {
+    if (confirm("Are you sure you want to delete this item?")) {
       try {
-        // API call (commented for now)
-        // await apiClient.deleteReview(id);
-        
-        // Local Storage
-        const updatedReviews = reviews.filter(review => review.id !== id);
-        setReviews(updatedReviews);
-        
-        alert('Review deleted successfully!');
+        const res = await fetch(`http://127.0.0.1:8000/api/reviews/${id}/`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error("Failed to delete item");
+
+        setReviews(reviews.filter((item) => item.id !== id));
+        alert("review item deleted successfully!");
       } catch (error) {
-        console.error('Error deleting review:', error);
-        alert('Error deleting review. Please try again.');
+        console.error("Error deleting review item:", error);
+        alert("Error deleting item. Please try again.");
       }
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.name || !formData.title || !formData.fullText) {
-      alert('Please fill in all required fields');
+  
+    if (!formData.name || !formData.title || !formData.fullText || !formData.location || !formData.tourType) {
+      alert("Please fill in all required fields");
       return;
     }
-
+  
     try {
       const reviewData = {
-        ...formData,
-        id: editingReview ? editingReview.id : Date.now(),
-        excerpt: formData.fullText?.substring(0, 100) + '...' || ''
-      } as Review;
-
+        name: formData.name,
+        username: formData.username || "",
+        rating: formData.rating || 5,
+        title: formData.title,
+        excerpt: (formData.fullText?.substring(0, 100) || "") + "...",
+        fullText: formData.fullText,
+        location: formData.location,
+        tourType: formData.tourType,
+      };
+  
+      let res;
       if (editingReview) {
-        // API call (commented for now)
-        // await apiClient.updateReview(editingReview.id, reviewData);
-        
-        // Local Storage
-        const updatedReviews = reviews.map(review => 
-          review.id === editingReview.id ? reviewData : review
-        );
-        setReviews(updatedReviews);
-        alert('Review updated successfully!');
+        res = await fetch(`http://127.0.0.1:8000/api/reviews/${editingReview.id}/`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(reviewData),
+        });
       } else {
-        // API call (commented for now)
-        // await apiClient.createReview(reviewData);
-        
-        // Local Storage
-        setReviews([...reviews, reviewData]);
-        alert('Review created successfully!');
+        res = await fetch("http://127.0.0.1:8000/api/reviews/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(reviewData),
+        });
       }
-      
+  
+      if (!res.ok) throw new Error("Failed to save review");
+  
+      const savedReview = await res.json();
+  
+      if (editingReview) {
+        setReviews(
+          reviews.map((review) =>
+            review.id === editingReview.id ? savedReview : review
+          )
+        );
+        alert("Review updated successfully!");
+      } else {
+        setReviews([...reviews, savedReview]);
+        alert("Review added successfully!");
+      }
+  
       resetForm();
     } catch (error) {
-      console.error('Error saving review:', error);
-      alert('Error saving review. Please try again.');
+      console.error("Error saving review:", error);
+      alert("Error saving review. Please try again.");
     }
   };
-
+  
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -204,7 +245,7 @@ export default function ReviewsAdmin() {
                     onChange={(e) => setFormData({...formData, date: e.target.value})}
                     placeholder="e.g., December 2024"
                     className="border-gray-300"
-                    required
+                    // required
                   />
                 </div>
                 <div>

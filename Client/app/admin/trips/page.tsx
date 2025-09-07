@@ -25,7 +25,7 @@ interface Trip {
   fullDescription: string;
   duration: string;
   price: string;
-  image: string;
+  image: string | File;
   category: string;
   highlights: string[];
   timeline: {

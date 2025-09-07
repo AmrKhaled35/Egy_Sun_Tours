@@ -10,6 +10,7 @@ interface ReviewPageProps {
     id: string;
   };
 }
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: ReviewPageProps): Promise<Metadata> {
   const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${params.id}`, {
@@ -39,10 +40,6 @@ export async function generateMetadata({ params }: ReviewPageProps): Promise<Met
       canonical: `/reviews/${params.id}`,
     },
   };
-}
-
-export async function generateStaticParams() {
-  return []; 
 }
 
 export default async function ReviewPage({ params }: ReviewPageProps) {

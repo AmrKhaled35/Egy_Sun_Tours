@@ -12,7 +12,7 @@ interface ReviewPageProps {
 }
 
 export async function generateMetadata({ params }: ReviewPageProps): Promise<Metadata> {
-  const res = await fetch(`http://127.0.0.1:8000/api/reviews/${params.id}`, {
+  const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${params.id}`, {
     cache: "no-store",
   });
 
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: ReviewPageProps): Promise<Met
 }
 
 export async function generateStaticParams() {
-  const res = await fetch("http://127.0.0.1:8000/api/reviews", {
+  const res = await fetch("https://egysuntours-production.up.railway.app/api/reviews", {
     cache: "no-store",
   });
 
@@ -59,7 +59,7 @@ export async function generateStaticParams() {
 }
 
 export default async function ReviewPage({ params }: ReviewPageProps) {
-  const res = await fetch(`http://127.0.0.1:8000/api/reviews/${params.id}`, {
+  const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${params.id}`, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",

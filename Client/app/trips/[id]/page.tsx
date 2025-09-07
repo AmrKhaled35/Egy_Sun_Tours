@@ -10,7 +10,7 @@ interface TripPageProps {
   };
 }
 export async function generateMetadata({ params }: TripPageProps): Promise<Metadata> {
-  const res = await fetch(`http://127.0.0.1:8000/api/trips/${params.id}`, {
+  const res = await fetch(`https://egysuntours-production.up.railway.app/api/trips/${params.id}`, {
     cache: "no-store",
   });
   if (!res.ok) {
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: TripPageProps): Promise<Metad
   };
 }
 export async function generateStaticParams() {
-  const res = await fetch("http://127.0.0.1:8000/api/trips", {
+  const res = await fetch("https://egysuntours-production.up.railway.app/api/trips", {
     cache: "no-store",
   });
   if (!res.ok) {
@@ -63,7 +63,7 @@ export async function generateStaticParams() {
   }));
 }
 export default async function TripPage({ params }: TripPageProps) {
-  const res = await fetch(`http://127.0.0.1:8000/api/trips/${params.id}`, {
+  const res = await fetch(`https://egysuntours-production.up.railway.app/api/trips/${params.id}`, {
     cache: "no-store",
     headers: {
       "Content-Type": "application/json",

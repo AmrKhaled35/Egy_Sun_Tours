@@ -55,17 +55,18 @@ export default function TripsAdmin() {
   });
 
   useEffect(() => {
-    const fetchTrips = async () => {
+    const fetchtrips = async () => {
       try {
-        const data = await apiClient.getTrips();
+        const res = await fetch("https://egysuntours-production.up.railway.app/api/trips/");
+        if (!res.ok) throw new Error("Failed to fetch trips");
+        const data = await res.json();
         setTrips(data.results);
-      } catch (error) {
-        console.error("Error fetching trips:", error);
-        alert("Failed to fetch trips from API");
+      } catch (err) {
+        console.error("Error fetching trips:", err);
       }
     };
 
-    fetchTrips();
+    fetchtrips();
   }, []);
 
   const resetForm = () => {
@@ -94,7 +95,7 @@ export default function TripsAdmin() {
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this trip?")) {
       try {
-        const response = await fetch(`http://localhost:8000/api/trips/${id}/`, {
+        const response = await fetch(`https://egysuntours-production.up.railway.app/api/trips/${id}/`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -141,8 +142,8 @@ export default function TripsAdmin() {
   
       let response;
       if (editingTrip) {
-        console.log(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`);
-        response = await fetch(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`, {
+        // console.log(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`);
+        response = await fetch(`https://egysuntours-production.up.railway.app/api/trips/${editingTrip.id}/`, {
           method: "PATCH",
           body: payload,
           headers: {
@@ -150,7 +151,7 @@ export default function TripsAdmin() {
           },
         });
       } else {
-        response = await fetch("http://127.0.0.1:8000/api/trips/", {
+        response = await fetch("https://egysuntours-production.up.railway.app/api/trips/", {
           method: "POST",
           body: payload,
           headers: {

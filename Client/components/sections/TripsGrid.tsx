@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Clock, Users, MapPin, ArrowRight, Filter } from "lucide-react";
@@ -14,17 +14,18 @@ const [trips, setTrips] = useState<any[]>([]);
   const [visibleTrips, setVisibleTrips] = useState<number[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   useEffect(() => {
-    const fetchTrips = async () => {
+    const fetchtrips = async () => {
       try {
-        const data = await apiClient.getTrips();
+        const res = await fetch("https://egysuntours-production.up.railway.app/api/trips/");
+        if (!res.ok) throw new Error("Failed to fetch trips");
+        const data = await res.json();
         setTrips(data.results);
-      } catch (error) {
-        console.error("Error fetching trips:", error);
-        alert("Failed to fetch trips from API");
+      } catch (err) {
+        console.error("Error fetching trips:", err);
       }
     };
 
-    fetchTrips();
+    fetchtrips();
   }, []);
   const categories = [
     "All",
@@ -142,7 +143,7 @@ const [trips, setTrips] = useState<any[]>([]);
                       Highlights:
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {trip.highlights.slice(0, 3).map((highlight, idx) => (
+                      {trip.highlights.slice(0, 3).map((highlight: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined, idx: Key | null | undefined) => (
                         <span
                           key={idx}
                           className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs"

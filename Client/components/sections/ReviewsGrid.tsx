@@ -16,11 +16,12 @@ const ReviewsGrid = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const data = await apiClient.getReviews();
+        const res = await fetch("https://egysuntours-production.up.railway.app/api/reviews/");
+        if (!res.ok) throw new Error("Failed to fetch trips");
+        const data = await res.json();
         setReviews(data.results);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-        alert("Failed to fetch reviews from API");
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
       }
     };
 
@@ -28,7 +29,6 @@ const ReviewsGrid = () => {
   }, []);
 
   useEffect(() => {
-    // Animate reviews appearing one by one
     reviews.forEach((_, index) => {
       setTimeout(() => {
         setVisibleReviews((prev) => [...prev, index]);

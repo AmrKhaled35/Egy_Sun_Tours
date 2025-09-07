@@ -18,12 +18,10 @@ const GalleryGrid = () => {
   useEffect(() => {
     const fetchGallery = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/gallery/");
+        const res = await fetch("https://egysuntours-production.up.railway.app/api/gallery/");
         if (!res.ok) throw new Error("Failed to fetch gallery");
         const data = await res.json();
         setGalleryItems(data.results);
-
-        // animate images after fetching
         data.results.forEach((_: any, index: number) => {
           setTimeout(() => {
             setVisibleImages((prev) => [...prev, index]);

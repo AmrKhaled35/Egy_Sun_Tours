@@ -53,17 +53,18 @@ export default function ReviewsAdmin() {
     setShowForm(false);
   };
   useEffect(() => {
-    const fetchReviewsItems = async () => {
+    const fetchReviews = async () => {
       try {
-        const data = await apiClient.getReviews();
+        const res = await fetch("https://egysuntours-production.up.railway.app/api/reviews/");
+        if (!res.ok) throw new Error("Failed to fetch trips");
+        const data = await res.json();
         setReviews(data.results);
-      } catch (error) {
-        console.error("Error fetching trips:", error);
-        alert("Failed to fetch GalleryItems from API");
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
       }
     };
 
-    fetchReviewsItems();
+    fetchReviews();
   }, []);
 
   const handleEdit = (review: Review) => {
@@ -75,7 +76,7 @@ export default function ReviewsAdmin() {
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this item?")) {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/reviews/${id}/`, {
+        const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${id}/`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -116,7 +117,7 @@ export default function ReviewsAdmin() {
   
       let res;
       if (editingReview) {
-        res = await fetch(`http://127.0.0.1:8000/api/reviews/${editingReview.id}/`, {
+        res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${editingReview.id}/`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -125,7 +126,7 @@ export default function ReviewsAdmin() {
           body: JSON.stringify(reviewData),
         });
       } else {
-        res = await fetch("http://127.0.0.1:8000/api/reviews/", {
+        res = await fetch("https://egysuntours-production.up.railway.app/api/reviews/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

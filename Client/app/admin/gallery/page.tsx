@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { apiClient } from "@/lib/api";
 
 interface GalleryItem {
   id: number;
@@ -26,30 +25,38 @@ export default function GalleryAdmin() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
-  const [formData, setFormData] = useState({
-    image: "",
+  const [formData, setFormData] = useState<{
+    image: File | null;
+    alt: string;
+    category: string;
+    type: "image" | "video";
+  }>({
+    image: null,
     alt: "",
     category: "",
-    type: "image" as "image" | "video",
+    type: "image",
   });
 
   useEffect(() => {
-    const fetchGalleryItems = async () => {
+    const fetchGallery = async () => {
       try {
-        const data = await apiClient.getGalleryItems();
+        const res = await fetch(
+          "https://egysuntours-production.up.railway.app/api/gallery/"
+        );
+        if (!res.ok) throw new Error("Failed to fetch gallery");
+        const data = await res.json();
         setGalleryItems(data.results);
-      } catch (error) {
-        console.error("Error fetching trips:", error);
-        alert("Failed to fetch GalleryItems from API");
+      } catch (err) {
+        console.error("Error fetching gallery:", err);
       }
     };
 
-    fetchGalleryItems();
+    fetchGallery();
   }, []);
 
   const resetForm = () => {
     setFormData({
-      image: "",
+      image: null,
       alt: "",
       category: "",
       type: "image",
@@ -60,7 +67,7 @@ export default function GalleryAdmin() {
 
   const handleEdit = (item: GalleryItem) => {
     setFormData({
-      image: item.image,
+      image: null,
       alt: item.alt,
       category: item.category,
       type: item.type,
@@ -68,17 +75,22 @@ export default function GalleryAdmin() {
     setEditingItem(item);
     setShowForm(true);
   };
+
   const token = localStorage.getItem("accessToken");
+  console.log("Token:", token);
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this item?")) {
       try {
-        const res = await fetch(`http://127.0.0.1:8000/api/gallery/${id}/`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `https://egysuntours-production.up.railway.app/api/gallery/${id}/`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!res.ok) throw new Error("Failed to delete item");
 
@@ -94,14 +106,20 @@ export default function GalleryAdmin() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.image || !formData.alt || !formData.category) {
+    if (!formData.image && !editingItem) {
+      alert("Please upload an image or video");
+      return;
+    }
+    if (!formData.alt || !formData.category) {
       alert("Please fill in all required fields");
       return;
     }
 
     try {
       const data = new FormData();
-      data.append("image", formData.image); 
+      if (formData.image) {
+        data.append("image", formData.image);
+      }
       data.append("alt", formData.alt);
       data.append("category", formData.category);
       data.append("type", formData.type || "image");
@@ -109,7 +127,7 @@ export default function GalleryAdmin() {
       let res;
       if (editingItem) {
         res = await fetch(
-          `http://127.0.0.1:8000/api/gallery/${editingItem.id}/`,
+          `https://egysuntours-production.up.railway.app/api/gallery/${editingItem.id}/`,
           {
             method: "PUT",
             headers: {
@@ -119,13 +137,16 @@ export default function GalleryAdmin() {
           }
         );
       } else {
-        res = await fetch("http://127.0.0.1:8000/api/gallery/", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: data,
-        });
+        res = await fetch(
+          "https://egysuntours-production.up.railway.app/api/gallery/",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: data,
+          }
+        );
       }
 
       if (!res.ok) throw new Error("Failed to save item");
@@ -168,6 +189,7 @@ export default function GalleryAdmin() {
           Add Media
         </Button>
       </div>
+
       {showForm && (
         <Card className="border-2 border-black">
           <CardContent className="p-6">
@@ -183,26 +205,21 @@ export default function GalleryAdmin() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Media URL *
+                    Upload File *
                   </label>
                   <Input
                     type="file"
-                    accept="image/*"
+                    accept="image/*,video/*"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
-                        const reader = new FileReader();
-                        reader.onloadend = () => {
-                          setFormData({
-                            ...formData,
-                            image: file,
-                          });
-                        };
-                        reader.readAsDataURL(file);
+                        setFormData({
+                          ...formData,
+                          image: file,
+                        });
                       }
                     }}
                     className="border border-gray-300 rounded p-2 w-full"
-                    // required
                   />
                 </div>
                 <div>
@@ -274,7 +291,6 @@ export default function GalleryAdmin() {
         </Card>
       )}
 
-      {/* Gallery Grid */}
       <div>
         <h2 className="text-xl font-bold mb-6">
           Gallery Items ({galleryItems.length})
@@ -293,6 +309,7 @@ export default function GalleryAdmin() {
                         src={item.image}
                         className="w-full h-full object-cover"
                         muted
+                        controls
                       />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/20">
                         <Video className="w-8 h-8 text-white" />

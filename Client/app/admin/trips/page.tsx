@@ -57,7 +57,9 @@ export default function TripsAdmin() {
   useEffect(() => {
     const fetchtrips = async () => {
       try {
-        const res = await fetch("https://egysuntours-production.up.railway.app/api/trips/");
+        const res = await fetch(
+          "https://egysuntours-production.up.railway.app/api/trips/"
+        );
         if (!res.ok) throw new Error("Failed to fetch trips");
         const data = await res.json();
         setTrips(data.results);
@@ -95,14 +97,17 @@ export default function TripsAdmin() {
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this trip?")) {
       try {
-        const response = await fetch(`https://egysuntours-production.up.railway.app/api/trips/${id}/`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
+        const response = await fetch(
+          `https://egysuntours-production.up.railway.app/api/trips/${id}/`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         if (response.ok) {
           const updatedTrips = trips.filter((trip) => trip.id !== id);
           setTrips(updatedTrips);
@@ -116,16 +121,15 @@ export default function TripsAdmin() {
       }
     }
   };
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!formData.title || !formData.shortDescription) {
       alert("Please fill in all required fields");
       return;
     }
-  
+
     try {
       const payload = new FormData();
       payload.append("title", formData.title || "");
@@ -142,43 +146,52 @@ export default function TripsAdmin() {
       let response;
       if (editingTrip) {
         // console.log(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`);
-        response = await fetch(`https://egysuntours-production.up.railway.app/api/trips/${editingTrip.id}/`, {
-          method: "PATCH",
-          body: payload,
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+        response = await fetch(
+          `https://egysuntours-production.up.railway.app/api/trips/${editingTrip.id}/`,
+          {
+            method: "PATCH",
+            body: payload,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       } else {
-        response = await fetch("https://egysuntours-production.up.railway.app/api/trips/", {
-          method: "POST",
-          body: payload,
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+        response = await fetch(
+          "https://egysuntours-production.up.railway.app/api/trips/",
+          {
+            method: "POST",
+            body: payload,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       }
-  
+
       if (!response.ok) {
         throw new Error("Failed to save trip");
       }
-  
+
       const result = await response.json();
-  
+
       setTrips(
         editingTrip
           ? trips.map((trip) => (trip.id === editingTrip.id ? result : trip))
           : [...trips, result]
       );
-  
-      alert(editingTrip ? "Trip updated successfully!" : "Trip created successfully!");
+
+      alert(
+        editingTrip
+          ? "Trip updated successfully!"
+          : "Trip created successfully!"
+      );
       resetForm();
     } catch (error) {
       console.error(error);
       alert("Error saving trip. Please check the console for details.");
     }
   };
-  
 
   const handleAddHighlight = () => {
     setFormData({
@@ -373,7 +386,11 @@ export default function TripsAdmin() {
                   />
                   {formData.image && (
                     <img
-                      src={formData.image}
+                      src={
+                        typeof formData.image === "string"
+                          ? formData.image
+                          : URL.createObjectURL(formData.image)
+                      }
                       alt="Main"
                       className="mt-2 w-40 h-40 object-cover rounded"
                     />

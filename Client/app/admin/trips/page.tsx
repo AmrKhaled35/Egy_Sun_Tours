@@ -78,7 +78,7 @@ export default function TripsAdmin() {
       fullDescription: "",
       duration: "",
       price: "",
-      image: undefined,
+      image: "",
       category: "",
       highlights: [""],
       timeline: [{ time: "", title: "", description: "", image: "" }],
@@ -618,7 +618,11 @@ export default function TripsAdmin() {
               <CardContent className="p-6">
                 <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
                   <img
-                    src={trip.image}
+                    src={
+                      typeof trip.image === "string"
+                        ? trip.image
+                        : URL.createObjectURL(trip.image)
+                    }
                     alt={trip.title}
                     className="w-full h-full object-cover"
                   />

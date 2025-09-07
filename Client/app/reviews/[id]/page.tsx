@@ -12,7 +12,9 @@ interface ReviewPageProps {
 }
 
 export async function generateMetadata({ params }: ReviewPageProps): Promise<Metadata> {
-  const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${params.id}`);
+  const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${params.id}`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     return {
@@ -40,22 +42,16 @@ export async function generateMetadata({ params }: ReviewPageProps): Promise<Met
 }
 
 export async function generateStaticParams() {
-  const res = await fetch("https://egysuntours-production.up.railway.app/api/reviews");
-
-  if (!res.ok) {
-    return [];
-  }
-
-  const data = await res.json();
-  const reviews = Array.isArray(data) ? data : data.results || [];
-
-  return reviews.map((review: any) => ({
-    id: review.id.toString(),
-  }));
+  return []; 
 }
 
 export default async function ReviewPage({ params }: ReviewPageProps) {
-  const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${params.id}`);
+  const res = await fetch(`https://egysuntours-production.up.railway.app/api/reviews/${params.id}`, {
+    cache: "no-store",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!res.ok) {
     notFound();

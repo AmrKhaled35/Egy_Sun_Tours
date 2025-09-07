@@ -134,12 +134,11 @@ export default function TripsAdmin() {
       payload.append("duration", formData.duration || "");
       payload.append("price", formData.price || "");
       payload.append("category", formData.category || "");
-  
-      if (formData.image instanceof File) {
-        payload.append("image", formData.image);
+      const image = formData.image as File | undefined;
+      if (image) {
+        payload.append("image", image);
         console.log("Image file appended to payload");
       }
-  
       let response;
       if (editingTrip) {
         // console.log(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`);

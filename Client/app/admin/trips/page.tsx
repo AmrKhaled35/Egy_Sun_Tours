@@ -76,7 +76,7 @@ export default function TripsAdmin() {
       fullDescription: "",
       duration: "",
       price: "",
-      image: "",
+      image: undefined,
       category: "",
       highlights: [""],
       timeline: [{ time: "", title: "", description: "", image: "" }],
@@ -134,8 +134,8 @@ export default function TripsAdmin() {
       payload.append("duration", formData.duration || "");
       payload.append("price", formData.price || "");
       payload.append("category", formData.category || "");
-      const image = formData.image as File | undefined;
-      if (image) {
+      const image = formData.image as File | string | undefined;
+      if (image && image instanceof File) {
         payload.append("image", image);
         console.log("Image file appended to payload");
       }

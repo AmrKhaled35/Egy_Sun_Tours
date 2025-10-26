@@ -1,13 +1,19 @@
-django>=5.2.0
-djangorestframework>=3.16.0
-djangorestframework-simplejwt>=5.3.0
-django-cors-headers>=4.0.0
-pillow>=11.0.0
-pytz>=2025.2
-gunicorn>=21.2.0
-whitenoise>=6.6.0
-dj-database-url>=2.1.0
-psycopg2-binary>=2.9.9
-# MongoDB related (optional)
-# djongo>=1.2.30
-# pymongo>=4.0.0
+asgiref==3.9.1
+dataclasses==0.6
+dj-database-url==3.0.1
+Django==5.2.6
+django-cors-headers==4.7.0
+djangorestframework==3.16.1
+djangorestframework_simplejwt==5.5.1
+djongo==1.2.31
+dnspython==2.7.0
+gunicorn==23.0.0
+packaging==25.0
+pillow==11.3.0
+psycopg2-binary==2.9.11
+PyJWT==2.10.1
+pymongo==4.14.1
+pytz==2025.2
+sqlparse==0.5.3
+typing_extensions==4.15.0
+whitenoise==6.11.0

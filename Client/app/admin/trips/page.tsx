@@ -25,7 +25,7 @@ interface Trip {
   fullDescription: string;
   duration: string;
   price: string;
-  image: string;
+  image: string | File;
   category: string;
   highlights: string[];
   timeline: {
@@ -55,17 +55,20 @@ export default function TripsAdmin() {
   });
 
   useEffect(() => {
-    const fetchTrips = async () => {
+    const fetchtrips = async () => {
       try {
-        const data = await apiClient.getTrips();
+        const res = await fetch(
+          "https://egysuntours-production.up.railway.app/api/trips/"
+        );
+        if (!res.ok) throw new Error("Failed to fetch trips");
+        const data = await res.json();
         setTrips(data.results);
-      } catch (error) {
-        console.error("Error fetching trips:", error);
-        alert("Failed to fetch trips from API");
+      } catch (err) {
+        console.error("Error fetching trips:", err);
       }
     };
 
-    fetchTrips();
+    fetchtrips();
   }, []);
 
   const resetForm = () => {
@@ -94,14 +97,17 @@ export default function TripsAdmin() {
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this trip?")) {
       try {
-        const response = await fetch(`http://localhost:8000/api/trips/${id}/`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
+        const response = await fetch(
+          `https://egysuntours-production.up.railway.app/api/trips/${id}/`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         if (response.ok) {
           const updatedTrips = trips.filter((trip) => trip.id !== id);
           setTrips(updatedTrips);
@@ -115,16 +121,15 @@ export default function TripsAdmin() {
       }
     }
   };
-  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!formData.title || !formData.shortDescription) {
       alert("Please fill in all required fields");
       return;
     }
-  
+
     try {
       const payload = new FormData();
       payload.append("title", formData.title || "");
@@ -133,52 +138,60 @@ export default function TripsAdmin() {
       payload.append("duration", formData.duration || "");
       payload.append("price", formData.price || "");
       payload.append("category", formData.category || "");
-  
-      if (formData.image instanceof File) {
-        payload.append("image", formData.image);
+      const image = formData.image as File | string | undefined;
+      if (image && image instanceof File) {
+        payload.append("image", image);
         console.log("Image file appended to payload");
       }
-  
       let response;
       if (editingTrip) {
-        console.log(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`);
-        response = await fetch(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`, {
-          method: "PATCH",
-          body: payload,
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+        // console.log(`http://127.0.0.1:8000/api/trips/${editingTrip.id}/`);
+        response = await fetch(
+          `https://egysuntours-production.up.railway.app/api/trips/${editingTrip.id}/`,
+          {
+            method: "PATCH",
+            body: payload,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       } else {
-        response = await fetch("http://127.0.0.1:8000/api/trips/", {
-          method: "POST",
-          body: payload,
-          headers: {
-            "Authorization": `Bearer ${token}`,
-          },
-        });
+        response = await fetch(
+          "https://egysuntours-production.up.railway.app/api/trips/",
+          {
+            method: "POST",
+            body: payload,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
       }
-  
+
       if (!response.ok) {
         throw new Error("Failed to save trip");
       }
-  
+
       const result = await response.json();
-  
+
       setTrips(
         editingTrip
           ? trips.map((trip) => (trip.id === editingTrip.id ? result : trip))
           : [...trips, result]
       );
-  
-      alert(editingTrip ? "Trip updated successfully!" : "Trip created successfully!");
+
+      alert(
+        editingTrip
+          ? "Trip updated successfully!"
+          : "Trip created successfully!"
+      );
       resetForm();
     } catch (error) {
       console.error(error);
       alert("Error saving trip. Please check the console for details.");
     }
   };
-  
 
   const handleAddHighlight = () => {
     setFormData({
@@ -373,7 +386,11 @@ export default function TripsAdmin() {
                   />
                   {formData.image && (
                     <img
-                      src={formData.image}
+                      src={
+                        typeof formData.image === "string"
+                          ? formData.image
+                          : URL.createObjectURL(formData.image)
+                      }
                       alt="Main"
                       className="mt-2 w-40 h-40 object-cover rounded"
                     />
@@ -601,7 +618,11 @@ export default function TripsAdmin() {
               <CardContent className="p-6">
                 <div className="aspect-video bg-gray-200 rounded-lg mb-4 overflow-hidden">
                   <img
-                    src={trip.image}
+                    src={
+                      typeof trip.image === "string"
+                        ? trip.image
+                        : URL.createObjectURL(trip.image)
+                    }
                     alt={trip.title}
                     className="w-full h-full object-cover"
                   />
